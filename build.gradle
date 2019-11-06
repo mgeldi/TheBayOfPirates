@@ -18,9 +18,13 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
 	compile("org.springframework.boot:spring-boot-starter-web")
-	// https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-	compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.6.RELEASE'
+	//https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+	compile group: 'org.springframework', name: 'spring-webmvc'
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile("org.springframework.boot:spring-boot-devtools")
+
 
 }
 
