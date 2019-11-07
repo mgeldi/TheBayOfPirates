@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- das mit xlmns damit wir thymeleaf haben und müssen beispielsweise dann th:text benutzen siehe unten/-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--/*@thymesVar id="name" type=""*/-->
+<p> Muhammed Ali Geldi & Ali Aslan</p>
+<!-- Unser Attribut von vor hin wird eingesetzt in ${} da drin steht name, weil wir es im Controller so genannt haben/-->
+<p  th:text=" ${localdatetime} ">Current local date and time</p>
+<!-- Hast du Package Template erstellt? Tyhmeleaf muss immer unter den Package templates (könnten also template löschen)/-->
+
+</body>
+</html>
