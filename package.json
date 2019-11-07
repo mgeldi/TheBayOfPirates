@@ -1,0 +1,23 @@
+{
+  "name": "thebayofpirates",
+  "version": "1.0.0",
+  "description": "webproject",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^3.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rankhole/TheBayOfPirates.git"
+  },
+  "author": "Ali Aslan & Muhammed Ali Geldi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rankhole/TheBayOfPirates/issues"
+  },
+  "homepage": "https://github.com/Rankhole/TheBayOfPirates#readme"
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- das mit xlmns damit wir thymeleaf haben und müssen beispielsweise dann th:text benutzen siehe unten/-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>About us</title>
+</head>
+<body>
+<div class="navbar">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About Us</a></li>
+    </ul>
+</div>
+<!--/*@thymesVar id="name" type=""*/-->
+<p>This is a project by: Muhammed Ali Geldi & Ali Aslan</p>
+<!-- Unser Attribut von vor hin wird eingesetzt in ${} da drin steht name, weil wir es im Controller so genannt haben/-->
+Current time according to model:
+<p th:text=" ${localdatetime} ">Current local date and time</p>
+<!-- Hast du Package Template erstellt? Tyhmeleaf muss immer unter den Package templates (könnten also template löschen)/-->
+<pre>Project goals:
+    1) Enable (legal) torrent sharing/down- and uploading
+    2) Build a solid foundation for a torrent-caring community
+    3) Rating system for torrents
+</pre>
+<pre><i>Note: Torrents themselves are not illegal, they are just a way
+of sharing files (no matter if legal/illegal) with other people.
+Because torrents utilize peer-to-peer networking, they make it possible
+to "host" files without actually having a server.
+This project is obviously not discussing the legality or ethicality of
+piracy. Piracy can be done with or without torrents! This is not the
+    topic of our project.</i>
+</pre>
+
+<pre>
+USER persona: Jürgen
+Demographics:
+    Lives in a dorm in Berlin, Germany, together with other students
+    Is a student at HTW Berlin
+    Works parttime, low income
+    Age: 22
+</pre>
+<pre>
+Behaviours:
+    Likes peer to peer networking -> huge interest in torrents
+    IT geek/nerd
+</pre>
+<pre>
+Needs and Goals:
+    Wants a torrent sharing website that offers (legal) torrents for everything
+    Wants to be member of a community and engage with them
+    Hopes for a more positive public opinion of torrents
+</pre>
+<pre>
+User persona: Peter
+Demographics:
+    Lives alone in Hamburg, Germany
+    Works full time as a security expert
+    Parttime contributor to open source projects
+    Age: 35
+</pre>
+<pre>
+Behaviours:
+    Likes peer to peer networking (torrents), building&hosting webpages, open source
+    IT geek/nerd
+    Security aware
+</pre>
+<pre>
+Needs and Goals:
+    Wants to build/host a website to enable sharing of torrents
+    Wants to enable people to engage in discussions about them
+    Hopes to change public perception of torrents
+</pre>
+
+<p><a href="/">Back to homepage!</a></p>
+</body>
+</html>
