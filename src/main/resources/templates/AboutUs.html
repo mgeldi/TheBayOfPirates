@@ -3,13 +3,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/style.css}" href="/static/style.css">
     <title>About us</title>
 </head>
 <body>
 <div class="navbar">
     <ul>
-        <li><a href="/">Home</a></li>
+        <li><a class="active" href="/" >Home</a></li>
         <li><a href="/about">About Us</a></li>
     </ul>
 </div>
@@ -30,7 +30,7 @@ Because torrents utilize peer-to-peer networking, they make it possible
 to "host" files without actually having a server.
 This project is obviously not discussing the legality or ethicality of
 piracy. Piracy can be done with or without torrents! This is not the
-    topic of our project.</i>
+    topic of our project. </i>
 </pre>
 
 <pre>
