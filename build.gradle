@@ -1,8 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.0.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
-	id "com.gorylenko.gradle-git-properties" version "1.4.17"
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id "com.gorylenko.gradle-git-properties" version "1.4.17"
 }
 
 group = 'de.htw-berlin.de'
@@ -10,29 +10,33 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 
-	compile("org.springframework.boot:spring-boot-starter-web")
-	//https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-	compile group: 'org.springframework', name: 'spring-webmvc'
-	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-	compile("org.springframework.boot:spring-boot-devtools")
-
-
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+    compile group: 'org.springframework', name: 'spring-webmvc'
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    testCompile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 springBoot {
-	buildInfo()
+    buildInfo()
 }
 
