@@ -16,7 +16,7 @@ cd TheBayOfPirates
 ```
 
 ## Running tests
-To run tests, simply use ./gradlew test to run unit- and integration tests, and npx cypress run to open up cypress, from where you can run the cypress tests.
+To run tests, simply use ./gradlew test to run unit- and integration tests, and npx cypress run all of the cypress tests.
 ```
 ./gradlew test
 npx cypress run
