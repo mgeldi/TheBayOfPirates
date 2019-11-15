@@ -1,3 +1,4 @@
 node_modules/
-.grade/
-build/
+build/*
+!build/build.xml
+.idea/
