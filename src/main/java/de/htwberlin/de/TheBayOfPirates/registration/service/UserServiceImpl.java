@@ -20,10 +20,13 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user) throws Exception {
         user.setEncryptedPassword(pwEncoder.encode(user.getEncryptedPassword()));
         Role userRole = roleRepository.findByRoleName("USER");
-        user.setRole(userRole.getRoleID());
+        if(userRole == null) {
+            throw new Exception("Role not found!");
+        }
+        user.setRole(userRole);
         userRepository.save(user);
     }
 

@@ -36,6 +36,8 @@ dependencies {
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.2.2.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.1.RELEASE'
+    // https://mvnrepository.com/artifact/org.webjars/jquery
+    compile group: 'org.webjars', name: 'jquery', version: '3.4.1'
 }
 
 test {

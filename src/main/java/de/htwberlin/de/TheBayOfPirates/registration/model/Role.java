@@ -1,5 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.registration.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +21,7 @@ public class Role {
     }
 
     @Column(unique = true)
+    @ColumnDefault("USER")
     private String roleName;
 
     public String getRoleName() {

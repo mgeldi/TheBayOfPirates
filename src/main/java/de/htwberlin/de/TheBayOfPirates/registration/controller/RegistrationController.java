@@ -30,7 +30,7 @@ public class RegistrationController{
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("registration"); // resources/template/register.html
+        modelAndView.setViewName("registration"); // resources/templates/register.html
         return modelAndView;
     }
 
@@ -66,7 +66,7 @@ public class RegistrationController{
             modelAndView.addObject("successMessage", "User is registered successfully!");
         }
         modelAndView.addObject("user", new User());
-        modelAndView.setViewName("register");
+        modelAndView.setViewName("registration");
         return modelAndView;
     }
 }

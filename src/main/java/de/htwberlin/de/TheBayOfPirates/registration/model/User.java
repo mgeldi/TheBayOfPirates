@@ -30,8 +30,7 @@ public class User {
     private String encryptedPassword;
 
     @ManyToOne(targetEntity = Role.class)
-    @JoinTable(name = "users", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
-    private int roleID;
+    private Role roleID;
 
     public String getUserName() {
         return userName;
@@ -41,11 +40,11 @@ public class User {
         this.userName = userName;
     }
 
-    public int getRole() {
+    public Role getRole() {
         return roleID;
     }
 
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.roleID = role;
     }
 
