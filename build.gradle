@@ -30,6 +30,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     testCompile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
     compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.9.Final'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.2.2.RELEASE'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.1.RELEASE'
 }
 
 test {
