@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -14,19 +15,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userID;
 
+    @NotNull
     @Length(min = 3, max = 24, message = "Name must be between 3 and 24 characters long!")
     private String name;
 
+    @NotNull
     @Length(min = 3, max = 24, message = "Surname must be between 3 and 24 characters long!")
     private String surname;
 
+    @NotNull
     @Email
     private String email;
 
+    @NotNull
     @Column(unique=true)
     @Length(min = 5, max = 16, message = "Username must be between 5 and 16 characters long!")
     private String userName;
 
+    @NotNull
     private String encryptedPassword;
 
     @ManyToOne(targetEntity = Role.class)
