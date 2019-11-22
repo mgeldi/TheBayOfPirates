@@ -11,7 +11,7 @@ public interface UserService {
      *
      * @param user User with full data
      */
-    public void saveUser(User user);
+    public void saveUser(User user) throws Exception;
 
     /**
      * Checks if the user (username or email) already exists.
