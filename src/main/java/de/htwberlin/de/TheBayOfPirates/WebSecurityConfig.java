@@ -1,30 +1,54 @@
 package de.htwberlin.de.TheBayOfPirates;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private DataSource dataSource;
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        String usersQuery = "select email, username, encryptedPassword from users";
+        String rolesQuery = "select u.email, r.role_name from users u, role r where u.roleID=r.roleID";
+        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/about").permitAll()
+                .antMatchers("/", "/home", "/about", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                .and()
+                .csrf().disable().formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .and()
                 .logout()
                 .permitAll();
@@ -41,10 +65,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return manager;
     }
 
-    /**
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    **/
 }
