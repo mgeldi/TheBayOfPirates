@@ -30,17 +30,27 @@ public class User {
     @NotNull
     @Column(unique=true)
     @Length(min = 5, max = 16, message = "Username must be between 5 and 16 characters long!")
-    private String userName;
+    private String username;
 
     @NotNull
-    private String encryptedPassword;
+    private String password;
 
-    public String getUserName() {
-        return userName;
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
 
@@ -72,12 +82,12 @@ public class User {
         this.email = email;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setPassword(String encryptedPassword) {
+        this.password = encryptedPassword;
     }
 
     public User() {
@@ -86,8 +96,8 @@ public class User {
 
     public User(@Length(min = 3, max = 24, message = "Name must be between 3 and 24 characters long!")
                         String name, @Length(min = 3, max = 24, message = "Surname must be between 3 and 24 characters long!")
-                        String surname, @Email String email, String encryptedPassword, String encryptedPassword1) {
-        this.encryptedPassword = encryptedPassword1;
+                        String surname, @Email String email, String password, String encryptedPassword1) {
+        this.password = encryptedPassword1;
         this.name = name;
         this.surname = surname;
         this.email = email;

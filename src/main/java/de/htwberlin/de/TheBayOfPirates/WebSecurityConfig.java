@@ -23,14 +23,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private DataSource dataSource;
-
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        String usersQuery = "select email, username, encryptedPassword from users";
-        String rolesQuery = "select u.email, r.role_name from users u, role r where u.roleID=r.roleID";
-        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userDetailsService);
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
-
+    /**
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -64,5 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         manager.createUser(users.username("admin").password("password").roles("USER","ADMIN").build());
         return manager;
     }
+    **/
 
 }

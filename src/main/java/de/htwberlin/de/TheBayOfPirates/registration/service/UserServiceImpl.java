@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void saveUser(@Valid User user) throws Exception {
-        user.setEncryptedPassword(pwEncoder.encode(user.getEncryptedPassword()));
+        user.setPassword(pwEncoder.encode(user.getPassword()));
         //todo: add role
         userRepository.save(user);
     }
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean userExists(@Valid User user) {
         User existingUserEmail = userRepository.findByEmail(user.getEmail());
-        User existingUserName = userRepository.findByName(user.getUserName());
+        User existingUserName = userRepository.findByUsername(user.getUsername());
         if(existingUserEmail != null || existingUserName != null){
             return true;
         }

@@ -29,12 +29,12 @@ class UserServiceImplTest {
         mockedUser.setEmail("muhammed@gmail.com");
         mockedUser.setName("Muhammed");
         mockedUser.setSurname("Geldi");
-        mockedUser.setEncryptedPassword("wohohhhh");
-        mockedUser.setUserName("Slayer");
+        mockedUser.setPassword("wohohhhh");
+        mockedUser.setUsername("Slayer");
         mockedUserInvalid = Mockito.mock(User.class);
         mockedUserInvalid.setEmail("wrongEmail");
-        mockedUserInvalid.setUserName("EE");
-        mockedUserInvalid.setEncryptedPassword("1");
+        mockedUserInvalid.setUsername("EE");
+        mockedUserInvalid.setPassword("1");
     }
 
     @Test
