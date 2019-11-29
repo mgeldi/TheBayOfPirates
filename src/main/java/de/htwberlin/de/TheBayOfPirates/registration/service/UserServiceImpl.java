@@ -15,24 +15,17 @@ public class UserServiceImpl implements UserService{
     BCryptPasswordEncoder pwEncoder;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
 
-    public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository,
-                           RoleRepository roleRepository) {
+
+    public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository) {
         this.pwEncoder = pwEncoder;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
     @Override
     public void saveUser(@Valid User user) throws Exception {
         user.setEncryptedPassword(pwEncoder.encode(user.getEncryptedPassword()));
-        Role userRole = roleRepository.findByRoleName("USER");
-        if(userRole == null) {
-            throw new Exception("Role not found!");
-        }
-        user.setRole(userRole);
+        //todo: add role
         userRepository.save(user);
     }
 
