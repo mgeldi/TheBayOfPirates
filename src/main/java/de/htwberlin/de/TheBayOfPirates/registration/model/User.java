@@ -35,9 +35,6 @@ public class User {
     @NotNull
     private String encryptedPassword;
 
-    @ManyToOne(targetEntity = Role.class)
-    private Role roleID;
-
     public String getUserName() {
         return userName;
     }
@@ -46,13 +43,6 @@ public class User {
         this.userName = userName;
     }
 
-    public Role getRole() {
-        return roleID;
-    }
-
-    public void setRole(Role role) {
-        this.roleID = role;
-    }
 
     public UUID getUserID() {
         return userID;
