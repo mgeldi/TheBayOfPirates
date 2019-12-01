@@ -1,5 +1,6 @@
 package de.htwberlin.de.TheBayOfPirates;
 
+import de.htwberlin.de.TheBayOfPirates.registration.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Bean
+    public LoginSuccessHandler myLoginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //auth.userDetailsService(userDetailsService);
@@ -51,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable().formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
+                .successHandler(myLoginSuccessHandler())
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
