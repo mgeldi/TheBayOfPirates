@@ -55,9 +55,11 @@ public class RegistrationController{
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
             modelMap.addAttribute("bindingResult", bindingResult);
+            System.out.println(bindingResult.toString());
         }
         else if(userService.userExists(user)){
             modelAndView.addObject("successMessage", "user already exists!");
+            System.out.println("User exists!");
         }
         // we will save the user if, no binding errors
         else {
@@ -66,9 +68,18 @@ public class RegistrationController{
             //todo: add role user when registering
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User is registered successfully!");
+            System.out.println("User registered!");
         }
         modelAndView.addObject("user", new User());
         modelAndView.setViewName("registration");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public ModelAndView loginUser(@Valid User user){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/home");
         return modelAndView;
     }
 }

@@ -3,6 +3,8 @@ package de.htwberlin.de.TheBayOfPirates.registration.service;
 import de.htwberlin.de.TheBayOfPirates.registration.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public interface UserService {
 
@@ -20,5 +22,12 @@ public interface UserService {
      * @return True, if it already exists, otherwise false
      */
     public boolean userExists(User user);
+
+    /**
+     * Find user by email.
+     * @param email
+     * @return
+     */
+    public Optional<User> findByUserEmail(String email);
 
 }

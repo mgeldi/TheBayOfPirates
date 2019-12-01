@@ -18,4 +18,5 @@ public class DataSourceConfig {
         dataSourceBuilder.password("Royal3knight");
         return dataSourceBuilder.build();
     }
+
 }

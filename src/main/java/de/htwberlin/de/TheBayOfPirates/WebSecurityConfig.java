@@ -28,16 +28,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-        auth.jdbcAuthentication().dataSource(dataSource);
+        //auth.userDetailsService(userDetailsService);
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery("select email, password, enabled from users where email=?")
+                .authoritiesByUsernameQuery("select u.email, r.role from users u inner join userrole ur on(u.userid=ur.userid) inner join role r on(ur.roleid=r.roleid) where u.email=?")
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/about", "/register").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers( "login", "/about", "/register").permitAll()
+                .antMatchers("/", "/home", "/search").hasAnyAuthority("USER", "ADMIN")
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

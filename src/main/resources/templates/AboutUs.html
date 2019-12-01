@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- das mit xlmns damit wir thymeleaf haben und müssen beispielsweise dann th:text benutzen siehe unten/-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -13,12 +12,9 @@
         <li><a class="active" href="/about">About Us</a></li>
     </ul>
 </div>
-<!--/*@thymesVar id="name" type=""*/-->
 <p>This is a project by: Muhammed Ali Geldi & Ali Aslan</p>
-<!-- Unser Attribut von vor hin wird eingesetzt in ${} da drin steht name, weil wir es im Controller so genannt haben/-->
 Current time according to model:
 <p th:text=" ${localdatetime} ">Current local date and time</p>
-<!-- Hast du Package Template erstellt? Tyhmeleaf muss immer unter den Package templates (könnten also template löschen)/-->
 <pre>Project goals:
     1) Enable (legal) torrent sharing/down- and uploading
     2) Build a solid foundation for a torrent-caring community

@@ -1,12 +1,18 @@
 package de.htwberlin.de.TheBayOfPirates.registration.service;
 
+import de.htwberlin.de.TheBayOfPirates.registration.model.Role;
 import de.htwberlin.de.TheBayOfPirates.registration.model.User;
+import de.htwberlin.de.TheBayOfPirates.registration.repository.RoleRepository;
 import de.htwberlin.de.TheBayOfPirates.registration.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -15,29 +21,47 @@ public class UserServiceImpl implements UserService{
     BCryptPasswordEncoder pwEncoder;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
 
-    public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository) {
+    public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository, RoleRepository roleRepository) {
         this.pwEncoder = pwEncoder;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
+
+    @PostConstruct
+    public void initRoles(){
+        if(!roleRepository.findByRole("USER").isPresent()){
+            roleRepository.save(new Role("USER"));
+        }
     }
 
     @Override
     public void saveUser(@Valid User user) throws Exception {
         user.setPassword(pwEncoder.encode(user.getPassword()));
         //todo: add role
+        Optional<Role> userRole = roleRepository.findByRole("USER");
+        Role role = userRole.get();
+        user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         userRepository.save(user);
     }
 
     @Override
     public boolean userExists(@Valid User user) {
-        User existingUserEmail = userRepository.findByEmail(user.getEmail());
-        User existingUserName = userRepository.findByUsername(user.getUsername());
-        if(existingUserEmail != null || existingUserName != null){
+        Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
+        Optional<User> existingUserName = userRepository.findByUsername(user.getUsername());
+        if(existingUserEmail.isPresent() || existingUserName.isPresent()){
             return true;
         }
         else {
             return false;
         }
+    }
+
+    @Override
+    public Optional<User> findByUserEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
