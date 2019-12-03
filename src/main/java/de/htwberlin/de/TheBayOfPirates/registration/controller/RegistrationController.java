@@ -2,12 +2,15 @@ package de.htwberlin.de.TheBayOfPirates.registration.controller;
 
 import javax.validation.Valid;
 
+import de.htwberlin.de.TheBayOfPirates.UserValidator;
 import de.htwberlin.de.TheBayOfPirates.registration.model.User;
 import de.htwberlin.de.TheBayOfPirates.registration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +20,9 @@ public class RegistrationController{
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserValidator userValidator;
 
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -33,6 +39,8 @@ public class RegistrationController{
         modelAndView.setViewName("registration"); // resources/templates/register.html
         return modelAndView;
     }
+
+
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home() {
