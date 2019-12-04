@@ -1,5 +1,5 @@
 # Now on Heroku
-Visit [our heroku app](https://thebayofpirates.herokuapp.com/"Heroku - TheBayOfPirates") tocheck out our latest deployed version.
+Visit [our heroku app](https://thebayofpirates.herokuapp.com/ "Heroku - TheBayOfPirates") tocheck out our latest deployed version.
 
 # TheBayOfPirates
 TheBayOfPirates is a Spring Boot application. It will eventually function as a webpage that allows users to share torrents of legal files, have discussions about them and rate them.
