@@ -52,12 +52,7 @@ public class UserServiceImpl implements UserService{
     public boolean userExists(@Valid User user) {
         Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
         Optional<User> existingUserName = userRepository.findByUsername(user.getUsername());
-        if(existingUserEmail.isPresent() || existingUserName.isPresent()){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return existingUserEmail.isPresent() || existingUserName.isPresent();
     }
 
     @Override

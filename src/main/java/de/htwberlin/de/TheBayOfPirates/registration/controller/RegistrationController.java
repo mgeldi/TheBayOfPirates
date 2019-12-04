@@ -71,7 +71,7 @@ public class RegistrationController{
         }
         // we will save the user if, no binding errors
         else {
-            if(user == null) throw new Exception("User is null1");
+            if(user == null) throw new Exception("User is null!");
             user.setEnabled(true);
             //todo: add role user when registering
             userService.saveUser(user);

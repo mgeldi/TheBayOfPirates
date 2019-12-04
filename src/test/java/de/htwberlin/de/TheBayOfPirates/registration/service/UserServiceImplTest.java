@@ -1,6 +1,8 @@
 package de.htwberlin.de.TheBayOfPirates.registration.service;
 
+import de.htwberlin.de.TheBayOfPirates.registration.model.Role;
 import de.htwberlin.de.TheBayOfPirates.registration.model.User;
+import de.htwberlin.de.TheBayOfPirates.registration.repository.RoleRepository;
 import de.htwberlin.de.TheBayOfPirates.registration.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,20 +23,24 @@ class UserServiceImplTest {
         Role mockedRole = Mockito.mock(Role.class);
         mockedRole.setRoleName("USER");
         mockedRole.setRoleID(1);
-        Mockito.when(mockedRoleRepo.findByRoleName("USER")).thenReturn(mockedRole);
+        Mockito.when(mockedRoleRepo.findByRole("USER")).thenReturn(java.util.Optional.of(mockedRole));
         UserRepository mockedUserRepo = Mockito.mock(UserRepository.class);
         BCryptPasswordEncoder mockedEncoder = Mockito.mock(BCryptPasswordEncoder.class);
-        this.userService = new UserServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
         mockedUser = Mockito.mock(User.class);
-        mockedUser.setEmail("muhammed@gmail.com");
-        mockedUser.setName("Muhammed");
-        mockedUser.setSurname("Geldi");
-        mockedUser.setPassword("wohohhhh");
-        mockedUser.setUsername("Slayer");
         mockedUserInvalid = Mockito.mock(User.class);
-        mockedUserInvalid.setEmail("wrongEmail");
-        mockedUserInvalid.setUsername("EE");
-        mockedUserInvalid.setPassword("1");
+        Mockito.when(mockedUser.getEmail()).thenReturn("muhammed@gmail.com");
+        Mockito.when(mockedUser.getName()).thenReturn("Muhammed");
+        Mockito.when(mockedUser.getSurname()).thenReturn("Geldi");
+        Mockito.when(mockedUser.getPassword()).thenReturn("wohohhhh");
+        Mockito.when(mockedUser.getUsername()).thenReturn("Slayer");
+        Mockito.when(mockedUserInvalid.getUsername()).thenReturn("EE");
+        Mockito.when(mockedUserInvalid.getEmail()).thenReturn("wrongEmail");
+        Mockito.when(mockedUserInvalid.getPassword()).thenReturn("1");
+        Mockito.when(mockedUserRepo.findByEmail("muhammed@gmail.com")).thenReturn(java.util.Optional.of(mockedUser));
+        Mockito.when(mockedUserRepo.findByUsername("Slayer")).thenReturn(java.util.Optional.of(mockedUser));
+        Mockito.when(mockedUserRepo.findByEmail("wrongEmail")).thenReturn(java.util.Optional.ofNullable(null));
+        Mockito.when(mockedUserRepo.findByUsername("EE")).thenReturn(java.util.Optional.ofNullable(null));
+        this.userService = new UserServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
     }
 
     @Test
@@ -47,6 +53,9 @@ class UserServiceImplTest {
         }
     }
 
+
+    /**
+     * not Neccesary because @Valid is spring boot specific, handles wrong user for us
     @Test
     void saveInvalidUserNotSuccessful() {
         try{
@@ -56,8 +65,11 @@ class UserServiceImplTest {
             //everything went fine!
         }
     }
+     **/
 
     @Test
     void userExists() {
+        assertTrue(userService.userExists(mockedUser));
+        assertFalse(userService.userExists(mockedUserInvalid));
     }
 }

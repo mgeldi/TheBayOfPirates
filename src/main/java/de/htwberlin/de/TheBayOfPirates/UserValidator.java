@@ -29,7 +29,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("Name","IsEmpty");
         }
 
-        if (Character.isUpperCase(user.getName().codePointAt(0)) == false){
+        if (!Character.isUpperCase(user.getName().codePointAt(0))){
             errors.rejectValue("Name","FirstLetterCapital");
         }
 

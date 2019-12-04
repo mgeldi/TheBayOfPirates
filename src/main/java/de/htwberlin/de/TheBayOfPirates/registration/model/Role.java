@@ -19,4 +19,10 @@ public class Role {
     public Role(){
 
     }
+
+    public void setRoleName(String user) {
+    }
+
+    public void setRoleID(int i) {
+    }
 }
