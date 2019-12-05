@@ -1,1 +1,9 @@
 language: java
+
+addons:
+        postgresql: "42.2.8"
+
+sudo: enabled
+
+services:
+        - postgresql
