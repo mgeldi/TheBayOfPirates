@@ -40,26 +40,7 @@ function login_as_user() {
     cy.contains('Login').click()
 }
 
-function add_a_new_song() {
-    cy.contains('Add a new Song').click();
-    cy.url().should('eq', 'http://localhost:8080/songs/new');
-    cy.get('[data-qa=song-name]').type('tiny dancer');
-    cy.get('[data-qa=artist-name]').type('elton john');
-    cy.get('form').submit();
-}
-
-function I_see_the_song_is_added() {
-    cy.url().should('eq', 'http://localhost:8080/');
-    cy.get('td>span').first().should('contain', 'tiny dancer');
-    cy.get('td>a').first().should('contain', 'elton john');
-}
-
-function navigate_to_artist_page() {
-    cy.url().should('eq', 'http://localhost:8080/');
-    cy.contains('elton john').click()
-}
-
-function I_see_artist_name() {
+function I_see_navbar() {
     cy.url().should('contains', 'http://localhost:8080/artists/');
     cy.get('h1').should('contain', 'elton john')
 
