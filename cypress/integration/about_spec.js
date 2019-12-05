@@ -18,6 +18,7 @@ describe('Test opening up the main webpage', function (){
 });
 
 
+
 function visit_home_page() {
     cy.visit('http://localhost:8080');
 }
