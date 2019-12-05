@@ -1,5 +1,4 @@
-
-describe('Basic tests for the webpage', function (){
+describe('Basic tests for the webpage', function () {
 
     before('Setup Cookies', function () {
         Cypress.Cookies.preserveOnce('session_id', 'remember_token');
@@ -10,7 +9,7 @@ describe('Basic tests for the webpage', function (){
     });
 
     it('Test with wrong user registration', function () {
-       register_wrong_user();
+        register_wrong_user();
     });
 
     it('Test login with user', function () {
@@ -19,19 +18,27 @@ describe('Basic tests for the webpage', function (){
     });
 
     it('Test the Home page', function () {
-       I_see_navbar();
-       cy.get('h1').should('contain', 'Hello cypressemail@gmail.com!');
-       cy.get('h1').should('contain', 'Welcome to The Bay Of Pirates!');
+        login_as_user();
+        I_see_navbar();
+        cy.get('h1').should('contain', 'Hello cypressemail@gmail.com!');
+        cy.get('h1').should('contain', 'Welcome to The Bay Of Pirates!');
     });
 
     it('Test the About page', function () {
+        login_as_user();
         I_see_navbar();
         cy.get('.navbar').contains('About Us').click();
-        cy.url().should('contain', 'about');
+        cy.url().should('contain', '/about');
+        cy.get('h1').should('contain', 'About us');
+    });
+
+    it('Test About page without login', function () {
+        I_see_navbar();
+        cy.get('.navbar').contains('About Us').click();
+        cy.url().should('contain', '/about');
         cy.get('h1').should('contain', 'About us');
     });
 });
-
 
 
 function visit_home_page() {
@@ -41,7 +48,7 @@ function visit_home_page() {
 function register_as_user() {
     I_see_navbar();
     cy.get('button').contains('Register').click();
-    cy.url().should('contain', 'register');
+    cy.url().should('contain', '/register');
     cy.get('#name').type('cypress');
     cy.get('#surname').type('test');
     cy.get('#username').type('cypressuser');
@@ -52,20 +59,19 @@ function register_as_user() {
 
 function register_wrong_user() {
     cy.get('button').contains('Register').click();
-    cy.url().should('contain', 'register');
+    cy.url().should('contain', '/register');
     cy.get('#name').type('c');
     cy.get('#surname').type('t');
     cy.get('#username').type('c');
     cy.get('#email').type('cypressemail@gmail.com');
     cy.get('#password').type('cypress');
     cy.get('button').contains('Register User').click();
-    cy.url().should('contain', 'register');
+    cy.url().should('contain', '/register');
 }
 
 
 function login_as_user() {
-    cy.wait(1500);
-    cy.visit('http://localhost:8080/login');
+    visit_home_page();
     I_see_login_page();
     cy.get('#email').type('cypressemail@gmail.com');
     cy.get('#password').type('cypress');
@@ -78,7 +84,7 @@ function I_see_navbar() {
 }
 
 function I_see_login_page() {
-    cy.url().should('contain', 'login');
+    cy.url().should('contain', '/login');
     I_see_navbar();
     cy.get('#email').should('have.id', 'email');
     cy.get('#password').should('have.id', 'password');
