@@ -2,7 +2,6 @@ package de.htwberlin.de.TheBayOfPirates.registration.controller;
 
 import javax.validation.Valid;
 
-import de.htwberlin.de.TheBayOfPirates.UserValidator;
 import de.htwberlin.de.TheBayOfPirates.registration.model.User;
 import de.htwberlin.de.TheBayOfPirates.registration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class RegistrationController{
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserValidator userValidator;
 
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public ModelAndView login() {
