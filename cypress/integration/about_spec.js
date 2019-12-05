@@ -30,6 +30,7 @@ describe('Basic tests for the webpage', function (){
 });
 
 
+
 function visit_home_page() {
     cy.visit('http://localhost:8080');
 }
