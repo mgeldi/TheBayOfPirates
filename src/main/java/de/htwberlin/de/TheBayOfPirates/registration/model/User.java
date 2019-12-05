@@ -27,7 +27,7 @@ public class User {
     private String surname;
 
     @NotNull
-    @Email
+    @Email(message = "EEEE")
     @Column(unique = true)
     private String email;
 
