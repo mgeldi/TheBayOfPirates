@@ -4,6 +4,3 @@ sudo: enabled
 
 services:
         - postgresql
-
-before install:
-        - psql -c 'create database travis_ci_test;' -U postgres
