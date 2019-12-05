@@ -63,7 +63,7 @@ public class RegistrationController{
             modelAndView.addObject("successMessage", "user already exists!");
             System.out.println("User exists!");
         }
-        // we will save the user if, no binding errors
+        // we will save the user if there are no binding errors
         else {
             if(user == null) throw new Exception("User is null!");
             user.setEnabled(true);

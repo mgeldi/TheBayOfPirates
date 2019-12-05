@@ -1,8 +1,11 @@
 
 describe('Basic tests for the webpage', function (){
 
+    before('Setup Cookies', function () {
+        Cypress.Cookies.preserveOnce('session_id', 'remember_token');
+    })
+
     beforeEach('Visit page', function () {
-        Cypress.Cookies.preserveOnce('sessionid', 'remember_token');
         visit_home_page();
     });
 
@@ -32,7 +35,7 @@ describe('Basic tests for the webpage', function (){
 
 
 function visit_home_page() {
-    cy.visit('http://localhost:8080');
+    cy.visit('http://localhost:8080/');
 }
 
 function register_as_user() {
@@ -61,6 +64,7 @@ function register_wrong_user() {
 
 
 function login_as_user() {
+    cy.wait(1500);
     cy.visit('http://localhost:8080/login');
     I_see_login_page();
     cy.get('#email').type('cypressemail@gmail.com');

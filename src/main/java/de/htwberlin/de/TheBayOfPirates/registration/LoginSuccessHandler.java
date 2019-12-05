@@ -27,8 +27,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 
         if (!response.isCommitted()) {
             response.sendRedirect(targetUrl);
-        }else{
-            return;
         }
     }
 
