@@ -4,3 +4,6 @@ sudo: enabled
 
 services:
         - postgresql
+
+before_install:
+        - psql -c 'create database webprojectdb;' -U postgres
