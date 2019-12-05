@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="de.htwberlin.de.TheBayOfPirates.registration.service.UserServiceImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-12-04T19:14:29" hostname="simplylinux-pc" time="0.37">
-  <properties/>
-  <testcase name="saveUserSuccessful()" classname="de.htwberlin.de.TheBayOfPirates.registration.service.UserServiceImplTest" time="0.362"/>
-  <testcase name="userExists()" classname="de.htwberlin.de.TheBayOfPirates.registration.service.UserServiceImplTest" time="0.007"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
