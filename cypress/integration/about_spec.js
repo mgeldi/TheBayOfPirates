@@ -10,6 +10,7 @@ describe('Basic tests for the webpage', function () {
 
     it('Test with wrong user registration', function () {
         register_wrong_user();
+        cy.get('li').should("contain",'Name must be between 3 and 24 characters long!');
     });
 
     it('Test login with user', function () {
@@ -61,8 +62,8 @@ function register_wrong_user() {
     cy.get('button').contains('Register').click();
     cy.url().should('contain', '/register');
     cy.get('#name').type('c');
-    cy.get('#surname').type('t');
-    cy.get('#username').type('c');
+    cy.get('#surname').type('tttttt');
+    cy.get('#username').type('cdsdsw');
     cy.get('#email').type('cypressemail@gmail.com');
     cy.get('#password').type('cypress');
     cy.get('button').contains('Register User').click();
@@ -81,6 +82,11 @@ function login_as_user() {
 function I_see_navbar() {
     cy.get('.navbar').should("contain", 'Home');
     cy.get('.navbar').should("contain", 'About Us');
+}
+
+function I_see_allert() {
+    register_wrong_user();
+    cy.get('alert alert-success alert-dismissible col-sm-12').should("contain",'Name must be between 3 and 24 characters long!');
 }
 
 function I_see_login_page() {
