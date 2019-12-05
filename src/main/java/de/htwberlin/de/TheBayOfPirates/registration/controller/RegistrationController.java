@@ -43,7 +43,7 @@ public class RegistrationController{
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home"); // resources/template/home.html
+        modelAndView.setViewName("index"); // resources/template/home.html
         return modelAndView;
     }
 
@@ -88,7 +88,7 @@ public class RegistrationController{
     public ModelAndView loginUser(@Valid User user){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("/home");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 }
