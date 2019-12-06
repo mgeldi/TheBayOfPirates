@@ -39,13 +39,6 @@ describe('Basic tests for the webpage', function () {
         cy.url().should('contain', '/about');
         cy.get('h1').should('contain', 'About us');
     });
-
-    it('Test sign in link ', function () {
-        cy.get('button').contains('Register').click();
-        cy.get('p').should('contain', 'Already have an account? Sign in').click();
-        I_see_login_page();
-
-    });
 });
 
 
