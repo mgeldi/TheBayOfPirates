@@ -1,4 +1,4 @@
-package config;
+package de.htwberlin.de.TheBayOfPirates.config;
 
 import de.htwberlin.de.TheBayOfPirates.login.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;

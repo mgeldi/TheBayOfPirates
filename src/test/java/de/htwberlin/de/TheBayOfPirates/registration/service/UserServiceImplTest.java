@@ -74,9 +74,4 @@ class UserServiceImplTest {
         assertTrue(userService.userExists(mockedUser));
         assertFalse(userService.userExists(mockedUserInvalid));
     }
-
-    @Test
-    void xxx(){
-
-    }
 }
