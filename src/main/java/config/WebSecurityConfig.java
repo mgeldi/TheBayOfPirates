@@ -1,18 +1,14 @@
-package de.htwberlin.de.TheBayOfPirates;
+package config;
 
-import de.htwberlin.de.TheBayOfPirates.registration.LoginSuccessHandler;
+import de.htwberlin.de.TheBayOfPirates.login.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -24,8 +20,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private DataSource dataSource;
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Bean
     public LoginSuccessHandler myLoginSuccessHandler() {
@@ -34,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userDetailsService);
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("select email, password, enabled from users where email=?")
                 .authoritiesByUsernameQuery("select u.email, r.role from users u inner join userrole ur on(u.userid=ur.userid) inner join role r on(ur.roleid=r.roleid) where u.email=?")
@@ -46,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "login", "/about", "/register").permitAll()
+                .antMatchers("login", "/about", "/register").permitAll()
                 .antMatchers("/", "/home", "/search").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
@@ -64,17 +57,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
-    /**
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        // todo later: use correct password encoder
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(users.username("user").password("password").roles("USER").build());
-        manager.createUser(users.username("admin").password("password").roles("USER","ADMIN").build());
-        return manager;
-    }
-    **/
 
 }

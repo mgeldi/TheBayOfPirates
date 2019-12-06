@@ -1,9 +1,9 @@
-package de.htwberlin.de.TheBayOfPirates.registration.service;
+package de.htwberlin.de.TheBayOfPirates.service;
 
-import de.htwberlin.de.TheBayOfPirates.registration.model.Role;
-import de.htwberlin.de.TheBayOfPirates.registration.model.User;
-import de.htwberlin.de.TheBayOfPirates.registration.repository.RoleRepository;
-import de.htwberlin.de.TheBayOfPirates.registration.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.entity.Role;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
+import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
+import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

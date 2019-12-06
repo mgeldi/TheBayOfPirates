@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates.registration.model;
+package de.htwberlin.de.TheBayOfPirates.entity;
 
 import javax.persistence.*;
 

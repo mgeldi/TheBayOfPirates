@@ -1,9 +1,9 @@
-package de.htwberlin.de.TheBayOfPirates.registration.controller;
+package de.htwberlin.de.TheBayOfPirates.registration;
 
 import javax.validation.Valid;
 
-import de.htwberlin.de.TheBayOfPirates.registration.model.User;
-import de.htwberlin.de.TheBayOfPirates.registration.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
+import de.htwberlin.de.TheBayOfPirates.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,13 +17,6 @@ public class RegistrationController{
 
     @Autowired
     UserService userService;
-
-    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login"); // resources/template/login.html
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
@@ -80,13 +73,7 @@ public class RegistrationController{
         return modelAndView;
     }
 
-    @RequestMapping(value="/login", method=RequestMethod.POST)
-    public ModelAndView loginUser(@Valid User user){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
+
 }
 
 

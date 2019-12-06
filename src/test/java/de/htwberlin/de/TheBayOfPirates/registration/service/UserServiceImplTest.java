@@ -1,9 +1,11 @@
 package de.htwberlin.de.TheBayOfPirates.registration.service;
 
-import de.htwberlin.de.TheBayOfPirates.registration.model.Role;
-import de.htwberlin.de.TheBayOfPirates.registration.model.User;
-import de.htwberlin.de.TheBayOfPirates.registration.repository.RoleRepository;
-import de.htwberlin.de.TheBayOfPirates.registration.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.entity.Role;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
+import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
+import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -71,5 +73,10 @@ class UserServiceImplTest {
     void userExists() {
         assertTrue(userService.userExists(mockedUser));
         assertFalse(userService.userExists(mockedUserInvalid));
+    }
+
+    @Test
+    void xxx(){
+
     }
 }

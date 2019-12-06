@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates;
+package config;
 
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;

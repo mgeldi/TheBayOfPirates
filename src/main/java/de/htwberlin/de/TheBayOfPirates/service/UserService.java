@@ -1,6 +1,6 @@
-package de.htwberlin.de.TheBayOfPirates.registration.service;
+package de.htwberlin.de.TheBayOfPirates.service;
 
-import de.htwberlin.de.TheBayOfPirates.registration.model.User;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

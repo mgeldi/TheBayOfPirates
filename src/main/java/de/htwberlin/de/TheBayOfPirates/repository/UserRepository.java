@@ -1,6 +1,6 @@
-package de.htwberlin.de.TheBayOfPirates.registration.repository;
+package de.htwberlin.de.TheBayOfPirates.repository;
 
-import de.htwberlin.de.TheBayOfPirates.registration.model.User;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

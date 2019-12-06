@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates.registration;
+package de.htwberlin.de.TheBayOfPirates.login;
 
 
 import java.io.IOException;

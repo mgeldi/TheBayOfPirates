@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates.registration.model;
+package de.htwberlin.de.TheBayOfPirates.entity;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class User {
     private String surname;
 
     @NotNull
-    @Email(message = "EEEE")
+    @Email(message = "The Mail address is incorrect")
     @Column(unique = true)
     private String email;
 
