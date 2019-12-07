@@ -12,3 +12,4 @@ deploy:
         provider: heroku
         api_key:
                 secure: "c2f25de9-9de9-43df-9180-f6db4a7aa18b"
+        app: thebayofpirates
