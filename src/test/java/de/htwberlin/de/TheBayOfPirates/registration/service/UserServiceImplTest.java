@@ -4,8 +4,7 @@ import de.htwberlin.de.TheBayOfPirates.entity.Role;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
 import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
-import de.htwberlin.de.TheBayOfPirates.service.UserService;
-import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
+import de.htwberlin.de.TheBayOfPirates.service.UserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceImplTest {
+class UserDetailsServiceImplTest {
 
     private UserService userService;
     private User mockedUser;
@@ -42,7 +41,7 @@ class UserServiceImplTest {
         Mockito.when(mockedUserRepo.findByUsername("Slayer")).thenReturn(java.util.Optional.of(mockedUser));
         Mockito.when(mockedUserRepo.findByEmail("wrongEmail")).thenReturn(java.util.Optional.ofNullable(null));
         Mockito.when(mockedUserRepo.findByUsername("EE")).thenReturn(java.util.Optional.ofNullable(null));
-        this.userService = new UserServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
+        this.userService = new UserDetailsServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
     }
 
     @Test

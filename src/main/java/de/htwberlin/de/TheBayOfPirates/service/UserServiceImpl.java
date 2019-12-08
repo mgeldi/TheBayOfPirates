@@ -31,6 +31,10 @@ public class UserServiceImpl implements UserService{
         this.roleRepository = roleRepository;
     }
 
+    public UserServiceImpl(){
+
+    }
+
     @PostConstruct
     public void initRoles(){
         if(!roleRepository.findByRole("USER").isPresent()){

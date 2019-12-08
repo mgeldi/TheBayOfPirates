@@ -1,11 +1,14 @@
 package de.htwberlin.de.TheBayOfPirates.entity;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,7 +41,7 @@ public class User {
     @NotNull
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
     private Set<Role> roles;
 
@@ -111,5 +114,9 @@ public class User {
 
     public void setRoles(HashSet<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return this.roles;
     }
 }

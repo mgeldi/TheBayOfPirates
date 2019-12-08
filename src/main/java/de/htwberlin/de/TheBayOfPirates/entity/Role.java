@@ -25,4 +25,8 @@ public class Role {
 
     public void setRoleID(int i) {
     }
+
+    public String getRoleName(){
+        return this.role;
+    }
 }

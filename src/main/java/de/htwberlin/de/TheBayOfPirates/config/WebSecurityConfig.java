@@ -1,13 +1,17 @@
 package de.htwberlin.de.TheBayOfPirates.config;
 
 import de.htwberlin.de.TheBayOfPirates.login.LoginSuccessHandler;
+import de.htwberlin.de.TheBayOfPirates.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
@@ -20,6 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public LoginSuccessHandler myLoginSuccessHandler() {
@@ -28,11 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .usersByUsernameQuery("select email, password, enabled from users where email=?")
-                .authoritiesByUsernameQuery("select u.email, r.role from users u inner join userrole ur on(u.userid=ur.userid) inner join role r on(ur.roleid=r.roleid) where u.email=?")
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userDetailsService)
+        .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
@@ -54,8 +57,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
-                .logout()
+                .logout().logoutSuccessUrl("/login")
                 .permitAll();
+
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**");
     }
 
 }
