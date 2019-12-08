@@ -4,7 +4,8 @@ import de.htwberlin.de.TheBayOfPirates.entity.Role;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
 import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
-import de.htwberlin.de.TheBayOfPirates.service.UserDetailsServiceImpl;
+import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -41,7 +42,7 @@ class UserDetailsServiceImplTest {
         Mockito.when(mockedUserRepo.findByUsername("Slayer")).thenReturn(java.util.Optional.of(mockedUser));
         Mockito.when(mockedUserRepo.findByEmail("wrongEmail")).thenReturn(java.util.Optional.ofNullable(null));
         Mockito.when(mockedUserRepo.findByUsername("EE")).thenReturn(java.util.Optional.ofNullable(null));
-        this.userService = new UserDetailsServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
+        this.userService = new UserServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
     }
 
     @Test
