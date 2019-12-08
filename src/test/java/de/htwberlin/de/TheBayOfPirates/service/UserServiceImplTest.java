@@ -1,23 +1,24 @@
-package de.htwberlin.de.TheBayOfPirates.registration.service;
+package de.htwberlin.de.TheBayOfPirates.service;
 
 import de.htwberlin.de.TheBayOfPirates.entity.Role;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
 import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
-import de.htwberlin.de.TheBayOfPirates.service.UserService;
-import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-class UserDetailsServiceImplTest {
+class UserServiceImplTest {
 
     private UserService userService;
     private User mockedUser;
     private User mockedUserInvalid;
+    private UserRepository mockedUserRepo;
 
     @BeforeEach
     void setupUserServiceAndRepo(){
@@ -42,6 +43,7 @@ class UserDetailsServiceImplTest {
         Mockito.when(mockedUserRepo.findByUsername("Slayer")).thenReturn(java.util.Optional.of(mockedUser));
         Mockito.when(mockedUserRepo.findByEmail("wrongEmail")).thenReturn(java.util.Optional.ofNullable(null));
         Mockito.when(mockedUserRepo.findByUsername("EE")).thenReturn(java.util.Optional.ofNullable(null));
+        this.mockedUserRepo = mockedUserRepo;
         this.userService = new UserServiceImpl(mockedEncoder, mockedUserRepo, mockedRoleRepo);
     }
 
@@ -73,5 +75,11 @@ class UserDetailsServiceImplTest {
     void userExists() {
         assertTrue(userService.userExists(mockedUser));
         assertFalse(userService.userExists(mockedUserInvalid));
+    }
+
+    @Test
+    void testFindByUserEmail(){
+        userService.findByUserEmail("test");
+        verify(mockedUserRepo, times(1)).findByEmail("test");
     }
 }

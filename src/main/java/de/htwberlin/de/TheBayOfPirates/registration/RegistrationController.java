@@ -18,6 +18,10 @@ public class RegistrationController{
     @Autowired
     UserService userService;
 
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView();
@@ -27,21 +31,6 @@ public class RegistrationController{
         return modelAndView;
     }
 
-
-
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index"); // resources/template/home.html
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView adminHome() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin"); // resources/template/admin.html
-        return modelAndView;
-    }
 
     @RequestMapping(value="/register", method=RequestMethod.POST)
     public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) throws Exception {
@@ -53,19 +42,18 @@ public class RegistrationController{
             System.out.println(bindingResult.toString());
         }
         else if(userService.userExists(user)){
-            modelAndView.addObject("successMessage", "user already exists!");
+            modelAndView.addObject("successMessage", "User already exists!");
             System.out.println("User exists!");
         }
         // we will save the user if there are no binding errors
         else {
             if(user == null) throw new Exception("User is null!");
             user.setEnabled(true);
-            //todo: add role user when registering
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User is registered successfully!");
             System.out.println("User registered!");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
         modelAndView.addObject("user", new User());

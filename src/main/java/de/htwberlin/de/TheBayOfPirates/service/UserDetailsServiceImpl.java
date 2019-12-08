@@ -19,13 +19,10 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserServiceImpl userService;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    UserService userService;
 
-    public UserDetailsServiceImpl(UserServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public UserDetailsServiceImpl() {
@@ -38,7 +35,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserBuilder builder = null;
         if (user.isPresent()) {
             builder = org.springframework.security.core.userdetails.User.withUsername(user.get().getEmail());
-            System.out.println(user.get().getEmail());
             builder.password(user.get().getPassword());
             Set grantedAuthorities = new HashSet<>();
             for (Role role : user.get().getRoles()) {
