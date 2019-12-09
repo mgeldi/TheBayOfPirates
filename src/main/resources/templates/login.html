@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://github.com/thymeleaf/thymeleaf-extras-springsecurity/tree/3.0-master/thymeleaf-extras-springsecurity3" lang="en"
 >
 <head>
     <title>Spring Security Example </title>
@@ -24,17 +25,32 @@
         <br/>
 
         <input type="text" id="email" name="email"  th:placeholder="Email"
-               class="form-control" /> <br/>
+               class="form-control" autofocus="autofocus" /> <br/>
         <input type="password"  th:placeholder="Password"
                id="password" name="password" class="form-control" /> <br />
 
-        <div align="center" th:if="${param.error}">Email or Password invalid, please verify
-        </div>
+            <div
+                align="center" th:if="${param.error}">Email or Password invalid, please verify
+            </div>
         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
     </form>
+
     <form action="/register" method="get" class="form-signin">
         <button class="btn btn-lg btn-primary btn-block" name="Register" type="submit">New? Register here!</button>
     </form>
+</div>
+<div class="page">
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <h1>Welcome to The Bay Of Pirates!</h1>
+    <h2>Want to learn who we are?</h2>
+    <a href="/about">About us!</a>
+</div>
+<div sec:authorize="hasRole('ADMIN)">
+    This content is only shown to administrators.
+</div>
 </div>
 </body>
 </html>

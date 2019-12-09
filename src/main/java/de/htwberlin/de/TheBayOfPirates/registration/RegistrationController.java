@@ -27,12 +27,11 @@ public class RegistrationController{
         return modelAndView;
     }
 
-
-
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index"); // resources/template/home.html
+        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
@@ -51,6 +50,9 @@ public class RegistrationController{
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
             modelMap.addAttribute("bindingResult", bindingResult);
             System.out.println(bindingResult.toString());
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
         }
         else if(userService.userExists(user)){
             modelAndView.addObject("successMessage", "user already exists!");
@@ -65,11 +67,11 @@ public class RegistrationController{
             modelAndView.addObject("successMessage", "User is registered successfully!");
             System.out.println("User registered!");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
         modelAndView.addObject("user", new User());
-        modelAndView.setViewName("registration");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 

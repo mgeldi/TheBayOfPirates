@@ -1,29 +1,184 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://github.com/thymeleaf/thymeleaf-extras-springsecurity/tree/3.0-master/thymeleaf-extras-springsecurity3" lang="en">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>TheBayOfPirates</title>
 </head>
-<body>
+<body onload="myFunction()">
 <div class="navbar">
     <ul>
-        <li><a class="active" href="/" >Home</a></li>
-        <li><a href="/about">About Us</a></li>
+        <li><a class="active" href="/" style="margin: 6px 0 0 10px">Home</a></li>
+        <li><a href="/about" style="margin: 6px 0 0 10px">About Us</a></li>
+        <button onclick="document.getElementById('id1').style.display='block'"
+                style="float: right; width:auto; display: inline-block; margin-right:10px;"
+                type="button">Login
+        </button>
     </ul>
+
+    <div id="id1" class="modal">
+        <form th:action="@{/}" method="POST" class="modal-content animate">
+
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id1').style.display='none'"
+                      class="close"
+                      title="Close Modal">&times;
+                </span>
+                <img src="" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+
+                <label for="email">E-Mail</label>
+                <input type="text" id="email" name="email" th:placeholder="Email"
+                       class="form-control" required/> <br/>
+
+                <label for="password">Password</label>
+                <input type="password" th:placeholder="Password"
+                       id="password" name="password"
+                       class="form-control" required/> <br/>
+
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+
+                <button class="btn btn-lg btn-primary btn-block"
+                        name="Submit" value="Login" type="Submit"
+                        th:text="Login">
+                </button>
+
+                <button class="btn btn-lg btn-primary btn-block"
+                        onclick="document.getElementById('id2').style.display='block'
+                                  document.getElementById('id1').style.display='none'"
+                        name="Register" value="Register" type="Submit" href="/">
+                    New? Register Now
+                </button>
+
+                <div th:if="${param.error}">Invalid username and password.</div>
+                <div th:if="${param.logout}">You have been logged out.</div>
+
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <p class="password" style="text-align: center; font-size: 12px; margin: -5px">Forgot <a href="#">password?</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <div id="id2" class="modal">
+        <form autocomplete="off" th:action="@{/register}" th:object="${user}" method="post"
+              role="form"
+              class="modal-content animate">
+
+            <div class="imgcontainer">
+            <span onclick="document.getElementById('id2').style.display='none'"
+                  class="close"
+                  title="Close Modal">&times;
+            </span>
+            </div>
+
+            <div class="container">
+                <h1>Register</h1>
+                <p>Please fill in this form to create an account</p>
+
+
+                <input type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
+                <span
+                        if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                        class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{surname}" placeholder="Last Name" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <label for="username"></label>
+                    <input id="username" type="text" th:field="*{username}" placeholder="Username"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <button type="submit" class="btn btn-default">Register User</button>
+                </div>
+            </div>
+            <div class="alert alert-success alert-dismissible col-sm-12"
+                 th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+                <button type="submit" class="close" data-dismiss="alert"
+                        aria-hidden="true">
+                </button>
+                <ul th:each="data : ${bindingResult.getAllErrors()}">
+                    <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                </ul>
+            </div>
+            <p>Already have an account? <a href="/login">Sign in</a>.</p>
+        </form>
+
+    </div>
+
+    </form>
 </div>
+
 <div class="page">
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
     </form>
     <h1>Welcome to The Bay Of Pirates!</h1>
-    <h2>Want to learn who we are?</h2>
+    <h2>Want to know who we are?</h2>
     <a href="/about">About us!</a>
 </div>
 <div sec:authorize="hasRole('ADMIN)">
     This content is only shown to administrators.
 </div>
+
 </body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    // Get the modal
+    var modal = document.getElementById('id1')
+    var modal2 = document.getElementById('id2')
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target === modal || event.target === modal2) {
+            modal.style.display = "none";
+            modal2.style.display = "none";
+        }
+    }
+
+    function myFunction() {
+        var errormsg =  /*[[${param.error}]]*/ 'param.error';
+        var regerrormsg = /*[[${param.successMessage}]]*/ 'param.successMessage';
+        console.log(errormsg);
+        console.log(regerrormsg);
+        if(errormsg != null){
+            alert('Invalid email or password!')
+        } else if(regerrormsg[0] == "User is registered successfully!"){
+            alert("You are successfully registered");
+        }else if(regerrormsg[0] == "user already exists!"){
+            alert('User with that email or username already exists!');
+        }else if(regerrormsg[0] == "Please correct the errors in form!"){
+            alert('Registration failed. Check your registration form!')
+        }
+    }
+
+    /*]]>*/
+</script>
 </html>
