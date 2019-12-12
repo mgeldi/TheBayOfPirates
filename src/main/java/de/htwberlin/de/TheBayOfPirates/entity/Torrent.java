@@ -1,6 +1,8 @@
 package de.htwberlin.de.TheBayOfPirates.entity;
 
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,17 +12,22 @@ import java.util.UUID;
 public class Torrent {
 
     @Id
+    @Column(name="torrentid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int torrentID;
 
-    @Column(name="name", nullable = false)
+    @Column(name="name", nullable = false, unique = true)
+    @Length(min = 4, max = 50, message = "Your torrent name must be between 4 and 50 characters long")
     private String name;
 
+    @NotNull
+    @Length(min = 20, max = 1000, message = "Please provide a sufficient description that" +
+            " is between 20 and 100 characters long!")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "uploadedby", joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "torrentid"))
+    @ManyToOne
+    @JoinTable(name = "uploadedby", joinColumns = @JoinColumn(name = "torrentid"),
+            inverseJoinColumns = @JoinColumn(name = "userid"))
     private User user;
 
     @Lob
