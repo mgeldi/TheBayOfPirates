@@ -1,184 +1,174 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://github.com/thymeleaf/thymeleaf-extras-springsecurity/tree/3.0-master/thymeleaf-extras-springsecurity3" lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font awesome icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>TheBayOfPirates</title>
 </head>
-<body onload="myFunction()">
-<div class="navbar">
-    <ul>
-        <li><a class="active" href="/" style="margin: 6px 0 0 10px">Home</a></li>
-        <li><a href="/about" style="margin: 6px 0 0 10px">About Us</a></li>
-        <button onclick="document.getElementById('id1').style.display='block'"
-                style="float: right; width:auto; display: inline-block; margin-right:10px;"
-                type="button">Login
-        </button>
-    </ul>
+<body>
 
-    <div id="id1" class="modal">
-        <form th:action="@{/}" method="POST" class="modal-content animate">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">TheBayOfPirates</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id1').style.display='none'"
-                      class="close"
-                      title="Close Modal">&times;
-                </span>
-                <img src="" alt="Avatar" class="avatar">
-            </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
 
-            <div class="container">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
 
-                <label for="email">E-Mail</label>
-                <input type="text" id="email" name="email" th:placeholder="Email"
-                       class="form-control" required/> <br/>
-
-                <label for="password">Password</label>
-                <input type="password" th:placeholder="Password"
-                       id="password" name="password"
-                       class="form-control" required/> <br/>
-
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>
-
-                <button class="btn btn-lg btn-primary btn-block"
-                        name="Submit" value="Login" type="Submit"
-                        th:text="Login">
-                </button>
-
-                <button class="btn btn-lg btn-primary btn-block"
-                        onclick="document.getElementById('id2').style.display='block'
-                                  document.getElementById('id1').style.display='none'"
-                        name="Register" value="Register" type="Submit" href="/">
-                    New? Register Now
-                </button>
-
-                <div th:if="${param.error}">Invalid username and password.</div>
-                <div th:if="${param.logout}">You have been logged out.</div>
-
-            </div>
-
-            <div class="container" style="background-color:#f1f1f1">
-                <p class="password" style="text-align: center; font-size: 12px; margin: -5px">Forgot <a href="#">password?</a>
-                </p>
+            <div class="btn-toolbar">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                    <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
+                            data-toggle="modal" data-target=".LoginButton">Login</button>
+                </div>
             </div>
         </form>
     </div>
+</nav>
 
-    <div id="id2" class="modal">
-        <form autocomplete="off" th:action="@{/register}" th:object="${user}" method="post"
-              role="form"
-              class="modal-content animate">
+<!--Modal: Login / Register Form-->
+<div class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
 
-            <div class="imgcontainer">
-            <span onclick="document.getElementById('id2').style.display='none'"
-                  class="close"
-                  title="Close Modal">&times;
-            </span>
-            </div>
+            <!--Modal cascading tabs-->
+            <div class="modal-c-tabs">
 
-            <div class="container">
-                <h1>Register</h1>
-                <p>Please fill in this form to create an account</p>
-
-
-                <input type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
-                <span
-                        if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                        class="text-danger"></span>
-
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{surname}" placeholder="Last Name" class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <label for="username"></label>
-                    <input id="username" type="text" th:field="*{username}" placeholder="Username"
-                           class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <button type="submit" class="btn btn-default">Register User</button>
-                </div>
-            </div>
-            <div class="alert alert-success alert-dismissible col-sm-12"
-                 th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
-                <button type="submit" class="close" data-dismiss="alert"
-                        aria-hidden="true">
-                </button>
-                <ul th:each="data : ${bindingResult.getAllErrors()}">
-                    <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs md-tabs tabs-2" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
+                                class="fas fa-user mr-1"></i>
+                            Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i
+                                class="fas fa-user-plus mr-1"></i>
+                            Register</a>
+                    </li>
                 </ul>
+
+                <!-- Tab panels -->
+                <div class="tab-content">
+                    <!--Panel 7-->
+                    <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+
+                        <!--Body-->
+                        <div class="modal-body mb-1">
+                            <div class="md-form form-sm mb-5">
+                                <i class="fas fa-envelope prefix"></i>
+                                <input type="email" id="modalLRInput10" class="form-control form-control-sm validate" placeholder="Enter email...">
+                                <label data-error="wrong" data-success="right" for="modalLRInput10"></label>
+                            </div>
+
+                            <div class="md-form form-sm mb-4">
+                                <i class="fas fa-lock prefix"></i>
+                                <input type="password" id="modalLRInput11"
+                                       class="form-control form-control-sm validate"
+                                        placeholder="Enter password...">
+                                <label data-error="wrong" data-success="right" for="modalLRInput11"></label>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                            </div>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <div class="options text-center text-md-right mt-1">
+                                <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
+                                <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                            </div>
+                            <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                    data-dismiss="modal">Close
+                            </button>
+                        </div>
+
+                    </div>
+                    <!--/.Panel 7-->
+
+                    <!--Panel 8-->
+                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="md-form form-sm mb-5">
+                                <i class="fas fa-envelope prefix"></i>
+                                <input type="email" id="modalLRInput12" class="form-control form-control-sm validate" placeholder="Enter email...">
+                                <label data-error="wrong" data-success="right" for="modalLRInput12"></label>
+                            </div>
+
+                            <div class="md-form form-sm mb-5">
+                                <i class="fas fa-lock prefix"></i>
+                                <input type="password" id="modalLRInput13"
+                                       class="form-control form-control-sm validate"
+                                        placeholder="Enter password...">
+                                <label data-error="wrong" data-success="right" for="modalLRInput13"></label>
+                            </div>
+
+                            <div class="md-form form-sm mb-4">
+                                <i class="fas fa-lock prefix"></i>
+                                <input type="password" id="modalLRInput14"
+                                       class="form-control form-control-sm validate"
+                                        placeholder="Repeat password...">
+                                <label data-error="wrong" data-success="right" for="modalLRInput14"></label>
+                            </div>
+
+                            <div class="text-center form-sm mt-2">
+                                <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                            </div>
+
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <div class="options text-right">
+                                <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
+                            </div>
+                            <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                    data-dismiss="modal">Close
+                            </button>
+                        </div>
+                    </div>
+                    <!--/.Panel 8-->
+                </div>
+
             </div>
-            <p>Already have an account? <a href="/login">Sign in</a>.</p>
-        </form>
-
+        </div>
+        <!--/.Content-->
     </div>
-
-    </form>
 </div>
-
-<div class="page">
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-    <h1>Welcome to The Bay Of Pirates!</h1>
-    <h2>Want to know who we are?</h2>
-    <a href="/about">About us!</a>
-</div>
-<div sec:authorize="hasRole('ADMIN)">
-    This content is only shown to administrators.
-</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
 
 <script th:inline="javascript">
-    /*<![CDATA[*/
 
-    // Get the modal
-    var modal = document.getElementById('id1')
-    var modal2 = document.getElementById('id2')
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target === modal || event.target === modal2) {
-            modal.style.display = "none";
-            modal2.style.display = "none";
-        }
-    }
 
-    function myFunction() {
-        var errormsg =  /*[[${param.error}]]*/ 'param.error';
-        var regerrormsg = /*[[${param.successMessage}]]*/ 'param.successMessage';
-        console.log(errormsg);
-        console.log(regerrormsg);
-        if(errormsg != null){
-            alert('Invalid email or password!')
-        } else if(regerrormsg[0] == "User is registered successfully!"){
-            alert("You are successfully registered");
-        }else if(regerrormsg[0] == "user already exists!"){
-            alert('User with that email or username already exists!');
-        }else if(regerrormsg[0] == "Please correct the errors in form!"){
-            alert('Registration failed. Check your registration form!')
-        }
-    }
-
-    /*]]>*/
 </script>
 </html>
