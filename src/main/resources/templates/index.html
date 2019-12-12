@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="https://github.com/thymeleaf/thymeleaf-extras-springsecurity/tree/3.0-master/thymeleaf-extras-springsecurity3" lang="en">
+      lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Font awesome icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>TheBayOfPirates</title>
 </head>
 <body>
@@ -35,7 +36,8 @@
                 </div>
                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                     <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
-                            data-toggle="modal" data-target=".LoginButton">Login</button>
+                            data-toggle="modal" data-target=".LoginButton">Login
+                    </button>
                 </div>
             </div>
         </form>
@@ -43,7 +45,8 @@
 </nav>
 
 <!--Modal: Login / Register Form-->
-<div class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
         <!--Content-->
         <div class="modal-content">
@@ -69,37 +72,38 @@
                 <div class="tab-content">
                     <!--Panel 7-->
                     <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                        <form th:action="@{/login}" method="POST" class="form-signin">
+                            <!--Login-Body-->
+                            <div class="modal-body mb-1">
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-envelope prefix"></i>
+                                    <input type="email" name="email" id="modalLRInput10"
+                                           class="form-control form-control-sm validate" placeholder="Enter email...">
+                                    <label data-error="wrong" data-success="right" for="modalLRInput10"></label>
+                                </div>
 
-                        <!--Body-->
-                        <div class="modal-body mb-1">
-                            <div class="md-form form-sm mb-5">
-                                <i class="fas fa-envelope prefix"></i>
-                                <input type="email" id="modalLRInput10" class="form-control form-control-sm validate" placeholder="Enter email...">
-                                <label data-error="wrong" data-success="right" for="modalLRInput10"></label>
+                                <div class="md-form form-sm mb-4">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <input type="password" name="password" th:id="modalLRInput11"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter password...">
+                                    <label data-error="wrong" data-success="right" th:for="modalLRInput11"></label>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                                </div>
                             </div>
-
-                            <div class="md-form form-sm mb-4">
-                                <i class="fas fa-lock prefix"></i>
-                                <input type="password" id="modalLRInput11"
-                                       class="form-control form-control-sm validate"
-                                        placeholder="Enter password...">
-                                <label data-error="wrong" data-success="right" for="modalLRInput11"></label>
+                            <!--Login-Footer-->
+                            <div class="modal-footer">
+                                <div class="options text-center text-md-right mt-1">
+                                    <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
+                                    <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                                </div>
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                        data-dismiss="modal">Close
+                                </button>
                             </div>
-                            <div class="text-center mt-2">
-                                <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
-                            </div>
-                        </div>
-                        <!--Footer-->
-                        <div class="modal-footer">
-                            <div class="options text-center text-md-right mt-1">
-                                <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
-                                <p>Forgot <a href="#" class="blue-text">Password?</a></p>
-                            </div>
-                            <button type="button" class="btn btn-outline-info waves-effect ml-auto"
-                                    data-dismiss="modal">Close
-                            </button>
-                        </div>
-
+                        </form>
                     </div>
                     <!--/.Panel 7-->
 
@@ -110,7 +114,8 @@
                         <div class="modal-body">
                             <div class="md-form form-sm mb-5">
                                 <i class="fas fa-envelope prefix"></i>
-                                <input type="email" id="modalLRInput12" class="form-control form-control-sm validate" placeholder="Enter email...">
+                                <input type="email" id="modalLRInput12" class="form-control form-control-sm validate"
+                                       placeholder="Enter email...">
                                 <label data-error="wrong" data-success="right" for="modalLRInput12"></label>
                             </div>
 
@@ -118,7 +123,7 @@
                                 <i class="fas fa-lock prefix"></i>
                                 <input type="password" id="modalLRInput13"
                                        class="form-control form-control-sm validate"
-                                        placeholder="Enter password...">
+                                       placeholder="Enter password...">
                                 <label data-error="wrong" data-success="right" for="modalLRInput13"></label>
                             </div>
 
@@ -126,7 +131,7 @@
                                 <i class="fas fa-lock prefix"></i>
                                 <input type="password" id="modalLRInput14"
                                        class="form-control form-control-sm validate"
-                                        placeholder="Repeat password...">
+                                       placeholder="Repeat password...">
                                 <label data-error="wrong" data-success="right" for="modalLRInput14"></label>
                             </div>
 

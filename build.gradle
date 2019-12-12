@@ -23,14 +23,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     //https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc'
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.2.RELEASE'
+
     compile("org.springframework.boot:spring-boot-devtools")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
-    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity3', version: '3.0.4.RELEASE'
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.4.RELEASE'
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.9.Final'
