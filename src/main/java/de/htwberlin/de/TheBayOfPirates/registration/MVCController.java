@@ -10,10 +10,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
-public class RegistrationController{
+public class MVCController {
 
     @Autowired
     UserService userService;
@@ -28,10 +31,11 @@ public class RegistrationController{
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView home() {
+    public ModelAndView home(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index"); // resources/template/home.html
         modelAndView.addObject("user", new User());
+        modelAndView.addObject("principal", principal);
         return modelAndView;
     }
 

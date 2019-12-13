@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="en">
 
 <head>
@@ -23,22 +23,40 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
 
-            <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
 
             <div class="btn-toolbar">
-                <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                <div th:if="${principal}" id="search-bar">
+                    <input class="form-control mr-sm-2" type="search"
+                           placeholder="Search..." aria-label="Search">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </div>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Second group">
+
+                <div th:if="${principal} ==  null" th:action="@{/login}" th:method="POST" class="btn-group mr-2" role="group" aria-label="Second group">
                     <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
                             data-toggle="modal" data-target=".LoginButton">Login
                     </button>
                 </div>
+
+                <form th:action="@{/logout}" th:method="POST">
+                    <div th:if="${principal}" class="btn-group mr-2" role="group" aria-label="Second group">
+                        <button type = "submit" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">Logout
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </form>
     </div>
@@ -55,15 +73,15 @@
             <div class="modal-c-tabs">
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs md-tabs tabs-2" role="tablist">
+                <ul class="nav nav-tabs md-tabs tabs-2 secondary-text" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
-                                class="fas fa-user mr-1"></i>
+                                class="fas fa-user mr-1 secondary-text"></i>
                             Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i
-                                class="fas fa-user-plus mr-1"></i>
+                        <a class="nav-link secondary-text" data-toggle="tab" href="#panel8" role="tab"><i
+                                class="fas fa-user-plus mr-1 secondary-text"></i>
                             Register</a>
                     </li>
                 </ul>
@@ -169,7 +187,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
 </body>
 
 <script th:inline="javascript">
