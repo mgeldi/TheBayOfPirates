@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public interface TorrentService {
 
-    void saveTorrent(File torrentFile, String userEmail, String description) throws Exception;
+    Torrent saveTorrent(File torrentFile, String userEmail, String description) throws Exception;
 
     File loadTorrent(String torrentName) throws Exception;
 

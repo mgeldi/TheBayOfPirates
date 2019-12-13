@@ -38,7 +38,7 @@ public class TorrentServiceImpl implements TorrentService {
     }
 
     @Override
-    public void saveTorrent(File torrentFile, String userEmail, String description) throws Exception {
+    public Torrent saveTorrent(File torrentFile, String userEmail, String description) throws Exception {
         if (torrentFile.getName().endsWith(".torrent")
                 && getFileSizeKiloBytes(torrentFile) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
 
@@ -55,7 +55,7 @@ public class TorrentServiceImpl implements TorrentService {
             byte[] byteTorrent = Files.readAllBytes(torrentFile.toPath());
             torrent.setTorrent(byteTorrent);
             torrentRepository.save(torrent);
-
+            return torrent;
         } else {
             throw new Exception("Not a Torrent!");
         }

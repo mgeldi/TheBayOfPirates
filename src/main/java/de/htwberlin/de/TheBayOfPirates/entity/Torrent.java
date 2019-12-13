@@ -16,6 +16,10 @@ public class Torrent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int torrentID;
 
+    public int getTorrentID() {
+        return torrentID;
+    }
+
     @Column(name="name", nullable = false, unique = true)
     @Length(min = 4, max = 50, message = "Your torrent name must be between 4 and 50 characters long")
     private String name;
