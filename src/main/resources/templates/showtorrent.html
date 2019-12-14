@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:object="${torrent}">
+    <div th:text="${torrent.getName()}"></div>
+    <div th:text="${torrent.getDescription()}"></div>
+    <div th:text="${torrent.getUser().getEmail()}"></div>
+    <div th:text="${torrent.getTorrentID()}"></div>
+</div>
+</body>
+</html>

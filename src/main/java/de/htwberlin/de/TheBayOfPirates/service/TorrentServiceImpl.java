@@ -1,15 +1,12 @@
 package de.htwberlin.de.TheBayOfPirates.service;
 
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.repository.TorrentRepository;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -49,7 +46,6 @@ public class TorrentServiceImpl implements TorrentService {
             if (!user.isPresent())
                 throw new Exception("User not found!");
             torrent.setUser(user.get());
-            System.out.println(torrentFile.getName());
             String actualName = torrentFile.getName().substring(0, torrentFile.getName().length() - ".torrent".length());
             torrent.setName(actualName);
             byte[] byteTorrent = Files.readAllBytes(torrentFile.toPath());
@@ -58,6 +54,27 @@ public class TorrentServiceImpl implements TorrentService {
             return torrent;
         } else {
             throw new Exception("Not a Torrent!");
+        }
+    }
+
+    @Override
+    public Torrent saveTorrentBytes(byte[] torrentBytes, String filename, String userEmail, String description) throws Exception {
+        if(filename.endsWith("torrent")
+                && (torrentBytes.length / 1000) <= MAX_FILE_SIZE_IN_KILO_BYTES){
+            Torrent torrent = new Torrent();
+            torrent.setDescription(description);
+            Optional<User> user = userService.findByUserEmail(userEmail);
+            if (!user.isPresent()) {
+                throw new Exception("User not found!");
+            }
+            torrent.setUser(user.get());
+            String actualName = filename.substring(0, filename.length() - ".torrent".length());
+            torrent.setName(actualName);
+            torrent.setTorrent(torrentBytes);
+            torrentRepository.save(torrent);
+            return torrent;
+        } else {
+            throw new Exception("Not a torrent!");
         }
     }
 

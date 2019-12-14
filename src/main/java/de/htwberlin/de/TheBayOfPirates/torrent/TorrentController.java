@@ -8,14 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Controller
@@ -24,7 +28,7 @@ public class TorrentController {
     @Autowired
     TorrentService torrentService;
 
-    @GetMapping(value = "/torrent/name={name}}")
+    @GetMapping(value = "/torrent/name={name}")
     public String getTorrent(Model model, @PathVariable String name) {
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
@@ -36,7 +40,7 @@ public class TorrentController {
         return "showtorrent";
     }
 
-    @GetMapping(value = "/torrent/id={id}}")
+    @GetMapping(value = "/torrent/id={id}")
     public String getTorrent(Model model, @PathVariable int id) {
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
         if (torrent.isPresent()) {
@@ -57,20 +61,33 @@ public class TorrentController {
     }
 
     @PostMapping(value = "/torrent/upload")
-    public ModelAndView postTorrent(ModelMap modelMap, BindingResult bindingResult, File file,
-                                    Principal principal, Torrent torrent) {
+    public ModelAndView postTorrent(HttpServletRequest request, @RequestParam("file") MultipartFile file,
+                                    RedirectAttributes redirectAttributes, ModelMap modelMap,
+                                    Principal principal, @RequestParam("description") String description) {
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile multipartFile = null;
+
+        Iterator<String> iterator = multipartRequest.getFileNames();
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            // create multipartFile array if you upload multiple files
+            multipartFile = (MultipartFile) multipartRequest.getFile(key);
+        }
+        String fileName = multipartFile.getOriginalFilename();
         ModelAndView modelAndView = new ModelAndView();
-        String actualName = file.getName().substring(0, file.getName().length() - ".torrent".length());
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("sucessMessage", "Please correct the errors");
-            modelMap.addAttribute("bindingResult", bindingResult);
-        } else if (torrentService.findByName(actualName).isPresent()) {
+        System.out.println("File to be uploaded was called: " + fileName);
+        String actualName = fileName.substring(0, fileName.length() - ".torrent".length());
+        if (torrentService.findByName(actualName).isPresent()) {
             modelAndView.addObject("successMessage",
                     "Torrent with that name already exists!");
             System.out.println("Torrent already exists!");
+            modelAndView.setViewName("redirect:/torrent/upload");
         } else {
             try {
-                Torrent savedTorrent = torrentService.saveTorrent(file, principal.getName(), torrent.getDescription());
+                Torrent savedTorrent = torrentService.saveTorrentBytes(file.getBytes(), fileName,
+                        principal.getName(), description);
                 modelAndView.addObject("successMessage", "Upload succeeded!");
                 modelAndView.setViewName("redirect:/torrent/id=" + savedTorrent.getTorrentID());
             } catch (Exception e) {

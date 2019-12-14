@@ -11,6 +11,8 @@ public interface TorrentService {
 
     Torrent saveTorrent(File torrentFile, String userEmail, String description) throws Exception;
 
+    Torrent saveTorrentBytes(byte[] torrentBytes, String filename, String userEmail, String description) throws Exception;
+
     File loadTorrent(String torrentName) throws Exception;
 
     public Optional<Torrent> findByName(String name);
