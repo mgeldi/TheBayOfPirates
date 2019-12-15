@@ -3,7 +3,11 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
 import de.htwberlin.de.TheBayOfPirates.service.TorrentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Iterator;
 import java.util.Optional;
@@ -97,5 +103,23 @@ public class TorrentController {
         }
 
         return modelAndView;
+    }
+
+    @GetMapping(value = "/torrent/download")
+    public ResponseEntity<InputStreamResource> downloadFile1(@RequestParam(name = "filename") String filename,
+                                                             ModelAndView modelAndView) throws Exception {
+        Optional<Torrent> torrent = torrentService.findByName(filename);
+        if (!torrent.isPresent()) {
+            throw new Exception("Torrent not found! Shouldn't have happened!");
+        }
+        byte[] torrentBytes = torrent.get().getTorrent();
+        InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(torrentBytes));
+        String actualName = filename + ".torrent";
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + actualName)
+                // Contet-Length
+                .contentLength(torrentBytes.length) //
+                .body(resource);
     }
 }
