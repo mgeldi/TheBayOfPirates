@@ -25,7 +25,7 @@ public class TorrentServiceImpl implements TorrentService {
     @Autowired
     private UserService userService;
 
-    TorrentServiceImpl(TorrentRepository torrentRepository, UserService userService) {
+    public TorrentServiceImpl(TorrentRepository torrentRepository, UserService userService) {
         this.torrentRepository = torrentRepository;
         this.userService = userService;
     }
@@ -59,7 +59,7 @@ public class TorrentServiceImpl implements TorrentService {
 
     @Override
     public Torrent saveTorrentBytes(byte[] torrentBytes, String filename, String userEmail, String description) throws Exception {
-        if(filename.endsWith("torrent")
+        if(filename.endsWith(".torrent")
                 && (torrentBytes.length / 1000) <= MAX_FILE_SIZE_IN_KILO_BYTES){
             Torrent torrent = new Torrent();
             torrent.setDescription(description);

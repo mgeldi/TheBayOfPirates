@@ -1,8 +1,10 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.repository.TorrentRepository;
+import de.htwberlin.de.TheBayOfPirates.service.TorrentServiceImpl;
+import de.htwberlin.de.TheBayOfPirates.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -117,5 +119,21 @@ class TorrentServiceImplTest {
         torrentService.findByTorrentID(1);
         Mockito.verify(torrentRepository, Mockito.times(1)).findByName(filename);
         Mockito.verify(torrentRepository, Mockito.times(1)).findByTorrentID(1);
+    }
+
+    @Test
+    void testSaveTorrentByBytes(){
+        try {
+            Torrent returnedTorrent = torrentService.saveTorrentBytes(torrentAsByte, filename + ".torrent", mockedUser.getEmail(), description);
+            Mockito.verify(userService, Mockito.times(1)).findByUserEmail(mockedUser.getEmail());
+            Mockito.verify(torrentRepository, Mockito.times(1)).save(Mockito.any());
+            assertEquals(torrent.getDescription(), returnedTorrent.getDescription());
+            assertEquals(torrent.getName(), returnedTorrent.getName());
+            assertEquals(torrent.getTorrent(), returnedTorrent.getTorrent());
+            assertEquals(torrent.getTorrentID(), returnedTorrent.getTorrentID());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Unexpected exception!");
+        }
     }
 }

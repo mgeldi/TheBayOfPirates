@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public void saveUser(@Valid User user) throws Exception {
         user.setPassword(pwEncoder.encode(user.getPassword()));
-        //todo: add role
         Optional<Role> userRole = roleRepository.findByRole("USER");
         Role role = userRole.get();
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));

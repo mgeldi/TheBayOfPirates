@@ -3,7 +3,6 @@ package de.htwberlin.de.TheBayOfPirates.registration;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.service.UserService;
 import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
-import org.apache.catalina.filters.ExpiresFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -62,8 +61,8 @@ class RegistrationControllerTest {
                 .param("username", "werder")
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(forwardedUrl("registration"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/?successMessage=Please+correct+the+errors+in+form%21"))
                 .andExpect(model().attribute("successMessage", "Please correct the errors in form!"));
     }
 
@@ -79,8 +78,8 @@ class RegistrationControllerTest {
                 .param("username", "werder")
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(forwardedUrl("registration"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/?successMessage=User+already+exists%21"))
                 .andExpect(model().attribute("successMessage", "User already exists!"));
     }
 }

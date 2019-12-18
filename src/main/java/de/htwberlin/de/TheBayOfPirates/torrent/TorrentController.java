@@ -35,8 +35,9 @@ public class TorrentController {
         this.torrentService = torrentService;
     }
 
-    @GetMapping(value = "/torrent/name={name}")
+    @GetMapping(value = "/torrent/name={name:.+}")
     public String getTorrent(Model model, @PathVariable String name) {
+        System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
             model.addAttribute("torrent", torrent.get());

@@ -47,6 +47,9 @@ public class RegistrationController {
         } else if (userService.userExists(user)) {
             modelAndView.addObject("successMessage", "User already exists!");
             System.out.println("User exists!");
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
         }
         // we will save the user if there are no binding errors
         else {
@@ -59,9 +62,6 @@ public class RegistrationController {
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
-        modelAndView.addObject("user", new User());
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
     }
 
 

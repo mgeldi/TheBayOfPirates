@@ -1,8 +1,37 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
+import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
 import de.htwberlin.de.TheBayOfPirates.service.TorrentService;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
+import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
+import org.apache.catalina.filters.ExpiresFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import static org.mockito.Mockito.mock;
 
@@ -10,30 +39,73 @@ class TorrentControllerTest {
 
     private TorrentService torrentService;
     private TorrentController torrentController;
+    private Torrent mockedTorrent;
+    private MockMvc mockMvc;
+    private File torrentFile;
+    private MockMultipartFile mockedTorrentFile;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        torrentFile = new File(classLoader.getResource("archlinux-2019.12.01-x86_64.iso.torrent").getFile());
         torrentService = mock(TorrentService.class);
+        mockedTorrent = Mockito.mock(Torrent.class);
+        Mockito.when(mockedTorrent.getTorrent()).thenReturn("Hello".getBytes());
+        Mockito.when(mockedTorrent.getTorrentID()).thenReturn(1);
+        Mockito.when(torrentService.findByName("archlinux-2019.12.01-x86_64.iso"))
+                .thenReturn(java.util.Optional.ofNullable(mockedTorrent));
+        Mockito.when(torrentService.findByTorrentID(mockedTorrent.getTorrentID())).thenReturn(Optional.of(mockedTorrent));
         torrentController = new TorrentController(torrentService);
+        mockMvc = MockMvcBuilders.standaloneSetup(torrentController).build();
+        mockedTorrentFile = new MockMultipartFile(torrentFile.getName(), torrentFile.getName(),
+                "text/plain", Files.readAllBytes(torrentFile.toPath()));
     }
 
     @Test
-    void getTorrent() {
+    void getTorrent() throws Exception {
+        mockMvc.perform(get("/torrent/upload"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(forwardedUrl("torrentUpload"))
+                .andExpect(model().attribute("description", ""));
     }
 
     @Test
-    void testGetTorrent() {
+    void getTorrenPagetByName() throws Exception {
+        MvcResult result = mockMvc.perform(get("/torrent/name=archlinux-2019.12.01-x86_64.iso"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(forwardedUrl("showtorrent"))
+                .andReturn();
+
     }
 
-    @Test
-    void postTorrent() {
-    }
 
     @Test
-    void testPostTorrent() {
+    void getTorrentPageByID() throws Exception {
+        MvcResult result = mockMvc.perform(get("/torrent/id=1"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(forwardedUrl("showtorrent"))
+                .andReturn();
     }
 
+    /**
+     *
+
     @Test
-    void downloadFile1() {
+    void postTorrent() throws Exception {
+        System.out.println(torrentFile.getName());
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/torrent/upload")
+                .file(mockedTorrentFile)
+                .param("description", "hellohellohellohellohellohello"))
+                .andExpect(model().attribute("error", "something"));
+    }
+     */
+
+    @Test
+    void testDownloadTorrent() throws Exception {
+        MvcResult result = mockMvc.perform(get("/torrent/download")
+        .param("filename", "archlinux-2019.12.01-x86_64.iso"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
+        Assert.assertEquals("Hello", result.getResponse().getContentAsString());
     }
 }
