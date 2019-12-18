@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<div th:object="${torrent}">
+    <div th:text="${torrent.getName()}"></div>
+    <div th:text="${torrent.getDescription()}"></div>
+    <div th:text="${torrent.getUser().getEmail()}"></div>
+    <div th:text="${torrent.getTorrentID()}"></div>
+    <form action="/torrent/download" method="get">
+        <label>
+            <input hidden type="text" name="filename" th:value="${torrent.getName()}">
+        </label>
+        <div>
+            <button type="submit" id="downloadbtn"
+                    class="btn btn-outline-secondary my-2 my-sm-0">Download
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

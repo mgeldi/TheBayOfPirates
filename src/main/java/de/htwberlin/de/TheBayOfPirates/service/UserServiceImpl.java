@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService{
 
     @PostConstruct
     public void initRoles(){
+        System.out.println("Initializing User role!");
         if(!roleRepository.findByRole("USER").isPresent()){
             roleRepository.save(new Role("USER"));
         }
