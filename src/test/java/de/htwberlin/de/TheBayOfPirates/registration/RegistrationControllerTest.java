@@ -3,6 +3,7 @@ package de.htwberlin.de.TheBayOfPirates.registration;
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.service.UserService;
 import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -38,7 +39,7 @@ class RegistrationControllerTest {
 
     @Test
     void registerUserObject() throws Exception {
-        this.mockMvc.perform(get("/")).andExpect(status().is2xxSuccessful()).andExpect();
+        this.mockMvc.perform(get("/")).andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -50,7 +51,7 @@ class RegistrationControllerTest {
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/login?successMessage=User+is+registered+successfully%21"));
+        .andExpect(redirectedUrl("/?successMessage=User+is+registered+successfully%21"));
     }
 
     @Test

@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates.dateAndTime;
+package de.htwberlin.de.TheBayOfPirates.aboutus;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
