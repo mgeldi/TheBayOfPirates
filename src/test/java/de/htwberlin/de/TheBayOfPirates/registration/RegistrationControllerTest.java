@@ -1,21 +1,17 @@
 package de.htwberlin.de.TheBayOfPirates.registration;
 
-import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class RegistrationControllerTest {
@@ -30,7 +26,7 @@ class RegistrationControllerTest {
     @BeforeEach
     void setUp(){
         mockedUser = Mockito.mock(User.class);
-        UserService userService = Mockito.mock(UserService.class);
+        UserService userService = Mockito.mock(UserServiceImpl.class);
         registrationController = new RegistrationController(userService);
         mockMvc = MockMvcBuilders.standaloneSetup(registrationController).build();
     }
@@ -41,13 +37,8 @@ class RegistrationControllerTest {
     }
 
     @Test
-    void register() throws Exception {
-        this.mockMvc.perform(get("/register")).andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void registerUser() throws Exception {
-        this.mockMvc.perform(post("/register")).andExpect(status().is2xxSuccessful());
+    void registerUserObject() throws Exception {
+        this.mockMvc.perform(get("/")).andExpect(status().is2xxSuccessful()).andExpect();
     }
 
     @Test

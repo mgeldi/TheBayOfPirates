@@ -14,18 +14,13 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-public class MVCController {
+public class RegistrationController {
 
     @Autowired
     UserService userService;
-    
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("registration"); // resources/templates/register.html
-        return modelAndView;
+
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -34,13 +29,6 @@ public class MVCController {
         modelAndView.setViewName("index"); // resources/template/home.html
         modelAndView.addObject("user", new User());
         modelAndView.addObject("principal", principal);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView adminHome() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin"); // resources/template/admin.html
         return modelAndView;
     }
 
