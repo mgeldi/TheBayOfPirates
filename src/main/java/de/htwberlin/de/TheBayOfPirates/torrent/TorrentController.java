@@ -6,24 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Iterator;
 import java.util.Optional;
@@ -33,6 +30,10 @@ public class TorrentController {
 
     @Autowired
     TorrentService torrentService;
+
+    public TorrentController(TorrentService torrentService) {
+        this.torrentService = torrentService;
+    }
 
     @GetMapping(value = "/torrent/name={name}")
     public String getTorrent(Model model, @PathVariable String name) {
@@ -70,7 +71,7 @@ public class TorrentController {
     public ModelAndView postTorrent(HttpServletRequest request, @RequestParam("file") MultipartFile file,
                                     RedirectAttributes redirectAttributes, ModelMap modelMap,
                                     Principal principal, @RequestParam("description") String description) {
-
+        ModelAndView modelAndView = new ModelAndView();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile multipartFile = null;
 
@@ -82,11 +83,10 @@ public class TorrentController {
             multipartFile = (MultipartFile) multipartRequest.getFile(key);
         }
         String fileName = multipartFile.getOriginalFilename();
-        ModelAndView modelAndView = new ModelAndView();
         System.out.println("File to be uploaded was called: " + fileName);
         String actualName = fileName.substring(0, fileName.length() - ".torrent".length());
         if (torrentService.findByName(actualName).isPresent()) {
-            modelAndView.addObject("successMessage",
+            modelAndView.addObject("error",
                     "Torrent with that name already exists!");
             System.out.println("Torrent already exists!");
             modelAndView.setViewName("redirect:/torrent/upload");
@@ -97,12 +97,20 @@ public class TorrentController {
                 modelAndView.addObject("successMessage", "Upload succeeded!");
                 modelAndView.setViewName("redirect:/torrent/id=" + savedTorrent.getTorrentID());
             } catch (Exception e) {
-                e.printStackTrace();
-                modelAndView.addObject("successMessage", "Upload failed!");
+                modelAndView.addObject("error", "Upload failed!");
+                modelAndView.setViewName("redirect:/torrent/upload");
             }
         }
 
         return modelAndView;
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public String handleMissingParams(MissingServletRequestParameterException ex) {
+        String name = ex.getParameterName();
+        System.out.println(name + " parameter is missing");
+
+        return "/torrent/upload";
     }
 
     @GetMapping(value = "/torrent/download")
