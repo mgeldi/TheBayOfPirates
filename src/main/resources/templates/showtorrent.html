@@ -24,7 +24,6 @@
         </div>
     </form>
     <div th:if="${principal}">
-        <p>aksmdlksamdlksad</p>
         <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
             <form action="/torrent/delete" method="post">
                 <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
