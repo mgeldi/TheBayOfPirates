@@ -2,10 +2,12 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
       lang="en">
 <head lang="en" th:fragment="head">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Font awesome icons -->
+
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -17,7 +19,10 @@
             crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+
+    <script th:inline="javascript"></script>
 </head>
+
 <body>
 <div>
     <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -110,7 +115,6 @@
                                         <input type="email" name="email" id="modalLRInput10"
                                                class="form-control form-control-sm validate"
                                                placeholder="Enter email...">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput10"></label>
                                     </div>
 
                                     <div class="md-form form-sm mb-4">
@@ -118,7 +122,6 @@
                                         <input type="password" name="password" th:id="modalLRInput11"
                                                class="form-control form-control-sm validate"
                                                placeholder="Enter password...">
-                                        <label data-error="wrong" data-success="right" th:for="modalLRInput11"></label>
                                     </div>
                                     <div class="text-center mt-2">
                                         <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
@@ -148,7 +151,6 @@
                                     <input type="email" id="modalLRInput12"
                                            class="form-control form-control-sm validate"
                                            placeholder="Enter email...">
-                                    <label data-error="wrong" data-success="right" for="modalLRInput12"></label>
                                 </div>
 
                                 <div class="md-form form-sm mb-5">
@@ -156,7 +158,6 @@
                                     <input type="password" id="modalLRInput13"
                                            class="form-control form-control-sm validate"
                                            placeholder="Enter password...">
-                                    <label data-error="wrong" data-success="right" for="modalLRInput13"></label>
                                 </div>
 
                                 <div class="md-form form-sm mb-4">
@@ -164,10 +165,6 @@
                                     <input type="password" id="modalLRInput14"
                                            class="form-control form-control-sm validate"
                                            placeholder="Repeat password...">
-                                    <label data-error="wrong" data-success="right" for="modalLRInput14"></label>
-                                </div>
-
-                                <div class="text-center form-sm mt-2">
                                     <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
                                 </div>
 
@@ -189,8 +186,5 @@
         </div>
     </div>
 </div>
-
 </body>
-
-<script th:inline="javascript"></script>
 </html>
