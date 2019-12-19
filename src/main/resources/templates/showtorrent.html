@@ -23,6 +23,20 @@
             </button>
         </div>
     </form>
+    <div th:if="${principal}">
+        <p>aksmdlksamdlksad</p>
+        <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
+            <form action="/torrent/delete" method="post">
+                <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
+                <button type="submit" id="deletebtn"
+                        class="btn btn-outline-secondary my-2 my-sm-0">Delete this torrent
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
 </div>
 </body>
 </html>

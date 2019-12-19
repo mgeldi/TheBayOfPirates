@@ -19,4 +19,8 @@ public interface TorrentService {
 
     public Optional<Torrent> findByTorrentID(int torrentID);
 
+    public void removeTorrentByID(int torrentID);
+
+    public void removeTorrentByName(String name);
+
 }

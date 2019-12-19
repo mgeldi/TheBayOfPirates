@@ -59,8 +59,8 @@ public class TorrentServiceImpl implements TorrentService {
 
     @Override
     public Torrent saveTorrentBytes(byte[] torrentBytes, String filename, String userEmail, String description) throws Exception {
-        if(filename.endsWith(".torrent")
-                && (torrentBytes.length / 1000) <= MAX_FILE_SIZE_IN_KILO_BYTES){
+        if (filename.endsWith(".torrent")
+                && (torrentBytes.length / 1000) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
             Torrent torrent = new Torrent();
             torrent.setDescription(description);
             Optional<User> user = userService.findByUserEmail(userEmail);
@@ -120,7 +120,6 @@ public class TorrentServiceImpl implements TorrentService {
     }
 
 
-
     public void saveStandardTorrent() throws Exception {
         System.out.println("Entered postcunstruct");
         File file = new File("~/Downloads/archlinux-2019.12.01-x86_64.iso.torrent");
@@ -143,9 +142,9 @@ public class TorrentServiceImpl implements TorrentService {
 
     public void loadStandardTorrent() throws Exception {
         File file = this.loadTorrent("archlinux-2019.12.01-x86_64.iso");
-        if(file.exists()){
+        if (file.exists()) {
             System.out.println("Torrent was restored out of database!");
-            if(file.getName().equals("archlinux-2019.12.01-x86_64.iso")){
+            if (file.getName().equals("archlinux-2019.12.01-x86_64.iso")) {
                 System.out.println("Name was also fine!");
             }
         } else {
@@ -161,5 +160,17 @@ public class TorrentServiceImpl implements TorrentService {
     @Override
     public Optional<Torrent> findByTorrentID(int torrentID) {
         return torrentRepository.findByTorrentID(torrentID);
+    }
+
+    @Override
+    public void removeTorrentByID(int torrentID) {
+        Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
+        torrentRepository.delete(torrent.get());
+    }
+
+    @Override
+    public void removeTorrentByName(String name) {
+        Optional<Torrent> torrent = torrentRepository.findByName(name);
+        torrentRepository.delete(torrent.get());
     }
 }

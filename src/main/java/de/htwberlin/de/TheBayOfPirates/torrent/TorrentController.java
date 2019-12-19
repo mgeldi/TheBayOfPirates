@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.PrinterIOException;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.Iterator;
@@ -36,7 +37,8 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/name={name:.+}")
-    public String getTorrent(Model model, @PathVariable String name) {
+    public String getTorrent(Model model, @PathVariable String name, Principal principal, ModelMap modelMap) {
+        modelMap.addAttribute("principal", principal);
         System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
@@ -49,7 +51,8 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/id={id}")
-    public String getTorrent(Model model, @PathVariable int id) {
+    public String getTorrent(Model model, @PathVariable int id, Principal principal, ModelMap modelMap) {
+        modelMap.addAttribute("principal", principal);
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
         if (torrent.isPresent()) {
             model.addAttribute("torrent", torrent.get());
@@ -98,6 +101,7 @@ public class TorrentController {
                 modelAndView.addObject("successMessage", "Upload succeeded!");
                 modelAndView.setViewName("redirect:/torrent/id=" + savedTorrent.getTorrentID());
             } catch (Exception e) {
+                e.printStackTrace();
                 modelAndView.addObject("error", "Upload failed!");
                 modelAndView.setViewName("redirect:/torrent/upload");
             }
@@ -130,5 +134,22 @@ public class TorrentController {
                 // Contet-Length
                 .contentLength(torrentBytes.length) //
                 .body(resource);
+    }
+
+    @PostMapping(value = "/torrent/delete")
+    public ModelAndView deleteTorrent(@RequestParam(name = "filename") String filename, Principal principal) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Torrent> torrent = torrentService.findByName(filename);
+        if (torrent.isPresent()) {
+            if(principal.getName().equals(torrent.get().getUser().getEmail())){
+                torrentService.removeTorrentByName(filename);
+                modelAndView.setViewName("redirect:/torrent/upload");
+                return modelAndView;
+            } else {
+                throw new Exception("Not the original uploader!");
+            }
+        } else{
+            throw new Exception("Torrent not found");
+        }
     }
 }

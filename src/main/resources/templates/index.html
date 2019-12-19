@@ -26,7 +26,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li th:if="${principal}" class="nav-item">
-                <a class="nav-link" href="#">Edit Profile</a>
+                <a class="nav-link" href="#">Profile</a>
             </li>
             <li th:if="${principal}" class="nav-item">
                 <a class="nav-link" href="/torrent/upload">Torrents</a>
@@ -56,8 +56,7 @@
 
                 <div th:if="${principal}" class="btn-group mr-2" role="group" aria-label="Second group">
                     <a href="/logout">
-                        <button type="button" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">Logout
-                        </button>
+                        <button type="button" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">Logout</button>
                     </a>
                 </div>
 
@@ -99,20 +98,18 @@
                             <div class="modal-body mb-1">
                                 <div class="md-form form-sm mb-5">
                                     <i class="fas fa-envelope prefix"></i>
-                                    <input type="email" name="email" id="modalLRInput10"
-                                           class="form-control form-control-sm validate" placeholder="Enter email...">
-                                    <label data-error="wrong" data-success="right" for="modalLRInput10"></label>
+                                    <input type="email" name="email" id="emailLogin"
+                                           class="form-control form-control-sm validate" placeholder="Enter email..." required>
                                 </div>
 
                                 <div class="md-form form-sm mb-4">
                                     <i class="fas fa-lock prefix"></i>
-                                    <input type="password" name="password" th:id="modalLRInput11"
+                                    <input type="password" name="password" id="passwordLogin"
                                            class="form-control form-control-sm validate"
-                                           placeholder="Enter password...">
-                                    <label data-error="wrong" data-success="right" th:for="modalLRInput11"></label>
+                                           placeholder="Enter password..." required>
                                 </div>
                                 <div class="text-center mt-2">
-                                    <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                                    <button class="btn btn-info">Sign in<i class="fas fa-sign-in ml-1"></i></button>
                                 </div>
                             </div>
                             <!--Login-Footer-->
@@ -131,37 +128,61 @@
 
                     <!--Panel 8-->
                     <div class="tab-pane fade" id="panel8" role="tabpanel">
+                        <form th:action="@{/register}" method="post" th:object="${user}">
+                            <!--Body-->
+                            <div class="modal-body">
 
-                        <!--Body-->
-                        <div class="modal-body">
-                            <div class="md-form form-sm mb-5">
-                                <i class="fas fa-envelope prefix"></i>
-                                <input type="email" id="modalLRInput12" class="form-control form-control-sm validate"
-                                       placeholder="Enter email...">
-                                <label data-error="wrong" data-success="right" for="modalLRInput12"></label>
+                                <div class="md-form form-sm mb-5">
+                                    <label for="name">Name</label>
+                                    <input th:field="*{name}"
+                                           type="text" id="name"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter name..." required>
+                                </div>
+                                <div class="md-form form-sm mb-5">
+                                    <label for="surname">Last name:</label>
+                                    <input th:field="*{surname}"
+                                           type="text" id="surname"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter last name..." required>
+                                </div>
+                                <div class="md-form form-sm mb-5">
+                                    <label for="username">Username:</label>
+                                    <input th:field="*{username}"
+                                           type="text" id="username"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter username..." required>
+                                </div>
+
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-envelope prefix"></i>
+                                    <input th:field="*{email}"
+                                           type="email" id="email"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter email..." required>
+                                </div>
+
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <input th:field="*{password}"
+                                           type="password" id="password"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Enter password..." required>
+                                </div>
+
+                                <div class="md-form form-sm mb-4">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <input type="password" id="passwordRepeat"
+                                           class="form-control form-control-sm validate"
+                                           placeholder="Repeat password..." required>
+                                </div>
+
+                                <div class="text-center form-sm mt-2">
+                                    <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                                </div>
+
                             </div>
-
-                            <div class="md-form form-sm mb-5">
-                                <i class="fas fa-lock prefix"></i>
-                                <input type="password" id="modalLRInput13"
-                                       class="form-control form-control-sm validate"
-                                       placeholder="Enter password...">
-                                <label data-error="wrong" data-success="right" for="modalLRInput13"></label>
-                            </div>
-
-                            <div class="md-form form-sm mb-4">
-                                <i class="fas fa-lock prefix"></i>
-                                <input type="password" id="modalLRInput14"
-                                       class="form-control form-control-sm validate"
-                                       placeholder="Repeat password...">
-                                <label data-error="wrong" data-success="right" for="modalLRInput14"></label>
-                            </div>
-
-                            <div class="text-center form-sm mt-2">
-                                <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
-                            </div>
-
-                        </div>
+                        </form>
                         <!--Footer-->
                         <div class="modal-footer">
                             <div class="options text-right">
@@ -177,7 +198,7 @@
         </div>
     </div>
 </div>
-<div>
+<div th:if="${principal}">
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 </div>
 <!-- Optional JavaScript -->
