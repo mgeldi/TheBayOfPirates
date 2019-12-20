@@ -53,9 +53,9 @@ class TorrentServiceImplTest {
         Mockito.when(torrentRepository.findByName("something")).thenReturn(Optional.empty());
         torrentService = new TorrentServiceImpl(torrentRepository, userService);
         //we need to delete the previous test run files
-        File torrentFile = new File(System.getProperty("user.home") + "/"+ filename + ".torrent");
+        File torrentFile = new File(System.getProperty("user.home") + "/" + filename + ".torrent");
         torrentFile.delete();
-        File torrentFileSomething = new File(System.getProperty("user.home") + "/"+ "something" + ".torrent");
+        File torrentFileSomething = new File(System.getProperty("user.home") + "/" + "something" + ".torrent");
         torrentFileSomething.delete();
     }
 
@@ -76,7 +76,7 @@ class TorrentServiceImplTest {
         try {
             torrentService.saveTorrent(torrentFile, "someNonExistingUser", description);
             fail("Expected an exception!");
-        } catch(Exception e){
+        } catch (Exception e) {
             assertEquals("User not found!", e.getMessage());
         }
     }
@@ -102,7 +102,7 @@ class TorrentServiceImplTest {
     }
 
     @Test
-    void loadTorrentNotPresent(){
+    void loadTorrentNotPresent() {
         try {
             torrentService.loadTorrent("something");
             fail("No exception thrown!");
@@ -122,18 +122,14 @@ class TorrentServiceImplTest {
     }
 
     @Test
-    void testSaveTorrentByBytes(){
-        try {
-            Torrent returnedTorrent = torrentService.saveTorrentBytes(torrentAsByte, filename + ".torrent", mockedUser.getEmail(), description);
-            Mockito.verify(userService, Mockito.times(1)).findByUserEmail(mockedUser.getEmail());
-            Mockito.verify(torrentRepository, Mockito.times(1)).save(Mockito.any());
-            assertEquals(torrent.getDescription(), returnedTorrent.getDescription());
-            assertEquals(torrent.getName(), returnedTorrent.getName());
-            assertEquals(torrent.getTorrent(), returnedTorrent.getTorrent());
-            assertEquals(torrent.getTorrentID(), returnedTorrent.getTorrentID());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Unexpected exception!");
-        }
+    void testSaveTorrentByBytes() throws Exception {
+        Torrent returnedTorrent = torrentService.saveTorrentBytes(torrentAsByte, filename + ".torrent", mockedUser.getEmail(), description);
+        Mockito.verify(userService, Mockito.times(1)).findByUserEmail(mockedUser.getEmail());
+        Mockito.verify(torrentRepository, Mockito.times(1)).save(Mockito.any());
+        assertEquals(torrent.getDescription(), returnedTorrent.getDescription());
+        assertEquals(torrent.getName(), returnedTorrent.getName());
+        assertEquals(torrent.getTorrent(), returnedTorrent.getTorrent());
+        assertEquals(torrent.getTorrentID(), returnedTorrent.getTorrentID());
+
     }
 }

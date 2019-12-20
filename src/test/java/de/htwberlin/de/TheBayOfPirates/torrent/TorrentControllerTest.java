@@ -87,18 +87,17 @@ class TorrentControllerTest {
                 .andReturn();
     }
 
-    /**
-     *
 
     @Test
     void postTorrent() throws Exception {
         System.out.println(torrentFile.getName());
         mockMvc.perform(MockMvcRequestBuilders.multipart("/torrent/upload")
-                .file(mockedTorrentFile)
+                .file("file", mockedTorrentFile.getBytes())
                 .param("description", "hellohellohellohellohellohello"))
+                .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attribute("error", "something"));
     }
-     */
+
 
     @Test
     void testDownloadTorrent() throws Exception {

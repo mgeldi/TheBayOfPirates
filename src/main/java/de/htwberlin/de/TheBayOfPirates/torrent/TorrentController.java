@@ -1,6 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
+import de.htwberlin.de.TheBayOfPirates.entity.User;
 import de.htwberlin.de.TheBayOfPirates.service.TorrentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -39,6 +40,7 @@ public class TorrentController {
     @GetMapping(value = "/torrent/name={name:.+}")
     public String getTorrent(Model model, @PathVariable String name, Principal principal, ModelMap modelMap) {
         modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
         System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
@@ -53,6 +55,7 @@ public class TorrentController {
     @GetMapping(value = "/torrent/id={id}")
     public String getTorrent(Model model, @PathVariable int id, Principal principal, ModelMap modelMap) {
         modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
         if (torrent.isPresent()) {
             model.addAttribute("torrent", torrent.get());
@@ -64,7 +67,9 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/upload")
-    public ModelAndView postTorrent() {
+    public ModelAndView postTorrent(ModelMap modelMap, Principal principal) {
+        modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("description", "");
         modelAndView.setViewName("torrentUpload");

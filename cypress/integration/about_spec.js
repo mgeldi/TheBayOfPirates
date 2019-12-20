@@ -35,6 +35,16 @@ describe('Basic tests for the webpage', function () {
         visit_torrent_upload_page();
         I_see_torrent_upload_page();
         upload_a_torrent();
+        I_see_uploaded_torrent_page();
+    });
+
+    it('Upload same torrent again', function () {
+        login_as_user();
+        visit_torrent_upload_page();
+        I_see_torrent_upload_page();
+        upload_a_torrent();
+        I_see_torrent_upload_page();
+        torrent_already_exists();
     })
 });
 
@@ -134,7 +144,7 @@ function I_see_torrent_upload_page() {
 
 function I_see_uploaded_torrent_page() {
     cy.url().should("contain", "/torrent/id=")
-    cy.get('div').should("contain", "arch.torrent");
+    cy.get('div').should("contain", "arch");
     cy.get('div').should("contain", "cypressemail@gmail.com");
     cy.get('div').should("contain", "This is some description for cypress testing. Blablablalblablablalblabla");
     cy.get('button').should("contain", "Delete this torrent");
@@ -153,4 +163,8 @@ function visit_uploaded_torrent_page() {
 function delete_torrent() {
     cy.get('button').contains("Delete this torrent").click();
     I_see_torrent_upload_page();
+}
+
+function torrent_already_exists() {
+    cy.get('div').should("contain", "Torrent with that name already exists!");
 }
