@@ -5,11 +5,18 @@ sudo: enabled
 services:
         - postgresql
 
+install:
+        - npm ci
+
 before_install:
         - psql -c 'create database webprojectdb;' -U postgres
-        
+        - npm start -- --silent & wait-on htt://localhost:8080
+
 deploy:
         provider: heroku
         api_key:
                 secure: "c2f25de9-9de9-43df-9180-f6db4a7aa18b"
         app: thebayofpirates
+
+script:
+        - npm run cypress:run
