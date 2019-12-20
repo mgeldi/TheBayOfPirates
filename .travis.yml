@@ -5,12 +5,16 @@ sudo: enabled
 services:
         - postgresql
 
+addons:
+        apt:
+                packages:
+                        - libgconf-2-4
+
 install:
         - npm ci
 
 before_install:
         - psql -c 'create database webprojectdb;' -U postgres
-        - npm start -- --silent &
 
 deploy:
         provider: heroku
