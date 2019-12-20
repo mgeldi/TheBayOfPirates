@@ -10,7 +10,7 @@ install:
 
 before_install:
         - psql -c 'create database webprojectdb;' -U postgres
-        - npm start -- --silent & wait-on htt://localhost:8080
+        - npm start -- --silent &
 
 deploy:
         provider: heroku
