@@ -19,4 +19,10 @@ deploy:
         app: thebayofpirates
 
 script:
-        - npm run cypress:run
+        - $(npm bin)/cypress run --record
+
+
+cache:
+        npm: true
+        directories:
+                - ~/.cache
