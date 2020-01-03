@@ -7,12 +7,14 @@
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 
 <div class="row col-lg-4 col-lg-offset-4"
-     style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+     style="margin: auto; width: auto; background-color: #fff;
+     padding: 100px;">
+    <span class="border border-secodary" style="margin: 20px; padding: 40px">
     <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}" th:object="${description} "
           method="post"
           class="form-signin" role="form">
         <h3 class="form-signin-heading">Torrent Upload</h3>
-
+        <hr>
         <div>
             <table>
                 <tr>
@@ -23,12 +25,13 @@
                 </tr>
                 <tr>
                     <div class="form-group">
+                        <p></p>
                         <label for="FormControlTextarea1">Description: </label>
                         <textarea class="form-control" name="description" id="FormControlTextarea1" rows="3"></textarea>
                     </div>
                 </tr>
                 <tr>
-                    <div>
+                    <div style="align-content: center">
                         <button type="submit" id="uploadbtn" value="Upload"
                                 class="btn btn-outline-secondary my-2 my-sm-0">Upload
                         </button>
@@ -37,6 +40,7 @@
             </table>
         </div>
     </form>
+    </span>
 </div>
 </body>
 

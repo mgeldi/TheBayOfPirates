@@ -3,28 +3,53 @@
 <head th:insert="fragments/navbar.html :: head">
     <meta charset="UTF-8">
     <title>About us</title>
+    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
 </head>
 <body>
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
-<h1>About us</h1>
-<p>This is a project by: Muhammed Ali Geldi & Ali Aslan</p>
-Current time according to model:
-<p th:text=" ${localdatetime} ">Current local date and time</p>
-<pre>Project goals:
-    1) Enable (legal) torrent sharing/down- and uploading
-    2) Build a solid foundation for a torrent-caring community
-    3) Rating system for torrents
-</pre>
-<pre><i>Note: Torrents themselves are not illegal, they are just a way
-of sharing files (no matter if legal/illegal) with other people.
-Because torrents utilize peer-to-peer networking, they make it possible
-to "host" files without actually having a server.
-This project is obviously not discussing the legality or ethicality of
-piracy. Piracy can be done with or without torrents! This is not the
-    topic of our project. </i>
-</pre>
 
-<pre>
+<div style="margin: 0 auto; width: 800px;">
+    <div class="container text-center" style="padding-top: 80px">
+        <h1>About us</h1>
+        <hr>
+        <p>This is a project by: Muhammed Ali Geldi & Ali Aslan & Ai-Hong Ky</p>
+        Current time according to model:
+        <p th:text=" ${localdatetime} ">Current local date and time</p>
+
+        <div class="card bg-light mb-3">
+            <div class="card-header">Project goals:</div>
+            <div class="card-body">
+                <p class="card-text">
+                <ol>
+                    <li class="text-left">Enable (legal) torrent sharing/down- and uploading</li>
+                    <li class="text-left"> Build a solid foundation for a torrent-caring community</li>
+                    <li class="text-left">Rating system for torrents</li>
+                </ol>
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseInfo">
+                    Note
+                </button>
+            </p>
+            <div class="collapse" id="collapseInfo">
+                <div class="card card-body">
+                    Torrents themselves are not illegal, they are just a way
+                    of sharing files with other people, regardless
+                    of whether they're legal or illegal.
+                    Since torrents utilize peer-to-peer networking, it's possible
+                    to "host" files without actually having a server.
+                    This project is obviously not discussing the legality or ethicality of
+                    piracy. Piracy can be done with or without torrents! This is not the
+                    topic of this project.
+                </div>
+            </div>
+        </div>
+
+        <pre>
 USER persona: Jürgen
 Demographics:
     Lives in a dorm in Berlin, Germany, together with other students
@@ -32,19 +57,19 @@ Demographics:
     Works parttime, low income
     Age: 22
 </pre>
-<pre>
+        <pre>
 Behaviours:
     Likes peer to peer networking -> huge interest in torrents
     IT geek/nerd
 </pre>
-<pre>
+        <pre>
 Needs and Goals:
     Aspires to become a software engineer
     Wants to find legal and safe torrents
     Wants to be member of a community and engage with them
     Hopes for a more positive public opinion of torrents
 </pre>
-<pre>
+        <pre>
 User persona: Peter
 Demographics:
     Lives alone in Hamburg, Germany
@@ -52,19 +77,21 @@ Demographics:
     Part-time contributor to open source projects
     Age: 35
 </pre>
-<pre>
+        <pre>
 Behaviours:
     Likes peer to peer networking (torrents), building&hosting webpages, open source
     IT geek/nerd
     Security aware
 </pre>
-<pre>
+        <pre>
 Needs and Goals:
     Is driven by FOSS - free and open source software
     Wants to discuss torrents
     Hopes to change public perception of torrents
     Would love to have one place to find torrents many different of linux iso's (other distributions)
 </pre>
+    </div>
+</div>
 </body>
 
 <script th:inline="javascript"></script>

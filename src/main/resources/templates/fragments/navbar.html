@@ -25,55 +25,58 @@
 
 <body>
 <div>
-    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">TheBayOfPirates</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">TheBayOfPirates</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Edit Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/torrent/upload">Torrents</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/torrent/upload">Torrents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
 
-                <div class="btn-toolbar">
-                    <div th:if="${principal}" id="search-bar">
-                        <input class="form-control mr-sm-2" type="search"
-                               placeholder="Search..." aria-label="Search">
-                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <div class="btn-toolbar">
+                        <div th:if="${principal}" id="search-bar">
+                            <input class="form-control mr-sm-2" type="search"
+                                   placeholder="Search..." aria-label="Search">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div th:if="${principal} ==  null" th:action="@{/login}" th:method="POST" class="btn-group mr-2"
-                         role="group" aria-label="Second group">
-                        <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
-                                data-toggle="modal" data-target=".LoginButton">Login
-                        </button>
-                    </div>
-
-                    <div th:if="${principal}" class="btn-group mr-2" role="group" aria-label="Second group">
-                        <a href="/logout">
-                            <button type="button" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">Logout
+                        <div th:if="${principal} ==  null" th:action="@{/login}" th:method="POST" class="btn-group mr-2"
+                             role="group" aria-label="Second group">
+                            <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
+                                    data-toggle="modal" data-target=".LoginButton">Login
                             </button>
-                        </a>
-                    </div>
+                        </div>
 
-                </div>
-            </form>
+                        <div th:if="${principal}" class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a href="/logout">
+                                <button type="button" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">
+                                    Logout
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
     </nav>
 
@@ -89,7 +92,7 @@
                 <div class="modal-c-tabs">
 
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs md-tabs tabs-2 secondary-text" role="tablist">
+                    <ul class="nav nav-tabs tabs-2 secondary-text" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
                                     class="fas fa-user mr-1 secondary-text"></i>
@@ -108,17 +111,17 @@
                         <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
                             <form th:action="@{/login}" method="POST" class="form-signin">
                                 <!--Login-Body-->
-                                <div class="modal-body mb-1">
-                                    <div class="md-form form-sm mb-5">
+                                <div class="modal-body ">
+                                    <div class="md-form form-sm ">
                                         <i class="fas fa-envelope prefix"></i>
-                                        <input type="email" name="email" id="modalLRInput10"
+                                        <input type="email" name="email"
                                                class="form-control form-control-sm validate"
                                                placeholder="Enter email...">
                                     </div>
 
-                                    <div class="md-form form-sm mb-4">
+                                    <div class="md-form form-sm">
                                         <i class="fas fa-lock prefix"></i>
-                                        <input type="password" name="password" th:id="modalLRInput11"
+                                        <input type="password" name="password"
                                                class="form-control form-control-sm validate"
                                                placeholder="Enter password...">
                                     </div>
@@ -145,7 +148,7 @@
 
                             <!--Body-->
                             <div class="modal-body">
-                                <div class="md-form form-sm mb-5">
+                                <div class="md-form form-sm ">
                                     <i class="fas fa-envelope prefix"></i>
                                     <input type="email" id="modalLRInput12"
                                            class="form-control form-control-sm validate"
