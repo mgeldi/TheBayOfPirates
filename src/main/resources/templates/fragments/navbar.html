@@ -81,10 +81,9 @@
     </nav>
 
     <!--Modal: Login / Register Form-->
-    <div th:fragment="modal" class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg cascading-modal" role="document">
             <!--Content-->
             <div class="modal-content">
 
@@ -92,16 +91,18 @@
                 <div class="modal-c-tabs">
 
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs tabs-2 secondary-text" role="tablist">
+                    <ul class="nav nav-tabs md-tabs tabs-2 secondary-text" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i
-                                    class="fas fa-user mr-1 secondary-text"></i>
-                                Login</a>
+                            <a class="nav-link active text-uppercase" data-toggle="tab" href="#panel7" role="tab"
+                               style="color: #282828">
+                                <i class="fas fa-user mr-1 secondary-text"></i>
+                                <b>Login</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link secondary-text" data-toggle="tab" href="#panel8" role="tab"><i
-                                    class="fas fa-user-plus mr-1 secondary-text"></i>
-                                Register</a>
+                            <a class="nav-link secondary-text text-uppercase" data-toggle="tab" href="#panel8"
+                               role="tab" style="color: #282828">
+                                <i class="fas fa-user-plus mr-1 secondary-text"></i>
+                                <b>Register</b></a>
                         </li>
                     </ul>
 
@@ -111,22 +112,24 @@
                         <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
                             <form th:action="@{/login}" method="POST" class="form-signin">
                                 <!--Login-Body-->
-                                <div class="modal-body ">
-                                    <div class="md-form form-sm ">
+                                <div class="modal-body mb-1">
+                                    <div class="md-form form-sm mb-5">
                                         <i class="fas fa-envelope prefix"></i>
-                                        <input type="email" name="email"
+                                        <input type="email" name="email" id="emailLogin"
                                                class="form-control form-control-sm validate"
-                                               placeholder="Enter email...">
+                                               placeholder="Enter email..."
+                                               required>
                                     </div>
 
-                                    <div class="md-form form-sm">
+                                    <div class="md-form form-sm mb-4">
                                         <i class="fas fa-lock prefix"></i>
-                                        <input type="password" name="password"
+                                        <input type="password" name="password" id="passwordLogin"
                                                class="form-control form-control-sm validate"
-                                               placeholder="Enter password...">
+                                               placeholder="Enter password..." required>
                                     </div>
                                     <div class="text-center mt-2">
-                                        <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                                        <button class="btn btn-secondary">Sign in<i class="fas fa-sign-in ml-1"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 <!--Login-Footer-->
@@ -135,7 +138,7 @@
                                         <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
                                         <p>Forgot <a href="#" class="blue-text">Password?</a></p>
                                     </div>
-                                    <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                    <button type="button" class="btn btn-outline-secondary waves-effect ml-auto"
                                             data-dismiss="modal">Close
                                     </button>
                                 </div>
@@ -145,39 +148,69 @@
 
                         <!--Panel 8-->
                         <div class="tab-pane fade" id="panel8" role="tabpanel">
+                            <form th:action="@{/register}" method="post" th:object="${user}">
+                                <!--Body-->
+                                <div class="modal-body">
 
-                            <!--Body-->
-                            <div class="modal-body">
-                                <div class="md-form form-sm ">
-                                    <i class="fas fa-envelope prefix"></i>
-                                    <input type="email" id="modalLRInput12"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter email...">
+                                    <div class="md-form form-sm mb-5">
+                                        <label for="name">Name</label>
+                                        <input th:field="*{name}"
+                                               type="text" id="name"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Enter name..." required>
+                                    </div>
+                                    <div class="md-form form-sm mb-5">
+                                        <label for="surname">Last name:</label>
+                                        <input th:field="*{surname}"
+                                               type="text" id="surname"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Enter last name..." required>
+                                    </div>
+                                    <div class="md-form form-sm mb-5">
+                                        <label for="username">Username:</label>
+                                        <input th:field="*{username}"
+                                               type="text" id="username"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Enter username..." required>
+                                    </div>
+
+                                    <div class="md-form form-sm mb-5">
+                                        <i class="fas fa-envelope prefix"></i>
+                                        <input th:field="*{email}"
+                                               type="email" id="email"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Enter email..." required>
+                                    </div>
+
+                                    <div class="md-form form-sm mb-5">
+                                        <i class="fas fa-lock prefix"></i>
+                                        <input th:field="*{password}"
+                                               type="password" id="password"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Enter password..." required>
+                                    </div>
+
+                                    <div class="md-form form-sm mb-4">
+                                        <i class="fas fa-lock prefix"></i>
+                                        <input type="password" id="passwordRepeat"
+                                               class="form-control form-control-sm validate"
+                                               placeholder="Repeat password..." required>
+                                    </div>
+
+                                    <div class="text-center form-sm mt-2">
+                                        <button type="submit" class="btn btn-secondary">Sign up <i
+                                                class="fas fa-sign-in ml-1"></i></button>
+                                    </div>
+
                                 </div>
-
-                                <div class="md-form form-sm mb-5">
-                                    <i class="fas fa-lock prefix"></i>
-                                    <input type="password" id="modalLRInput13"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter password...">
-                                </div>
-
-                                <div class="md-form form-sm mb-4">
-                                    <i class="fas fa-lock prefix"></i>
-                                    <input type="password" id="modalLRInput14"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Repeat password...">
-                                    <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
-                                </div>
-
-                            </div>
+                            </form>
                             <!--Footer-->
                             <div class="modal-footer">
                                 <div class="options text-right">
                                     <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a>
                                     </p>
                                 </div>
-                                <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                                <button type="button" class="btn btn-outline-secondary waves-effect ml-auto"
                                         data-dismiss="modal">Close
                                 </button>
                             </div>
@@ -187,6 +220,5 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
