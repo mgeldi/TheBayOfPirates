@@ -5,21 +5,13 @@
 <head th:replace="fragments/navbar.html :: head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
     <script th:inline="javascript"></script>
 </head>
 <body>
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 <div class="jumbotron" th:if="${principal}">
     <div class="container text-center" style="padding-top: 40px">
-        <h1 th:inline="text">Welcome to the Bay of Pirates, [[${#httpServletRequest.remoteUser}]]!</h1>
+        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, [[${#httpServletRequest.remoteUser}]]!</h1>
         <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
     </div>
 </div>
@@ -40,14 +32,55 @@
             </div>
             <div class="col-lg-6 order-lg-1">
                 <div class="p-5">
-                    <h2 class="display-4">For those about to rock...</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                    <h2 class="display-4">For those about to pirate...</h2>
+                    <p>In order to use our free torrent upload and download site, just simply create a profile
+                    ...djsaflkadsjökj asdjfölaksdjfjas dfka sdfkjaldsö fjasl dfajsd fkas dfölkjas dlfjasdfj lasdk
+                    alkjf ldaskjf alsdkfa sdfalksdjf lasdf askldfj askldjf sadkf ksaldf klasakdf sa lasdfk aksdf
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <h2 class="display-4">Share with the community!</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia
+                        odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis
+                        recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="img/03.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">...?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 </body>
 

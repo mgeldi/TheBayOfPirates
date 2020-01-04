@@ -1,6 +1,5 @@
 package de.htwberlin.de.TheBayOfPirates.dateAndTime;
 
-import de.htwberlin.de.TheBayOfPirates.dateAndTime.DateAndTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,6 @@ public class DateAndTimeController {
     @RequestMapping({"/about"})
     public String dateAndTime(Model model) {
         model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
-        return "AboutUs";
+        return "about";
     }
 }
