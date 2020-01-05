@@ -25,7 +25,7 @@ deploy:
         app: thebayofpirates
 
 script:
-        - ./gradlew check && ./gradlew test &&  $(npm bin)/cypress run --record
+        - ./gradlew check && ./gradlew test &&  $(npm bin)/cypress run
 
 
 cache:
