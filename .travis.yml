@@ -18,8 +18,6 @@ deploy:
   api_key:
     secure: i26xAUk2hEvfWBHXX8EuqY8le08/QV+LQojAQ81Slqlccn8/KkOuissulGHYFNXwVf4igs5CobSbt+OK+PgEmQpuIqFxHvaLB39YmOl64xtnoBp/atulaSqq0hSRDh+px6nkvQatlL/WdW4pwczr4ApjeDNmGXEHOJpOEKPAEVhSnW7uXThO4Bkx5zAf8qwdwbDOkYV9s4lNxhTHovnQLnRXqNs0Nq0Seq6/iiiubPdonEQ/2AV8HgTiEB5Zir7+QC0QvmMXmkdt+0NJJcmXeZNSswm5ck75yBBIEgbdCUrb/bCxfjlFX4b0iDd+KsrjMdCd+RsqYGMM/9Cjot0BRiP4WWoY9p5BFKzLbwZPoZ8xOoH6XGsD8Fbfdp1wvvCcwUbBTtWxjfGI7a/Pv1beG2aN8hRFGeK9rAUMjjL7XlzvpMgK/kr1MoI91bLXYEvf0kSYJsCIN9nMfEwv/DD4/8JlHD3hex0Hi7XKZdftQej2A8KR2bJWfBr7UtomN3o5tnSXCFdC+qyNpd3boG5rDvCmVTJ0x0qVLexLUTVWpYKZ2o/03apNmb5WEv4/OhP1AGc9v4l+uv0VjUNLayaYOE0Lwpg6zGYGalszSFQe6WH91H4+OHfGQNf86PK+Uls/MgilN8NAD+ZV0TJo7eaf9dQiOUX2cxEQkJmFy18l5oY=
   app: thebayofpirates
-  on:
-    repo: Rankhole/TheBayOfPirates
 cache:
   npm: true
   directories:
