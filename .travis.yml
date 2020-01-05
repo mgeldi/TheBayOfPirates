@@ -23,6 +23,7 @@ deploy:
         app: thebayofpirates
 
 script:
+        - npm start & wait-on http://localhost:8080
         - $(npm bin)/cypress run
 
 
