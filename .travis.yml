@@ -11,6 +11,7 @@ addons:
                         - libgconf-2-4
 
 install:
+        - npm install wait-on
         - npm ci
 
 before_install:
