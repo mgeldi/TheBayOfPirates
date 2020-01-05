@@ -25,8 +25,7 @@ deploy:
         app: thebayofpirates
 
 script:
-        - $(npm bin)/cypress run
-        - ./gradlew bootRun && npm run cypress:ci
+        - ./gradlew bootRun &&  $(npm bin)/cypress run
 
 
 cache:
