@@ -1,7 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.config;
 
 
-import de.htwberlin.de.TheBayOfPirates.service.UserDetailsServiceImpl;
+import de.htwberlin.de.TheBayOfPirates.user.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "login", "/about", "/register").permitAll()
-                .antMatchers( "/search", "/torrent", "/torrent/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers( "/search", "/torrent/*", "/profile/*").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

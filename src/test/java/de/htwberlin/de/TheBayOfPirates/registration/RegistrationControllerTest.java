@@ -1,8 +1,8 @@
 package de.htwberlin.de.TheBayOfPirates.registration;
 
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.service.UserService;
-import de.htwberlin.de.TheBayOfPirates.service.UserServiceImpl;
+import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
+import de.htwberlin.de.TheBayOfPirates.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

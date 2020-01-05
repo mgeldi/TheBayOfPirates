@@ -1,7 +1,5 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
-import de.htwberlin.de.TheBayOfPirates.service.TorrentService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

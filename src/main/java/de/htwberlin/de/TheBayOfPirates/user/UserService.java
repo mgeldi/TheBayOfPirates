@@ -1,6 +1,5 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.user;
 
-import de.htwberlin.de.TheBayOfPirates.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

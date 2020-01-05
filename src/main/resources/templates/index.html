@@ -2,230 +2,87 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="en">
 
-<head>
+<head th:replace="fragments/navbar.html :: head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Font awesome icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>TheBayOfPirates</title>
+    <script th:inline="javascript"></script>
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">TheBayOfPirates</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li th:if="${principal}" class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-            </li>
-            <li th:if="${principal}" class="nav-item">
-                <a class="nav-link" href="/torrent/upload">Torrents</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-
-
-            <div class="btn-toolbar">
-                <div th:if="${principal}" id="search-bar">
-                    <input class="form-control mr-sm-2" type="search"
-                           placeholder="Search..." aria-label="Search">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </div>
-                </div>
-
-                <div th:if="${principal} ==  null" th:action="@{/login}" th:method="POST" class="btn-group mr-2"
-                     role="group" aria-label="Second group">
-                    <button id="loginbtn" class="btn btn-outline-secondary my-2 my-sm-0" type="button"
-                            data-toggle="modal" data-target=".LoginButton">Login
-                    </button>
-                </div>
-
-                <div th:if="${principal}" class="btn-group mr-2" role="group" aria-label="Second group">
-                    <a href="/logout">
-                        <button type="button" id="logoutbtn" class="btn btn-outline-secondary my-2 my-sm-0">Logout
-                        </button>
-                    </a>
-                </div>
-
-            </div>
-        </form>
+<div th:replace="fragments/navbar.html :: navbar"></div>
+<div class="jumbotron" th:if="${principal}">
+    <div class="container text-center" style="padding-top: 40px">
+        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, [[${#httpServletRequest.remoteUser}]]!</h1>
+        <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
     </div>
-</nav>
+</div>
+<div class="jumbotron" th:if="${principal} == null">
+    <div class="container text-center" style="padding-top: 40px">
+        <h1 class="display-2" th:inline="text">The Bay of Pirates</h1>
+        <p style="font-size: 20px; padding-top: 20px">Will Rock Your Socks Off</p>
+    </div>
+</div>
 
-<!--Modal: Login / Register Form-->
-<div class="modal fade LoginButton" id="modalLRForm" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg cascading-modal" role="document">
-        <!--Content-->
-        <div class="modal-content">
-
-            <!--Modal cascading tabs-->
-            <div class="modal-c-tabs">
-
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs md-tabs tabs-2 secondary-text" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active text-uppercase" data-toggle="tab" href="#panel7" role="tab" style="color: #282828">
-                            <i class="fas fa-user mr-1 secondary-text"></i>
-                            <b>Login</b></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link secondary-text text-uppercase" data-toggle="tab" href="#panel8" role="tab" style="color: #282828">
-                            <i class="fas fa-user-plus mr-1 secondary-text"></i>
-                            <b>Register</b></a>
-                    </li>
-                </ul>
-
-                <!-- Tab panels -->
-                <div class="tab-content">
-                    <!--Panel 7-->
-                    <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
-                        <form th:action="@{/login}" method="POST" class="form-signin">
-                            <!--Login-Body-->
-                            <div class="modal-body mb-1">
-                                <div class="md-form form-sm mb-5">
-                                    <i class="fas fa-envelope prefix"></i>
-                                    <input type="email" name="email" id="emailLogin"
-                                           class="form-control form-control-sm validate" placeholder="Enter email..."
-                                           required>
-                                </div>
-
-                                <div class="md-form form-sm mb-4">
-                                    <i class="fas fa-lock prefix"></i>
-                                    <input type="password" name="password" id="passwordLogin"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter password..." required>
-                                </div>
-                                <div class="text-center mt-2">
-                                    <button class="btn btn-secondary">Sign in<i class="fas fa-sign-in ml-1"></i></button>
-                                </div>
-                            </div>
-                            <!--Login-Footer-->
-                            <div class="modal-footer">
-                                <div class="options text-center text-md-right mt-1">
-                                    <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
-                                    <p>Forgot <a href="#" class="blue-text">Password?</a></p>
-                                </div>
-                                <button type="button" class="btn btn-outline-secondary waves-effect ml-auto"
-                                        data-dismiss="modal">Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!--/.Panel 7-->
-
-                    <!--Panel 8-->
-                    <div class="tab-pane fade" id="panel8" role="tabpanel">
-                        <form th:action="@{/register}" method="post" th:object="${user}">
-                            <!--Body-->
-                            <div class="modal-body">
-
-                                <div class="md-form form-sm mb-5">
-                                    <label for="name">Name</label>
-                                    <input th:field="*{name}"
-                                           type="text" id="name"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter name..." required>
-                                </div>
-                                <div class="md-form form-sm mb-5">
-                                    <label for="surname">Last name:</label>
-                                    <input th:field="*{surname}"
-                                           type="text" id="surname"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter last name..." required>
-                                </div>
-                                <div class="md-form form-sm mb-5">
-                                    <label for="username">Username:</label>
-                                    <input th:field="*{username}"
-                                           type="text" id="username"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter username..." required>
-                                </div>
-
-                                <div class="md-form form-sm mb-5">
-                                    <i class="fas fa-envelope prefix"></i>
-                                    <input th:field="*{email}"
-                                           type="email" id="email"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter email..." required>
-                                </div>
-
-                                <div class="md-form form-sm mb-5">
-                                    <i class="fas fa-lock prefix"></i>
-                                    <input th:field="*{password}"
-                                           type="password" id="password"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Enter password..." required>
-                                </div>
-
-                                <div class="md-form form-sm mb-4">
-                                    <i class="fas fa-lock prefix"></i>
-                                    <input type="password" id="passwordRepeat"
-                                           class="form-control form-control-sm validate"
-                                           placeholder="Repeat password..." required>
-                                </div>
-
-                                <div class="text-center form-sm mt-2">
-                                    <button type="submit" class="btn btn-secondary">Sign up <i
-                                            class="fas fa-sign-in ml-1"></i></button>
-                                </div>
-
-                            </div>
-                        </form>
-                        <!--Footer-->
-                        <div class="modal-footer">
-                            <div class="options text-right">
-                                <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
-                            </div>
-                            <button type="button" class="btn btn-outline-secondary waves-effect ml-auto"
-                                    data-dismiss="modal">Close
-                            </button>
-                        </div>
-                    </div>
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="../static/01.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">For those about to pirate...</h2>
+                    <p>In order to use our free torrent upload and download site, just simply create a profile
+                        ...djsaflkadsjökj asdjfölaksdjfjas dfka sdfkjaldsö fjasl dfajsd fkas dfölkjas dlfjasdfj lasdk
+                        alkjf ldaskjf alsdkfa sdfalksdjf lasdf askldfj askldjf sadkf ksaldf klasakdf sa lasdfk aksdf
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="home-page">
-    <div th:if="${principal}" align="center">
-        <h1 th:inline="text">Welcome to the bay of pirates [[${#httpServletRequest.remoteUser}]]!</h1>
-        <hr>
-    </div>
-    <div>
-        //fill with content here
-    </div>
+</section>
 
-</div>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <h2 class="display-4">Share with the community!</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia
+                        odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis
+                        recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="img/03.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">...?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste
+                        esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 
-<script th:inline="javascript">
-
-
-</script>
 </html>

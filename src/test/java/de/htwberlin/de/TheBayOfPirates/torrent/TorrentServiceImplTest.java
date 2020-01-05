@@ -1,10 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.repository.TorrentRepository;
-import de.htwberlin.de.TheBayOfPirates.service.TorrentServiceImpl;
-import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

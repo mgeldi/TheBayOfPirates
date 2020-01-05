@@ -1,4 +1,4 @@
-package de.htwberlin.de.TheBayOfPirates.entity;
+package de.htwberlin.de.TheBayOfPirates.role;
 
 import javax.persistence.*;
 

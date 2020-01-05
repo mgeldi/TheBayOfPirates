@@ -1,16 +1,12 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.user;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Role;
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import org.assertj.core.api.OptionalIntAssert;
-import org.junit.Before;
+import de.htwberlin.de.TheBayOfPirates.role.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.HashSet;
 import java.util.Optional;

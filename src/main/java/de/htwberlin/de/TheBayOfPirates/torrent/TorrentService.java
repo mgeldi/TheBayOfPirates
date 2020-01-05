@@ -1,6 +1,5 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
