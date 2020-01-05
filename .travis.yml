@@ -26,7 +26,7 @@ deploy:
 
 script:
         - $(npm bin)/cypress run
-        - npm run cypress:ci
+        - ./gradlew bootRun && npm run cypress:ci
 
 
 cache:
