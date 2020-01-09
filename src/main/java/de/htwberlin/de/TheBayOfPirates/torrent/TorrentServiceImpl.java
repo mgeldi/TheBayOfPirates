@@ -4,6 +4,9 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -11,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -171,5 +175,15 @@ public class TorrentServiceImpl implements TorrentService {
     public void removeTorrentByName(String name) {
         Optional<Torrent> torrent = torrentRepository.findByName(name);
         torrentRepository.delete(torrent.get());
+    }
+
+    @Override
+    public Page<Torrent> getTorrentPagesBySearch(String searchTerm, int page) {
+        PageRequest pageRequest = PageRequest.of(page, PAGESIZE);
+        Page<Torrent> resultPage = torrentRepository.findAllByNameContaining(searchTerm, pageRequest);
+        System.out.println("Searchterm was: " + searchTerm);
+        System.out.println("Result was:" + resultPage.toString());
+        System.out.println("Item count: " + resultPage.getTotalElements());
+        return resultPage;
     }
 }

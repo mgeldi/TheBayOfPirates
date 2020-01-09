@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
+
+<head th:insert="fragments/navbar.html :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script th:inline="javascript"></script>
+    <title>Search for Torrents</title>
+    <link rel="stylesheet" href="css/stylesheet.css"/>
+</head>
+
+<body>
+<div th:replace="fragments/navbar.html :: navbar"></div>
+<div class="border border-secodary" style="margin: 100px; width: auto; padding: 1px;">
+
+    <div class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
+        <table style="width: 100%">
+            <tr>
+                <th>Name</th>
+                <th>Uploaded By</th>
+                <th>Upload Date</th>
+            </tr>
+            <tr th:each="torrent : ${torrentPage.content}">
+                <td><a th:text="${torrent.getName()}" th:href="@{/torrent/id={id}(id=${torrent.getTorrentID()})}"></a></td>
+                <td th:text="${torrent.getUser().getUsername()}"></td>
+                <td th:text="${torrent.getUploadedDateTime()}"></td>
+            </tr>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li th:if="!${isFirstPage}">
+                    <a th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage -1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:if="${totalPages > 0}"
+                    th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:class="${pageNumber==torrentPage.number + 1} ? active"></a>
+                </li>
+                <li th:if="!${isLastPage}">
+                    <a th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage +1})}" aria-label="Previous">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+    </div>
+</div>
+
+</body>
+
+</html>
