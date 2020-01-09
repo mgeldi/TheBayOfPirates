@@ -2,7 +2,6 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import com.sun.istack.NotNull;
 import de.htwberlin.de.TheBayOfPirates.user.User;
-import jdk.vm.ci.meta.Local;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 
