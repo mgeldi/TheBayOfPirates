@@ -49,15 +49,20 @@
                         <a class="nav-link" href="/about">About</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+                <div class="form-inline my-2 my-lg-0">
 
                     <div class="btn-toolbar">
                         <div th:if="${principal}" id="search-bar">
-                            <input class="form-control mr-sm-2" type="search"
-                                   placeholder="Search..." aria-label="Search">
-                            <div class="btn-group mr-2" role="group" aria-label="First group">
-                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-                            </div>
+                            <form action="/torrent/search" method="get">
+                                <input class="form-control mr-sm-2"
+                                       type="search"
+                                       placeholder="Search..."
+                                       aria-label="Search" id="search" name="search">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                                </div>
+                            </form>
+
                         </div>
 
                         <div th:if="${principal} ==  null" th:action="@{/login}" th:method="POST" class="btn-group mr-2"
@@ -76,7 +81,7 @@
                         </div>
 
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </nav>

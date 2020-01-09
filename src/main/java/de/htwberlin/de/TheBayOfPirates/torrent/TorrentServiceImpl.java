@@ -6,7 +6,6 @@ import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -14,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -122,38 +120,6 @@ public class TorrentServiceImpl implements TorrentService {
 
     }
 
-
-    public void saveStandardTorrent() throws Exception {
-        System.out.println("Entered postcunstruct");
-        File file = new File("~/Downloads/archlinux-2019.12.01-x86_64.iso.torrent");
-        if (file.exists()) {
-
-            System.out.println(file.getName());
-            String actualName = file.getName().substring(0, file.getName().length() - ".torrent".length());
-            if (torrentRepository.findByName(actualName).isPresent()) {
-                System.out.println("Default torrent already in database!");
-                return;
-            }
-            System.out.println("Torrent was loaded!" + file.getName());
-            saveTorrent(file, "werder@gmail.com", "This is a test torrent file in our" +
-                    "database!");
-        } else {
-            System.out.println("Torrent not found!");
-        }
-    }
-
-
-    public void loadStandardTorrent() throws Exception {
-        File file = this.loadTorrent("archlinux-2019.12.01-x86_64.iso");
-        if (file.exists()) {
-            System.out.println("Torrent was restored out of database!");
-            if (file.getName().equals("archlinux-2019.12.01-x86_64.iso")) {
-                System.out.println("Name was also fine!");
-            }
-        } else {
-            System.out.println("Torrent could not be restored: " + file.getName() + " " + file.getAbsolutePath());
-        }
-    }
 
     @Override
     public Optional<Torrent> findByName(String name) {

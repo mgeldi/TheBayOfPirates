@@ -159,6 +159,14 @@ public class TorrentController {
         }
     }
 
+    @GetMapping(value = "/torrent/search")
+    public ModelAndView searchTorrent(@RequestParam(name="search") String search){
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(search);
+        modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/torrent/search={name}/page={page}")
     public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal, ModelMap modelMap) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
