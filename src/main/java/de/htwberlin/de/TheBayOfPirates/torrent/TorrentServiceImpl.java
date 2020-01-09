@@ -179,7 +179,7 @@ public class TorrentServiceImpl implements TorrentService {
 
     @Override
     public Page<Torrent> getTorrentPagesBySearch(String searchTerm, int page) {
-        PageRequest pageRequest = PageRequest.of(page, PAGESIZE);
+        PageRequest pageRequest = PageRequest.of(page, TorrentService.PAGESIZE);
         Page<Torrent> resultPage = torrentRepository.findAllByNameContaining(searchTerm, pageRequest);
         System.out.println("Searchterm was: " + searchTerm);
         System.out.println("Result was:" + resultPage.toString());

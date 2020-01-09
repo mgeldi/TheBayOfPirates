@@ -166,8 +166,8 @@ public class TorrentController {
         modelMap.addAttribute("principal", principal);
         Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page -1); //-1 because it starts at 0
         modelMap.addAttribute("totalPages", torrentPage.getTotalPages());
+        System.out.println(torrentPage.getTotalPages());
         modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("pageNum", page);
         modelMap.addAttribute("isFirstPage", page == 1);
         modelMap.addAttribute("isLastPage", page == torrentPage.getTotalPages());
         modelMap.addAttribute("searchURL", "/torrent/search=" + name + "/page=");

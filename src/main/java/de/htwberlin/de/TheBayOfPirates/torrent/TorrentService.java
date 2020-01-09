@@ -13,7 +13,7 @@ public interface TorrentService {
     /**
      * For setting the amount of items shown per page
      */
-    public static final int PAGESIZE = 5;
+    public static final int PAGESIZE = 3;
 
     Torrent saveTorrent(File torrentFile, String userEmail, String description) throws Exception;
 
