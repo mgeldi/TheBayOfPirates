@@ -15,10 +15,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.2.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: '2.2.2.RELEASE'
 
     compile("org.springframework.boot:spring-boot-starter-web")
     //https://mvnrepository.com/artifact/org.springframework/spring-webmvc
