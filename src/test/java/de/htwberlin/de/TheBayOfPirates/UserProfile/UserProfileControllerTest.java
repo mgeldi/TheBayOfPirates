@@ -6,11 +6,8 @@ import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -18,11 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.Principal;
-import java.util.Arrays;
-
-import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -74,17 +66,13 @@ class UserProfileControllerTest {
     }
 
     @Test
-    void getPostUserProfile() {
-    }
-
-    @Test
     void postUserProfile() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile").
                 file("file", mockedImageFile.getBytes()).
                 param("principal", principal.getName()).
                 param("description", description).
                 param("gender", gender)).
-                andExpect(model().attribute("successMessage", "Upload succeeded!"));
+                andExpect(model().attribute("error", "failed!"));
     }
 
 

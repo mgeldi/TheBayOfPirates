@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
-import static org.junit.Assert.fail;
+
 
 
 class UserProfileServiceImplTest {
