@@ -13,6 +13,10 @@ install:
 - npm ci
 before_install:
 - psql -c 'create database webprojectdb;' -U postgres
+script:
+        - .gradlew bootrun &
+        - sleep 100
+        - npx cypress run
 deploy:
   provider: heroku
   api_key:
