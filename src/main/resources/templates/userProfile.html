@@ -1,76 +1,118 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/navbar.html :: head">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script th:inline="javascript"></script>
+    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+          rel="stylesheet" type="text/css"/>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 </head>
 <body>
-<div class="navbar">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About Us</a></li>
-    </ul>
-</div>
-<div class="row col-lg-4 col-lg-offset-4" th:if="${principal.getName() == useremail}"
-     style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
-    <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" th:object="${description}"
-          method="post"
-          class="form-signin" role="form">
-        <h3 class="form-signin-heading">Profile</h3>
 
-        <div>
-            <table>
-                <tr>
-                    <div class="profilePic">
-                        <input type='file' name="file" onchange="readURL(this);" />
-                        <img id="blah" src="#" alt="your image"/>
+<nav th:replace="fragments/navbar.html :: navbar"></nav>
+
+<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == useremail}"
+     style="margin: auto; width: 80%; padding: 100px;">
+    <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
+        <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
+
+        <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" th:object="${description}"
+              method="post"
+              class="form-signin" role="form">
+            <h3 class="form-signin-heading display-3">Profile</h3>
+            <hr>
+            <input type="file" name="file" class="custom-file-input" id="customFileLang" onchange="readURL(this)"/>
+
+            <div>
+                <table>
+                    <tr>
+                        <div class="profilePic">
+                            <img src="/images/pirateprofile.png" style="width: 80%"/>
+                            <hr>
+                             <div class="custom-file">
+                                <label class="custom-file-label" for="customFileLang">Choose your image...</label>
+                             </div>
+                            <hr>
+                        </div>
+                    </tr>
+                    <div class="text-left">
+                        <span class="font-weight-light col-md-3 align-baseline"
+                              style="font-size: x-large; margin-left: 5%">Username:</span>
+                        <span class="container align-baseline " style="font-size: large"
+                              th:text="${user.getUsername()}"></span>
                     </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <label for="FormControlTextarea1">Description: </label>
-                        <input class="form-control" name="description" id="FormControlTextarea1" rows="1"/>
+
+                    <div class="form-row">
+                        <div class="text-left">
+                            <span class="font-weight-light col-md-3 align-baseline"
+                              style="font-size: x-large; margin-left: 5%">Gender:</span>
+                            <span class="container align-baseline " style="font-size: large"
+                                th:text="${user.getGender()}"></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="font-weight-light col-md-3 align-baseline"
+                                style="font-size: x-large; margin-left: 5%">Surname:</span>
+                            <span class="container align-baseline " style="font-size: large" th:text="${user.getSurname()}"></span>
+                        </div>
+
+                        <div class="text-left">
+                            <span class="font-weight-light col-md-3 align-baseline"
+                                  style="font-size: x-large; margin-left: 5%">Lastname:</span>
+                            <span class="container align-baseline " style="font-size: large" th:text="${user.getName()}"></span>
+                        </div>
+
+
                     </div>
-                </tr>
-                <tr>
-                    <div class="form-group" th:object="${gender}">
-                        <label for="FormControlTextarea2">Gender: </label>
-                        <input class="form-control" name="gender" id="FormControlTextarea2" rows="1"/>
-                    </div>
-                </tr>
-                <tr>
-                    <div>
-                        <button type="submit" id="uploadbtn" value="Upload"
-                                class="btn btn-outline-secondary my-2 my-sm-0">Upload
-                        </button>
-                    </div>
-                </tr>
-            </table>
+                    <!--
+                    <tr>
+                        <div class="form-group">
+                            <label for="FormControlTextarea1">About me: </label>
+                            <input class="form-control" name="description" id="FormControlTextarea1" rows="1"
+                                   style="margin: auto"/>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group" th:object="${gender}">
+                            <label for="FormControlTextarea2">Gender: </label>
+                            <input class="form-control" name="gender" id="FormControlTextarea2" rows="1"/>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div>
+                            <button type="submit" id="uploadbtn" value="Upload"
+                                    class="btn btn-outline-secondary my-2 my-sm-0">Upload
+                            </button>
+                        </div>
+                    </tr>
+                    -->
+                </table>
             </div>
-    </form>
+        </form>
+        </span>
+    </div>
 </div>
 </body>
 
-    <script>
+<script>
     function readURL(input) {
-    if (input.files && input.files[0]) {
-    var reader = new FileReader();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-    reader.onload = function (e) {
-    $('#blah')
-    .attr('src', e.target.result)
-    .width(150)
-    .height(200);
-    };
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
 
-    reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-    }
-    </script>
+</script>
 
 
