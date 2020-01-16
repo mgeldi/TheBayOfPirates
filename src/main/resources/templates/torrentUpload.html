@@ -1,55 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/navbar.html :: head">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/navbar.html :: head">
     <title>Upload Torrent</title>
 </head>
 <body>
-<nav th:replace="fragments/navbar.html :: navbar"></nav>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 
 <div class="row col-lg-8 col-lg-offset-8"
      style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
-    <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}" th:object="${description} "
-          method="post"
-          class="form-signin" role="form">
-        <h3 class="form-signin-heading display-3">Torrent Upload</h3>
-        <hr>
-        <div>
-            <table>
-                <tr>
-                    <div class="custom-file">
-                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
-                        <label class="custom-file-label" for="inputGroupFile02"> Chose file to upload </label>
-                        <script>
-                            $('#inputGroupFile02').on('change',function(){
-                                var fileName = $(this).val().substring(12);
-                                $(this).next('.custom-file-label').html(fileName);
-                            })
-                        </script>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <p></p>
-                        <label for="FormControlTextarea1">Torrent description: </label>
-                        <textarea class="form-control" name="description" id="FormControlTextarea1" rows="4"></textarea>
-                    </div>
-                </tr>
-                <tr>
-                    <div style="align-content: center">
-                        <button type="submit" id="uploadbtn" value="Upload"
-                                class="btn btn-outline-secondary my-2 my-sm-0">Upload
-                        </button>
-                    </div>
-                </tr>
-            </table>
+        <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}"
+              th:object="${description} "
+              method="post"
+              class="form-signin" role="form">
+            <h3 class="form-signin-heading display-3">Torrent Upload</h3>
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
+                            <label class="custom-file-label" for="inputGroupFile02"> Choose file to upload </label>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group">
+                            <p></p>
+                            <label for="FormControlTextarea1">Torrent description: </label>
+                            <textarea class="form-control" name="description" id="FormControlTextarea1"
+                                      rows="4"></textarea>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div style="align-content: center">
+                            <button type="submit" id="uploadbtn" value="Upload"
+                                    class="btn btn-outline-secondary my-2 my-sm-0">Upload
+                            </button>
+                        </div>
+                    </tr>
+                </table>
                 <div th:if="${param.error}">
                     <div th:text="${param.error.iterator().next()}"></div>
                 </div>
-        </div>
-    </form>
+            </div>
+        </form>
     </div>
 </div>
+<div th:insert="fragments/navbar.html :: footer"></div>
 </body>
+
+<script>
+    $('#inputGroupFile02').on('change', function () {
+        var fileName = $(this).val().substring(12);
+        $(this).next('.custom-file-label').html(fileName);
+    })
+</script>
 </html>

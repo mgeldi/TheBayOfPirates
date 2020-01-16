@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/navbar.html :: head">
+<head th:insert="fragments/navbar.html :: head">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<nav th:replace="fragments/navbar.html :: navbar"></nav>
+<nav th:insert="fragments/navbar.html :: navbar"></nav>
 
 <div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == useremail}"
      style="margin: auto; width: 80%; padding: 100px;">
@@ -82,7 +82,9 @@
                               </div>
                               <div class="modal-body">
                                    <div class="custom-file">
-                                <label class="custom-file-label" for="customFileLang">Change profile picture...</label>
+                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
+                                       <label class="custom-file-label"
+                                              for="customFileLang">Change profile picture...</label>
                              </div>
                                 <tr>
                                     <div class="form-group" th:object="${gender}">
@@ -93,7 +95,8 @@
                                 <tr>
                                     <div class="form-group">
                                         <label for="FormControlTextarea1" style="float: left">About me: </label>
-                                        <textarea class="form-control" name="description" id="FormControlTextarea1" rows="3"
+                                        <textarea class="form-control" name="description" id="FormControlTextarea1"
+                                                  rows="3"
                                                   style="margin: auto">
                                         </textarea>
                                     </div>
@@ -113,6 +116,7 @@
         </span>
     </div>
 </div>
+<div th:insert="fragments/navbar.html :: footer"></div>
 </body>
 
 <script>
@@ -130,6 +134,10 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-</script>
 
+    $('#inputGroupFile02').on('change', function () {
+        var fileName = $(this).val().substring(12);
+        $(this).next('.custom-file-label').html(fileName);
+    })
+</script>
 
