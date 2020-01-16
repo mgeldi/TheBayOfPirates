@@ -86,7 +86,7 @@ function login_as_user() {
     cy.get('#emailLogin').type('cypressemail@gmail.com');
     cy.get('#passwordLogin').type('cypress');
     cy.get('button').contains('Sign in').click();
-    cy.get('h1').should('contain', 'Hello cypressemail@gmail.com');
+    cy.get('h1').should('contain', 'Welcome to the Bay of Pirates, cypressemail@gmail.com!');
     I_see_navbar_as_user();
 }
 
@@ -147,7 +147,7 @@ function I_see_uploaded_torrent_page() {
     cy.get('div').should("contain", "arch");
     cy.get('div').should("contain", "cypressemail@gmail.com");
     cy.get('div').should("contain", "This is some description for cypress testing. Blablablalblablablalblabla");
-    cy.get('button').should("contain", "Delete this torrent");
+    cy.get('button').should("contain", "Delete");
 }
 
 function visit_torrent_upload_page() {
@@ -161,7 +161,7 @@ function visit_uploaded_torrent_page() {
 }
 
 function delete_torrent() {
-    cy.get('button').contains("Delete this torrent").click();
+    cy.get('button').contains("Delete").click();
     I_see_torrent_upload_page();
 }
 
