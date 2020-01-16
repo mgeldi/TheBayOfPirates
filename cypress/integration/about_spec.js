@@ -91,7 +91,7 @@ function login_as_user() {
     cy.get('#emailLogin').type('cypressemail@gmail.com');
     cy.get('#passwordLogin').type('cypress');
     cy.get('button').contains('Sign in').click();
-    cy.get('h1').should('contain', 'Welcome to the Bay of Pirates, cypressemail@gmail.com!');
+    cy.get('h1').should('contain', 'Welcome to the Bay of Pirates, cypressuser');
     I_see_navbar_as_user();
 }
 
@@ -181,5 +181,5 @@ function visit_profile_page() {
 
 function I_see_profile_page() {
     I_see_navbar_as_user();
-    cy.url().contains('/user/profile=cypressuser');
+    cy.url().should("contain", "/user/profile=cypressuser");
 }
