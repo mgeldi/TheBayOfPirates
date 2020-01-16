@@ -24,12 +24,6 @@ describe('Basic tests for the webpage', function () {
         visit_about_page();
     });
 
-    it('Delete the previously uploaded test torrent', function () {
-        login_as_user();
-        visit_uploaded_torrent_page();
-        delete_torrent();
-    });
-
     it('Visit Torrent page and upload a torrent', function () {
         login_as_user();
         visit_torrent_upload_page();
@@ -45,6 +39,12 @@ describe('Basic tests for the webpage', function () {
         upload_a_torrent();
         I_see_torrent_upload_page();
         torrent_already_exists();
+    });
+
+    it('Delete the previously uploaded test torrent', function () {
+        login_as_user();
+        visit_uploaded_torrent_page();
+        delete_torrent();
     });
 
     it('Visit profile page', function () {
@@ -91,7 +91,7 @@ function login_as_user() {
     cy.get('#emailLogin').type('cypressemail@gmail.com');
     cy.get('#passwordLogin').type('cypress');
     cy.get('button').contains('Sign in').click();
-    cy.get('h1').should('contain', 'Welcome to the Bay of Pirates, cypressemail@gmail.com!');
+    cy.get('h1').should('contain', 'Welcome to the Bay of Pirates, cypressuser');
     I_see_navbar_as_user();
 }
 
@@ -181,5 +181,5 @@ function visit_profile_page() {
 
 function I_see_profile_page() {
     I_see_navbar_as_user();
-    cy.url().contains('/user/profile=cypressuser');
+    cy.url().should("contain", "/user/profile=cypressuser");
 }
