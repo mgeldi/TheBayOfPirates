@@ -14,7 +14,7 @@ install:
 before_install:
 - psql -c 'create database webprojectdb;' -U postgres
 script:
-        - .gradlew bootrun &
+        - ./gradlew bootrun &
         - sleep 100
         - npx cypress run
 deploy:
