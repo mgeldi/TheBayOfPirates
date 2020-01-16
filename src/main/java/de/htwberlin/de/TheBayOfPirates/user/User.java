@@ -58,6 +58,8 @@ public class User {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;
 
+    private boolean hasProfilePicture;
+
 
     public byte[] getImage() {
         return image;
@@ -121,18 +123,12 @@ public class User {
         this.password = password;
     }
 
-    public User() {
-
+    public boolean hasProfilePicture() {
+        return hasProfilePicture;
     }
 
-    public User(@Length(min = 3, max = 24, message = "Name must be between 3 and 24 characters long!")
-                        String name, @Length(min = 3, max = 24, message = "Surname must be between 3 and 24 characters long!")
-                        String surname, @Email String email, @NotNull String password, UUID userID) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.userID = userID;
-
+    public void setHasProfilePicture(boolean hasProfilePicture) {
+        this.hasProfilePicture = hasProfilePicture;
     }
 
     public void setRoles(HashSet<Role> roles) {
@@ -158,4 +154,19 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public User() {
+
+    }
+
+    public User(@Length(min = 3, max = 24, message = "Name must be between 3 and 24 characters long!")
+                        String name, @Length(min = 3, max = 24, message = "Surname must be between 3 and 24 characters long!")
+                        String surname, @Email String email, @NotNull String password, UUID userID) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.userID = userID;
+
+    }
+
+
 }

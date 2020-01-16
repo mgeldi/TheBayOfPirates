@@ -32,7 +32,10 @@
 
                     <tr>
                         <div class="profilePic">
-                            <img src="/images/pirateprofile.png" style="width: 80%"/>
+                            <input type='file' name="file" onchange="readURL(this);" />
+                            <img id="blah" src="/images/pirateprofile.png" alt="your image" style="width: 80%"/>
+
+                          
                             <hr>
                             <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
                                     data-target="#editProfileModal">Edit Profile</button>
