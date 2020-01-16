@@ -29,67 +29,84 @@
 
             <div>
                 <table>
+
                     <tr>
                         <div class="profilePic">
                             <img src="/images/pirateprofile.png" style="width: 80%"/>
                             <hr>
-                             <div class="custom-file">
-                                <label class="custom-file-label" for="customFileLang">Choose your image...</label>
-                             </div>
+                            <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
+                                    data-target="#editProfileModal">Edit Profile</button>
                             <hr>
                         </div>
                     </tr>
-                    <div class="text-left">
-                        <span class="font-weight-light col-md-3 align-baseline"
-                              style="font-size: x-large; margin-left: 5%">Username:</span>
-                        <span class="container align-baseline " style="font-size: large"
-                              th:text="${user.getUsername()}"></span>
+
+                    <table class="table table-bordered table-light">
+                            <tr class="font-weight-light">
+                                <th scope="row">Username: </th>
+                                <td colspan="4" style="font-size: large" th:text="${user.getUsername()}"></td>
+                            </tr>
+
+                            <tr class="font-weight-light">
+                                 <th scope="row">E-Mail: </th>
+                                <td colspan="4" style="font-size: large" th:text="${user.getEmail()}"></td>
+                            </tr>
+
+                            <tr class="font-weight-light">
+                                <th scope="row">Gender: </th>
+                                <td colspan="4" style="font-size: large" th:text="${user.getGender()}"></td>
+                            </tr>
+
+                            <tr class="font-weight-light">
+                                <th scope="row">Surname: </th>
+                                <td colspan="2" style="font-size: large" th:text="${user.getSurname()}"></td>
+                                <th scope="row">Lastname: </th>
+                                <td colspan="2" style="font-size: large" th:text="${user.getName()}"></td>
+                            </tr>
+
+                            <tr class="font-weight-light">
+                                <th scope="row">About Me: </th>
+                                <td colspan="4" style="font-size: large" th:text="${user.getDescription()}"></td>
+                            </tr>
+                    </table>
+
+                    <!--Modal-->
+                    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+                         aria-labelledby="editProfileModalTitle" aria-hidden="true">
+                       <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Edit Profile</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                   <div class="custom-file">
+                                <label class="custom-file-label" for="customFileLang">Change profile picture...</label>
+                             </div>
+                                <tr>
+                                    <div class="form-group" th:object="${gender}">
+                                        <label for="FormControlTextarea2" style="float:left">Gender: </label>
+                                        <input class="form-control" name="gender" id="FormControlTextarea2"/>
+                                    </div>
+                                </tr>
+                                <tr>
+                                    <div class="form-group">
+                                        <label for="FormControlTextarea1" style="float: left">About me: </label>
+                                        <textarea class="form-control" name="description" id="FormControlTextarea1" rows="3"
+                                                  style="margin: auto">
+                                        </textarea>
+                                    </div>
+                                </tr>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" value="Upload" id="uploadbtn" class="btn btn-outline-secondary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="text-left">
-                            <span class="font-weight-light col-md-3 align-baseline"
-                              style="font-size: x-large; margin-left: 5%">Gender:</span>
-                            <span class="container align-baseline " style="font-size: large"
-                                th:text="${user.getGender()}"></span>
-                        </div>
-
-                        <div class="text-left">
-                            <span class="font-weight-light col-md-3 align-baseline"
-                                style="font-size: x-large; margin-left: 5%">Surname:</span>
-                            <span class="container align-baseline " style="font-size: large" th:text="${user.getSurname()}"></span>
-                        </div>
-
-                        <div class="text-left">
-                            <span class="font-weight-light col-md-3 align-baseline"
-                                  style="font-size: x-large; margin-left: 5%">Lastname:</span>
-                            <span class="container align-baseline " style="font-size: large" th:text="${user.getName()}"></span>
-                        </div>
-
-
-                    </div>
-                    <!--
-                    <tr>
-                        <div class="form-group">
-                            <label for="FormControlTextarea1">About me: </label>
-                            <input class="form-control" name="description" id="FormControlTextarea1" rows="1"
-                                   style="margin: auto"/>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div class="form-group" th:object="${gender}">
-                            <label for="FormControlTextarea2">Gender: </label>
-                            <input class="form-control" name="gender" id="FormControlTextarea2" rows="1"/>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div>
-                            <button type="submit" id="uploadbtn" value="Upload"
-                                    class="btn btn-outline-secondary my-2 my-sm-0">Upload
-                            </button>
-                        </div>
-                    </tr>
-                    -->
+                    <!-- Modal Ende -->
                 </table>
             </div>
         </form>
