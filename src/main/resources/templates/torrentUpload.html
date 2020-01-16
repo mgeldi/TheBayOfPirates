@@ -19,8 +19,14 @@
             <table>
                 <tr>
                     <div class="custom-file">
-                        <input type="file" name="file" class="custom-file-input" id="customFileLang">
-                        <label class="custom-file-label" for="customFileLang">Choose your file...</label>
+                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02"> Chose file to upload </label>
+                        <script>
+                            $('#inputGroupFile02').on('change',function(){
+                                var fileName = $(this).val().substring(12);
+                                $(this).next('.custom-file-label').html(fileName);
+                            })
+                        </script>
                     </div>
                 </tr>
                 <tr>
