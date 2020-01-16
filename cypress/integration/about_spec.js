@@ -24,12 +24,6 @@ describe('Basic tests for the webpage', function () {
         visit_about_page();
     });
 
-    it('Delete the previously uploaded test torrent', function () {
-        login_as_user();
-        visit_uploaded_torrent_page();
-        delete_torrent();
-    });
-
     it('Visit Torrent page and upload a torrent', function () {
         login_as_user();
         visit_torrent_upload_page();
@@ -45,6 +39,12 @@ describe('Basic tests for the webpage', function () {
         upload_a_torrent();
         I_see_torrent_upload_page();
         torrent_already_exists();
+    });
+
+    it('Delete the previously uploaded test torrent', function () {
+        login_as_user();
+        visit_uploaded_torrent_page();
+        delete_torrent();
     });
 
     it('Visit profile page', function () {
