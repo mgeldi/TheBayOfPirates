@@ -55,7 +55,7 @@ class TorrentControllerTest {
     }
 
     @Test
-    void getTorrenPagetByName() throws Exception {
+    void getTorrentPageByName() throws Exception {
         MvcResult result = mockMvc.perform(get("/torrent/name=archlinux-2019.12.01-x86_64.iso"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(forwardedUrl("showtorrent"))
