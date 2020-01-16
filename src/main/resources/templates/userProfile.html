@@ -16,7 +16,7 @@
         <li><a href="/about">About Us</a></li>
     </ul>
 </div>
-<div class="row col-lg-4 col-lg-offset-4"
+<div class="row col-lg-4 col-lg-offset-4" th:if="${principal.getName() == useremail}"
      style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
     <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" th:object="${description}"
           method="post"
@@ -27,20 +27,20 @@
             <table>
                 <tr>
                     <div class="profilePic">
-                        <input type='file' onchange="readURL(this);" />
+                        <input type='file' name="file" onchange="readURL(this);" />
                         <img id="blah" src="#" alt="your image"/>
                     </div>
                 </tr>
                 <tr>
                     <div class="form-group">
                         <label for="FormControlTextarea1">Description: </label>
-                        <textarea class="form-control" name="description" id="FormControlTextarea1" rows="1"></textarea>
+                        <input class="form-control" name="description" id="FormControlTextarea1" rows="1"/>
                     </div>
                 </tr>
                 <tr>
                     <div class="form-group" th:object="${gender}">
                         <label for="FormControlTextarea2">Gender: </label>
-                        <textarea class="form-control" name="gender" id="FormControlTextarea2" rows="1"></textarea>
+                        <input class="form-control" name="gender" id="FormControlTextarea2" rows="1"/>
                     </div>
                 </tr>
                 <tr>

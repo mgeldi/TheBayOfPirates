@@ -1,12 +1,13 @@
 package de.htwberlin.de.TheBayOfPirates.registration;
 
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.service.UserService;
+import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,6 +48,9 @@ public class RegistrationController {
         } else if (userService.userExists(user)) {
             modelAndView.addObject("successMessage", "User already exists!");
             System.out.println("User exists!");
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
         }
         // we will save the user if there are no binding errors
         else {
@@ -59,9 +63,6 @@ public class RegistrationController {
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
-        modelAndView.addObject("user", new User());
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
     }
 
 

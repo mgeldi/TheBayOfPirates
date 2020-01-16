@@ -1,16 +1,13 @@
-package de.htwberlin.de.TheBayOfPirates.entity;
+package de.htwberlin.de.TheBayOfPirates.user;
+
 
 import org.hibernate.annotations.Type;
+import de.htwberlin.de.TheBayOfPirates.role.Role;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 

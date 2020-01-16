@@ -1,9 +1,7 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.user;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Role;
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
-import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.role.Role;
+import de.htwberlin.de.TheBayOfPirates.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,7 +49,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public void saveUser(@Valid User user) throws Exception {
         user.setPassword(pwEncoder.encode(user.getPassword()));
-        //todo: add role
         Optional<Role> userRole = roleRepository.findByRole("USER");
         Role role = userRole.get();
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
@@ -71,30 +68,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Optional<User> findByUserName(String username) throws Exception{
+        Optional<User> user = userRepository.findByUsername(username);
+        if(!user.isPresent()){
+            throw new Exception("User profile not found!");
+        }
+        return user;
+    }
+
+    @Override
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName,String userEmail) throws Exception {
         if(imageName.endsWith(".png")|| imageName.endsWith(".jpg") &&
                 (imageByte.length/ 1000) < MAX_FILE_SIZE_IN_KILO_BYTES){
-            User userProfile = new User();
-            userProfile.setDescription(description);
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())
                 throw new Exception("User not found!");
+            User userProfile = user.get();
+            userProfile.setDescription(description);
             userProfile.setGender(gender);
             userProfile.setImage(imageByte);
             userRepository.save(userProfile);
             return userProfile;
         }else{
             throw new Exception("The uploaded picture is neither a png or jpg");
-        }
-    }
-
-    public File uploadPic(String pictureName) throws Exception {
-        Optional<User> user = userRepository.findByImage(pictureName);
-        File file = new File(System.getProperty(System.getProperty("user.home") + "/" + "" + pictureName + ".jpg"));
-        if (file.exists() == true) {
-            return file;
-        } else {
-            throw new Exception("File does not exist");
         }
     }
 }

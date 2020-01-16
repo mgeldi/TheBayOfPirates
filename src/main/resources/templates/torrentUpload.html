@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/navbar.html :: head">
     <title>Upload Torrent</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
 </head>
 <body>
-<div class="navbar">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About Us</a></li>
-    </ul>
-</div>
+<nav th:replace="fragments/navbar.html :: navbar"></nav>
+
 <div class="row col-lg-4 col-lg-offset-4"
-     style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+     style="margin: auto; width: auto; background-color: #fff;
+     padding: 100px;">
+    <span class="border border-secodary" style="margin: 40px; width: auto; padding: 60px">
     <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}" th:object="${description} "
           method="post"
           class="form-signin" role="form">
-        <h3 class="form-signin-heading">Torrent Upload</h3>
-
+        <h3 class="form-signin-heading display-3">Torrent Upload</h3>
+        <hr>
         <div>
             <table>
                 <tr>
@@ -30,25 +25,22 @@
                 </tr>
                 <tr>
                     <div class="form-group">
+                        <p></p>
                         <label for="FormControlTextarea1">Description: </label>
                         <textarea class="form-control" name="description" id="FormControlTextarea1" rows="3"></textarea>
                     </div>
                 </tr>
                 <tr>
-                    <div>
+                    <div style="align-content: center">
                         <button type="submit" id="uploadbtn" value="Upload"
                                 class="btn btn-outline-secondary my-2 my-sm-0">Upload
                         </button>
                     </div>
                 </tr>
             </table>
-            <div th:if="${param.error}">
-                <div th:text="${param.error.iterator().next()}"></div>
-            </div>
         </div>
     </form>
+    </span>
 </div>
 </body>
-
-
 </html>

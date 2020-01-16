@@ -1,16 +1,15 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
-import de.htwberlin.de.TheBayOfPirates.service.TorrentService;
+import de.htwberlin.de.TheBayOfPirates.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,10 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Min;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class TorrentController {
@@ -35,8 +38,11 @@ public class TorrentController {
         this.torrentService = torrentService;
     }
 
-    @GetMapping(value = "/torrent/name={name}")
-    public String getTorrent(Model model, @PathVariable String name) {
+    @GetMapping(value = "/torrent/name={name:.+}")
+    public String getTorrent(Model model, @PathVariable String name, Principal principal, ModelMap modelMap) {
+        modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
+        System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
             model.addAttribute("torrent", torrent.get());
@@ -48,7 +54,9 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/id={id}")
-    public String getTorrent(Model model, @PathVariable int id) {
+    public String getTorrent(Model model, @PathVariable int id, Principal principal, ModelMap modelMap) {
+        modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
         if (torrent.isPresent()) {
             model.addAttribute("torrent", torrent.get());
@@ -60,7 +68,9 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/upload")
-    public ModelAndView postTorrent() {
+    public ModelAndView postTorrent(ModelMap modelMap, Principal principal) {
+        modelMap.addAttribute("principal", principal);
+        modelMap.addAttribute("user", new User());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("description", "");
         modelAndView.setViewName("torrentUpload");
@@ -97,6 +107,7 @@ public class TorrentController {
                 modelAndView.addObject("successMessage", "Upload succeeded!");
                 modelAndView.setViewName("redirect:/torrent/id=" + savedTorrent.getTorrentID());
             } catch (Exception e) {
+                e.printStackTrace();
                 modelAndView.addObject("error", "Upload failed!");
                 modelAndView.setViewName("redirect:/torrent/upload");
             }
@@ -129,5 +140,56 @@ public class TorrentController {
                 // Contet-Length
                 .contentLength(torrentBytes.length) //
                 .body(resource);
+    }
+
+    @PostMapping(value = "/torrent/delete")
+    public ModelAndView deleteTorrent(@RequestParam(name = "filename") String filename, Principal principal) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Torrent> torrent = torrentService.findByName(filename);
+        if (torrent.isPresent()) {
+            if(principal.getName().equals(torrent.get().getUser().getEmail())){
+                torrentService.removeTorrentByName(filename);
+                modelAndView.setViewName("redirect:/torrent/upload");
+                return modelAndView;
+            } else {
+                throw new Exception("Not the original uploader!");
+            }
+        } else{
+            throw new Exception("Torrent not found");
+        }
+    }
+
+    @GetMapping(value = "/torrent/search")
+    public ModelAndView searchTorrent(@RequestParam(name="search") String search){
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(search);
+        modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/torrent/search={name}/page={page}")
+    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal, ModelMap modelMap) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        modelMap.addAttribute("user", new User());
+        modelMap.addAttribute("principal", principal);
+        Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page -1); //-1 because it starts at 0
+        modelMap.addAttribute("totalPages", torrentPage.getTotalPages());
+        System.out.println(torrentPage.getTotalPages());
+        modelMap.addAttribute("currentPage", page);
+        modelMap.addAttribute("isFirstPage", page == 1);
+        modelMap.addAttribute("isLastPage", page == torrentPage.getTotalPages());
+        modelMap.addAttribute("searchURL", "/torrent/search=" + name + "/page=");
+        modelMap.addAttribute("torrentPage", torrentPage);
+
+        int totalPages = torrentPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        modelAndView.setViewName("search");
+        return modelAndView;
     }
 }

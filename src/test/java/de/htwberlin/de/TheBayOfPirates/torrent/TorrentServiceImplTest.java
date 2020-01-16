@@ -1,10 +1,12 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Torrent;
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.repository.TorrentRepository;
+import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockingDetails;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -12,8 +14,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import static org.junit.Assert.*;
 
 
 class TorrentServiceImplTest {
@@ -49,11 +55,13 @@ class TorrentServiceImplTest {
         Mockito.when(torrentRepository.findByTorrentID(Mockito.anyInt())).thenReturn(Optional.empty());
         Mockito.when(torrentRepository.findByName(filename)).thenReturn(Optional.of(torrent));
         Mockito.when(torrentRepository.findByName("something")).thenReturn(Optional.empty());
+        Mockito.when(torrentRepository.findAllByNameContaining(Mockito.anyString(), Mockito.any()))
+                .thenReturn(Mockito.mock(Page.class));
         torrentService = new TorrentServiceImpl(torrentRepository, userService);
         //we need to delete the previous test run files
-        File torrentFile = new File(System.getProperty("user.home") + "/"+ filename + ".torrent");
+        File torrentFile = new File(System.getProperty("user.home") + "/" + filename + ".torrent");
         torrentFile.delete();
-        File torrentFileSomething = new File(System.getProperty("user.home") + "/"+ "something" + ".torrent");
+        File torrentFileSomething = new File(System.getProperty("user.home") + "/" + "something" + ".torrent");
         torrentFileSomething.delete();
     }
 
@@ -74,7 +82,7 @@ class TorrentServiceImplTest {
         try {
             torrentService.saveTorrent(torrentFile, "someNonExistingUser", description);
             fail("Expected an exception!");
-        } catch(Exception e){
+        } catch (Exception e) {
             assertEquals("User not found!", e.getMessage());
         }
     }
@@ -100,7 +108,7 @@ class TorrentServiceImplTest {
     }
 
     @Test
-    void loadTorrentNotPresent(){
+    void loadTorrentNotPresent() {
         try {
             torrentService.loadTorrent("something");
             fail("No exception thrown!");
@@ -117,5 +125,23 @@ class TorrentServiceImplTest {
         torrentService.findByTorrentID(1);
         Mockito.verify(torrentRepository, Mockito.times(1)).findByName(filename);
         Mockito.verify(torrentRepository, Mockito.times(1)).findByTorrentID(1);
+    }
+
+    @Test
+    void testSaveTorrentByBytes() throws Exception {
+        Torrent returnedTorrent = torrentService.saveTorrentBytes(torrentAsByte, filename + ".torrent", mockedUser.getEmail(), description);
+        Mockito.verify(userService, Mockito.times(1)).findByUserEmail(mockedUser.getEmail());
+        Mockito.verify(torrentRepository, Mockito.times(1)).save(Mockito.any());
+        assertEquals(torrent.getDescription(), returnedTorrent.getDescription());
+        assertEquals(torrent.getName(), returnedTorrent.getName());
+        assertEquals(torrent.getTorrent(), returnedTorrent.getTorrent());
+        assertEquals(torrent.getTorrentID(), returnedTorrent.getTorrentID());
+    }
+
+    @Test
+    void getTorrentPagesBySearch() {
+        Object resultPage = torrentService.getTorrentPagesBySearch("someSearchTerm", 0);
+        MockingDetails mockingDetails = Mockito.mockingDetails(resultPage);
+        Assert.assertTrue(new ReflectionEquals(Page.class).matches(mockingDetails.getMockCreationSettings().getTypeToMock()));
     }
 }

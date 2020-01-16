@@ -1,9 +1,7 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.user;
 
-import de.htwberlin.de.TheBayOfPirates.entity.Role;
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.repository.RoleRepository;
-import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.role.Role;
+import de.htwberlin.de.TheBayOfPirates.role.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

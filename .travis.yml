@@ -1,15 +1,24 @@
 language: java
-
+node_js:
+- 10
 sudo: enabled
-
 services:
-        - postgresql
-
+- postgresql
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
+install:
+- npm install -g wait-on
+- npm ci
 before_install:
-        - psql -c 'create database webprojectdb;' -U postgres
-        
+- psql -c 'create database webprojectdb;' -U postgres
 deploy:
-        provider: heroku
-        api_key:
-                secure: "c2f25de9-9de9-43df-9180-f6db4a7aa18b"
-        app: thebayofpirates
+  provider: heroku
+  api_key:
+    secure: uVGQ1zEqGt/48tLTefUb8PGcpZecwocj4XQbruanMlVHUeKKArJHsQfmhWO4xiUB+QRIBcDfWv1ZCMS+t/0+K9KRN/aXtbCCyNIkAPUrLJ2gtnxIL7M13uNuJq49Lc6A9JY4uRB5QWW/W0ojVmidyakdtIjEcUrfWe4EJ/IKzBNr5R6oUTFviq8pPD/OHmQnymy/GAI7Q1PHvcC2vGNdlEEwA90lINWlqiuhuvpU34osTQs3beQXLvVtyLLgJnOPYLy6cQuzSE6h3ogNDoaQU3qVgIQw3dxY2wQtQdSpbCI+BOiQvbQ0KDZY8WtKg0Zi4S2X4+ZffrF3NvII40Qx62UMYDl8zZih/qsjrpLvrdpj0FbGY7HTk70T/ZeCnjVt3vSZmVWS8pDeIwPSDTOp41bbp8tyYpKtLdGRTpkwXyG+vj85QCCneVmVmesOscVuZzAVmzQ6MDEgy664L0/wKRW72GUG+F998AwGgYuKu3MHzMr315MSMXvdFjzZQM7lhdvL9UCNYCcnLJKwVhN1ly1COpZJN/48pXvaUtBEAUtp/8ycirp3M5XmJVVDZiyLvA4+H6V3+EwbjmgzTNeO0kl7+fQ2mXljCnvD88off6YxNiEHW8qQBacqAdmGDDFwtljuoLCm5JQpY4lBiigg44wK5I0rgIGRpV+krtLygzo=
+  app: thebayofpirates
+cache:
+  npm: true
+  directories:
+  - "~/.cache"

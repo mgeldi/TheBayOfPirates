@@ -1,14 +1,10 @@
-package de.htwberlin.de.TheBayOfPirates.service;
+package de.htwberlin.de.TheBayOfPirates.user;
 
-
-
-import de.htwberlin.de.TheBayOfPirates.entity.User;
-import de.htwberlin.de.TheBayOfPirates.repository.UserRepository;
+import de.htwberlin.de.TheBayOfPirates.role.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +17,8 @@ import static org.junit.Assert.fail;
 class UserProfileServiceImplTest {
 
     private UserService userService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private RoleRepository roleRepository;
     private UserRepository userRepository;
     private File ImageFile;
     private User user;
@@ -38,6 +36,9 @@ class UserProfileServiceImplTest {
     void setUpMocks() throws IOException {
         ImageAsByte = gender.getBytes();
         userRepository = Mockito.mock(UserRepository.class);
+        bCryptPasswordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
+        roleRepository = Mockito.mock(RoleRepository.class);
+        userService = new UserServiceImpl(bCryptPasswordEncoder, userRepository, roleRepository);
         user = Mockito.mock(User.class);
         user = Mockito.mock(User.class);
         ClassLoader classLoader = getClass().getClassLoader();
@@ -56,17 +57,6 @@ class UserProfileServiceImplTest {
             userService.saveUserProfile(ImageAsByte, description, gender, Imagename, userMail);
             Mockito.verify(userRepository, Mockito.times(1))
                     .findByEmail("muhammed@gmail.com");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Test
-    void uploadPic() {
-        try {
-            userService.uploadPic(Imagename);
-            Mockito.verify(userRepository, Mockito.times(1)).findByImageName(Imagename);
         } catch (Exception e) {
             e.printStackTrace();
         }

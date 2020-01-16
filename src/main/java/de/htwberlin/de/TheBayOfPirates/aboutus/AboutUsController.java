@@ -1,11 +1,10 @@
 package de.htwberlin.de.TheBayOfPirates.aboutus;
 
-import de.htwberlin.de.TheBayOfPirates.entity.User;
+import de.htwberlin.de.TheBayOfPirates.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -33,7 +32,7 @@ public class AboutUsController {
     @GetMapping(value = "/about")
     public ModelAndView getAboutUs(Principal principal, Model model){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("AboutUs"); // resources/template/home.html
+        modelAndView.setViewName("about"); // resources/template/home.html
         modelAndView.addObject("user", new User());
         modelAndView.addObject("principal", principal);
         model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
