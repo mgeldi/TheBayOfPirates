@@ -74,22 +74,21 @@ class TorrentControllerTest {
 
 
     /**
-    @Test
-    void postTorrent() throws Exception {
-        System.out.println(torrentFile.getName());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/torrent/upload")
-                .file("file", mockedTorrentFile.getBytes())
-                .param("description", "hellohellohellohellohellohello"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(model().attribute("error", "something"));
-    }
+     * @Test void postTorrent() throws Exception {
+     * System.out.println(torrentFile.getName());
+     * mockMvc.perform(MockMvcRequestBuilders.multipart("/torrent/upload")
+     * .file("file", mockedTorrentFile.getBytes())
+     * .param("description", "hellohellohellohellohellohello"))
+     * .andExpect(status().is2xxSuccessful())
+     * .andExpect(model().attribute("error", "something"));
+     * }
      */
 
 
     @Test
     void testDownloadTorrent() throws Exception {
         MvcResult result = mockMvc.perform(get("/torrent/download")
-        .param("filename", "archlinux-2019.12.01-x86_64.iso"))
+                .param("filename", "archlinux-2019.12.01-x86_64.iso"))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
         Assert.assertEquals("Hello", result.getResponse().getContentAsString());

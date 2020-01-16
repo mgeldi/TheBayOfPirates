@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     BCryptPasswordEncoder pwEncoder;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserService userService;
 
-    private static final short MAX_FILE_SIZE_IN_KILO_BYTES = 500 ;
+    private static final short MAX_FILE_SIZE_IN_KILO_BYTES = 500;
 
 
     public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository, RoleRepository roleRepository) {
@@ -34,14 +33,14 @@ public class UserServiceImpl implements UserService{
         this.roleRepository = roleRepository;
     }
 
-    public UserServiceImpl(){
+    public UserServiceImpl() {
 
     }
 
     @PostConstruct
-    public void initRoles(){
+    public void initRoles() {
         System.out.println("Initializing User role!");
-        if(!roleRepository.findByRole("USER").isPresent()){
+        if (!roleRepository.findByRole("USER").isPresent()) {
             roleRepository.save(new Role("USER"));
         }
     }
@@ -68,18 +67,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> findByUserName(String username) throws Exception{
+    public Optional<User> findByUserName(String username) throws Exception {
         Optional<User> user = userRepository.findByUsername(username);
-        if(!user.isPresent()){
+        if (!user.isPresent()) {
             throw new Exception("User profile not found!");
         }
         return user;
     }
 
     @Override
-    public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName,String userEmail) throws Exception {
-        if(imageName.endsWith(".png")|| imageName.endsWith(".jpg") &&
-                (imageByte.length/ 1000) < MAX_FILE_SIZE_IN_KILO_BYTES){
+    public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String userEmail) throws Exception {
+        if (imageName.endsWith(".png") || imageName.endsWith(".jpg") &&
+                (imageByte.length / 1000) < MAX_FILE_SIZE_IN_KILO_BYTES) {
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())
                 throw new Exception("User not found!");
@@ -89,7 +88,7 @@ public class UserServiceImpl implements UserService{
             userProfile.setImage(imageByte);
             userRepository.save(userProfile);
             return userProfile;
-        }else{
+        } else {
             throw new Exception("The uploaded picture is neither a png or jpg");
         }
     }

@@ -1,6 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.UserProfile;
 
 
+import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,17 @@ public class UserProfileController {
     @Autowired
     UserService userService;
 
-    public UserProfileController(UserService userService){
+    public UserProfileController(UserService userService) {
         this.userService = userService;
     }
 
 
-
     @GetMapping(value = "/user/profile={username}")
-    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception{
+    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Optional<User> user = userService.findByUserName(username);
-        modelAndView.addObject("user", new User());
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("useremail", user.get().getEmail());
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("description", "");
         modelAndView.addObject("gender", "");
         modelAndView.setViewName("userProfile");
@@ -41,10 +40,11 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "/user/profile")
-    public ModelAndView postUserProfile(@RequestParam("description") String description,  @RequestParam("file") MultipartFile file,
-                                        @RequestParam("gender") String gender, Principal principal){
+    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile file,
+                                        @RequestParam("gender") String gender, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         try {
             String imageName = file.getOriginalFilename();
             User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());

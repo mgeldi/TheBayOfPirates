@@ -18,19 +18,18 @@ public class AboutUsController {
 
     /**
      * Request Mapping for /about (About Page). We fill the localdatetime with the information from our model.
+     *
      * @param model model
      * @return AboutUs the view which is to be returned
-
-    @RequestMapping({"/about"})
-    public String dateAndTime(Model model) {
-        model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
-        return "AboutUs";
-    }
-    */
+     * @RequestMapping({"/about"}) public String dateAndTime(Model model) {
+     * model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
+     * return "AboutUs";
+     * }
+     */
 
 
     @GetMapping(value = "/about")
-    public ModelAndView getAboutUs(Principal principal, Model model){
+    public ModelAndView getAboutUs(Principal principal, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("about"); // resources/template/home.html
         modelAndView.addObject("user", new User());

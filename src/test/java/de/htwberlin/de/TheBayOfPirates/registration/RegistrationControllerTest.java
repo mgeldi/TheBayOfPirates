@@ -24,7 +24,7 @@ class RegistrationControllerTest {
     private User mockedUser;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         mockedUser = Mockito.mock(User.class);
         UserService userService = Mockito.mock(UserServiceImpl.class);
         registrationController = new RegistrationController(userService);
@@ -32,7 +32,7 @@ class RegistrationControllerTest {
     }
 
     @Test
-    public void contextLoads() throws Exception{
+    public void contextLoads() throws Exception {
         assertThat(registrationController).isNotNull();
     }
 
@@ -49,8 +49,8 @@ class RegistrationControllerTest {
                 .param("username", "werder")
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/?successMessage=User+is+registered+successfully%21"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/?successMessage=User+is+registered+successfully%21"));
     }
 
     @Test

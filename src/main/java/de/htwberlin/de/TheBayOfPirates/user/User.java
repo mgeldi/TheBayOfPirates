@@ -1,9 +1,10 @@
 package de.htwberlin.de.TheBayOfPirates.user;
 
 
-import org.hibernate.annotations.Type;
 import de.htwberlin.de.TheBayOfPirates.role.Role;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,9 +54,9 @@ public class User{
 
     private boolean enabled;
 
-    @Column(name="image")
-    @Type(type="org.hibernate.type.BinaryType")
-    private byte []image;
+    @Column(name = "image")
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] image;
 
 
     public byte[] getImage() {
@@ -65,7 +66,6 @@ public class User{
     public void setImage(byte[] image) {
         this.image = image;
     }
-
 
 
     public boolean isEnabled() {
