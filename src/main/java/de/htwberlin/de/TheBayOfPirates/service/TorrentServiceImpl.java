@@ -39,7 +39,7 @@ public class TorrentServiceImpl implements TorrentService {
         if (torrentFile.getName().endsWith(".torrent")
                 && getFileSizeKiloBytes(torrentFile) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
 
-            FileInputStream fis = new FileInputStream(torrentFile);
+
             Torrent torrent = new Torrent();
             torrent.setDescription(description);
             Optional<User> user = userService.findByUserEmail(userEmail);

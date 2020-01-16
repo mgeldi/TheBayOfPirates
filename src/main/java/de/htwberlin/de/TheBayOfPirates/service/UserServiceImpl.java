@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -23,6 +24,10 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    private UserService userService;
+
+    private static final short MAX_FILE_SIZE_IN_KILO_BYTES = 500 ;
 
 
     public UserServiceImpl(BCryptPasswordEncoder pwEncoder, UserRepository userRepository, RoleRepository roleRepository) {
@@ -63,5 +68,33 @@ public class UserServiceImpl implements UserService{
     @Override
     public Optional<User> findByUserEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName,String userEmail) throws Exception {
+        if(imageName.endsWith(".png")|| imageName.endsWith(".jpg") &&
+                (imageByte.length/ 1000) < MAX_FILE_SIZE_IN_KILO_BYTES){
+            User userProfile = new User();
+            userProfile.setDescription(description);
+            Optional<User> user = userRepository.findByEmail(userEmail);
+            if (!user.isPresent())
+                throw new Exception("User not found!");
+            userProfile.setGender(gender);
+            userProfile.setImage(imageByte);
+            userRepository.save(userProfile);
+            return userProfile;
+        }else{
+            throw new Exception("The uploaded picture is neither a png or jpg");
+        }
+    }
+
+    public File uploadPic(String pictureName) throws Exception {
+        Optional<User> user = userRepository.findByImage(pictureName);
+        File file = new File(System.getProperty(System.getProperty("user.home") + "/" + "" + pictureName + ".jpg"));
+        if (file.exists() == true) {
+            return file;
+        } else {
+            throw new Exception("File does not exist");
+        }
     }
 }
