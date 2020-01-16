@@ -15,7 +15,7 @@ before_install:
 - psql -c 'create database webprojectdb;' -U postgres
 script:
         - ./gradlew bootrun &
-        - sleep 100
+        - sleep 130
         - npx cypress run
 deploy:
   provider: heroku
