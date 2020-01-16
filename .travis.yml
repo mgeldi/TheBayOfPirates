@@ -16,7 +16,7 @@ before_install:
 script:
         - ./gradlew test &
         - ./gradlew bootrun &
-        - sleep 70
+        - sleep 130
         - npx cypress run
 deploy:
   provider: heroku
