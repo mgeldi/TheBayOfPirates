@@ -39,10 +39,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li th:if="${principal}" class="nav-item">
                         <a class="nav-link" th:href="@{/user/profile={name}(name=${user.getUsername()})}">Profile</a>
                     </li>
-                    <li class="nav-item">
+                    <li th:if="${principal}" class="nav-item">
                         <a class="nav-link" href="/torrent/upload">Torrents</a>
                     </li>
                     <li class="nav-item">

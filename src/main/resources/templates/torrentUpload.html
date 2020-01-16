@@ -6,10 +6,10 @@
 <body>
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 
-<div class="row col-lg-8 col-lg-offset-8 center-block"
-     style="margin: auto; width: auto; background-color: #fff;
-     padding: 100px;">
-    <div class="border border-secodary" style="margin: 40px; width: auto; padding: 60px">
+<div class="row col-lg-8 col-lg-offset-8"
+     style="margin: auto; width: 80%; padding: 100px;">
+    <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
+        <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
     <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}" th:object="${description} "
           method="post"
           class="form-signin" role="form">
