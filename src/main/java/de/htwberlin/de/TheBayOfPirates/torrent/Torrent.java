@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Torrent {
 
     @Id
-    @Column(name="torrentid")
+    @Column(name = "torrentid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int torrentID;
 
@@ -21,7 +21,7 @@ public class Torrent {
         return torrentID;
     }
 
-    @Column(name="name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     @Length(min = 4, max = 50, message = "Your torrent name must be between 4 and 50 characters long")
     private String name;
 
@@ -38,8 +38,8 @@ public class Torrent {
     private LocalDateTime uploadedDateTime;
 
     @Lob
-    @Column(name="torrent", unique = false, nullable = false)
-    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name = "torrent", unique = false, nullable = false)
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] torrent;
 
     public String getName() {
@@ -75,7 +75,7 @@ public class Torrent {
     }
 
     @PrePersist
-    private void saveTimeStamp(){
+    private void saveTimeStamp() {
         uploadedDateTime = LocalDateTime.now();
     }
 

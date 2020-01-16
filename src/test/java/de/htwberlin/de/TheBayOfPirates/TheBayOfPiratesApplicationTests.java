@@ -9,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 class TheBayOfPiratesApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

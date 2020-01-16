@@ -3,10 +3,7 @@ package de.htwberlin.de.TheBayOfPirates.registration;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,12 +32,12 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) throws Exception {
+    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         // Check for the validations
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
-            modelMap.addAttribute("bindingResult", bindingResult);
+            modelAndView.addObject("bindingResult", bindingResult);
             System.out.println(bindingResult.toString());
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("redirect:/");

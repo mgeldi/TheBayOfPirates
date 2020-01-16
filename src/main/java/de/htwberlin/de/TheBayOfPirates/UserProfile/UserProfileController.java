@@ -21,14 +21,13 @@ public class UserProfileController {
     @Autowired
     UserService userService;
 
-    public UserProfileController(UserService userService){
+    public UserProfileController(UserService userService) {
         this.userService = userService;
     }
 
 
-
     @GetMapping(value = "/user/profile={username}")
-    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception{
+    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Optional<User> user = userService.findByUserName(username);
         modelAndView.addObject("user", new User());
@@ -41,8 +40,8 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "/user/profile")
-    public ModelAndView postUserProfile(@RequestParam("description") String description,  @RequestParam("file") MultipartFile file,
-                                        @RequestParam("gender") String gender, Principal principal){
+    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile file,
+                                        @RequestParam("gender") String gender, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView();
         try {

@@ -12,11 +12,11 @@ public class Role {
     @Column(name = "role", unique = true)
     private String role;
 
-    public Role(String role){
+    public Role(String role) {
         this.role = role;
     }
 
-    public Role(){
+    public Role() {
 
     }
 
@@ -26,7 +26,7 @@ public class Role {
     public void setRoleID(int i) {
     }
 
-    public String getRoleName(){
+    public String getRoleName() {
         return this.role;
     }
 }

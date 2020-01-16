@@ -5,21 +5,18 @@ import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockingDetails;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
+import org.springframework.data.domain.Page;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 class TorrentServiceImplTest {

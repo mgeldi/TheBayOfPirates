@@ -1,6 +1,5 @@
 package de.htwberlin.de.TheBayOfPirates.role;
 
-import de.htwberlin.de.TheBayOfPirates.role.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

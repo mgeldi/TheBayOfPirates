@@ -11,6 +11,7 @@ public class DateAndTime {
 
     /**
      * Simply returns a new LocalDateTime from the current time as a String.
+     *
      * @return String LocalDateTime now
      */
     public String getDateAndTime() {

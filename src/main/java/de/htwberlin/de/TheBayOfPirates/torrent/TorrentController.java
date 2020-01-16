@@ -13,16 +13,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Min;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -78,20 +74,10 @@ public class TorrentController {
     }
 
     @PostMapping(value = "/torrent/upload")
-    public ModelAndView postTorrent(HttpServletRequest request, @RequestParam("file") MultipartFile file,
-                                    RedirectAttributes redirectAttributes, ModelMap modelMap,
+    public ModelAndView postTorrent(@RequestParam("file") MultipartFile multipartFile,
                                     Principal principal, @RequestParam("description") String description) {
         ModelAndView modelAndView = new ModelAndView();
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile multipartFile = null;
 
-        Iterator<String> iterator = multipartRequest.getFileNames();
-
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            // create multipartFile array if you upload multiple files
-            multipartFile = (MultipartFile) multipartRequest.getFile(key);
-        }
         String fileName = multipartFile.getOriginalFilename();
         System.out.println("File to be uploaded was called: " + fileName);
         String actualName = fileName.substring(0, fileName.length() - ".torrent".length());
@@ -102,7 +88,7 @@ public class TorrentController {
             modelAndView.setViewName("redirect:/torrent/upload");
         } else {
             try {
-                Torrent savedTorrent = torrentService.saveTorrentBytes(file.getBytes(), fileName,
+                Torrent savedTorrent = torrentService.saveTorrentBytes(multipartFile.getBytes(), fileName,
                         principal.getName(), description);
                 modelAndView.addObject("successMessage", "Upload succeeded!");
                 modelAndView.setViewName("redirect:/torrent/id=" + savedTorrent.getTorrentID());
@@ -125,8 +111,7 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/download")
-    public ResponseEntity<InputStreamResource> downloadFile1(@RequestParam(name = "filename") String filename,
-                                                             ModelAndView modelAndView) throws Exception {
+    public ResponseEntity<InputStreamResource> downloadFile1(@RequestParam(name = "filename") String filename) throws Exception {
         Optional<Torrent> torrent = torrentService.findByName(filename);
         if (!torrent.isPresent()) {
             throw new Exception("Torrent not found! Shouldn't have happened!");
@@ -147,20 +132,20 @@ public class TorrentController {
         ModelAndView modelAndView = new ModelAndView();
         Optional<Torrent> torrent = torrentService.findByName(filename);
         if (torrent.isPresent()) {
-            if(principal.getName().equals(torrent.get().getUser().getEmail())){
+            if (principal.getName().equals(torrent.get().getUser().getEmail())) {
                 torrentService.removeTorrentByName(filename);
                 modelAndView.setViewName("redirect:/torrent/upload");
                 return modelAndView;
             } else {
                 throw new Exception("Not the original uploader!");
             }
-        } else{
+        } else {
             throw new Exception("Torrent not found");
         }
     }
 
     @GetMapping(value = "/torrent/search")
-    public ModelAndView searchTorrent(@RequestParam(name="search") String search){
+    public ModelAndView searchTorrent(@RequestParam(name = "search") String search) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.println(search);
         modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1");
@@ -168,25 +153,26 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/search={name}/page={page}")
-    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal, ModelMap modelMap) throws Exception {
+    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-        modelMap.addAttribute("user", new User());
-        modelMap.addAttribute("principal", principal);
-        Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page -1); //-1 because it starts at 0
-        modelMap.addAttribute("totalPages", torrentPage.getTotalPages());
+        modelAndView.addObject("user", new User());
+        modelAndView.addObject("principal", principal);
+        Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page - 1); //-1 because it starts at 0
+        modelAndView.addObject("totalPages", torrentPage.getTotalPages());
         System.out.println(torrentPage.getTotalPages());
-        modelMap.addAttribute("currentPage", page);
-        modelMap.addAttribute("isFirstPage", page == 1);
-        modelMap.addAttribute("isLastPage", page == torrentPage.getTotalPages());
-        modelMap.addAttribute("searchURL", "/torrent/search=" + name + "/page=");
-        modelMap.addAttribute("torrentPage", torrentPage);
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("isFirstPage", page == 1);
+        modelAndView.addObject("isLastPage", page == torrentPage.getTotalPages());
+        modelAndView.addObject("searchURL", "/torrent/search=" + name + "/page=");
+        modelAndView.addObject("torrentPage", torrentPage);
 
         int totalPages = torrentPage.getTotalPages();
+        // Get total number of pages
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
                     .collect(Collectors.toList());
-            modelMap.addAttribute("pageNumbers", pageNumbers);
+            modelAndView.addObject("pageNumbers", pageNumbers);
         }
 
         modelAndView.setViewName("search");

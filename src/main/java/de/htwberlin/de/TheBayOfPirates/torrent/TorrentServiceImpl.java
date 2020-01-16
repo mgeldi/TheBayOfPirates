@@ -8,17 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.Optional;
 
 @Service
 public class TorrentServiceImpl implements TorrentService {
-
-    private static int MAX_FILE_SIZE_IN_KILO_BYTES = 500;
 
     @Autowired
     private TorrentRepository torrentRepository;
@@ -29,33 +22,6 @@ public class TorrentServiceImpl implements TorrentService {
     public TorrentServiceImpl(TorrentRepository torrentRepository, UserService userService) {
         this.torrentRepository = torrentRepository;
         this.userService = userService;
-    }
-
-    private long getFileSizeKiloBytes(File file) {
-        return (long) file.length() / 1024;
-    }
-
-    @Override
-    public Torrent saveTorrent(File torrentFile, String userEmail, String description) throws Exception {
-        if (torrentFile.getName().endsWith(".torrent")
-                && getFileSizeKiloBytes(torrentFile) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
-
-
-            Torrent torrent = new Torrent();
-            torrent.setDescription(description);
-            Optional<User> user = userService.findByUserEmail(userEmail);
-            if (!user.isPresent())
-                throw new Exception("User not found!");
-            torrent.setUser(user.get());
-            String actualName = torrentFile.getName().substring(0, torrentFile.getName().length() - ".torrent".length());
-            torrent.setName(actualName);
-            byte[] byteTorrent = Files.readAllBytes(torrentFile.toPath());
-            torrent.setTorrent(byteTorrent);
-            torrentRepository.save(torrent);
-            return torrent;
-        } else {
-            throw new Exception("Not a Torrent!");
-        }
     }
 
     @Override
@@ -78,48 +44,6 @@ public class TorrentServiceImpl implements TorrentService {
             throw new Exception("Not a torrent!");
         }
     }
-
-    @Override
-    public File loadTorrent(String torrentName) throws Exception {
-        File torrentFile = new File(System.getProperty("user.home") + "/" + torrentName + ".torrent");
-        if (torrentFile.exists()) {
-            System.out.println("BUP");
-            return torrentFile;
-        } else {
-            torrentFile.createNewFile();
-            Optional<Torrent> torrent = torrentRepository.findByName(torrentName);
-            System.out.println(torrentName + torrent.isPresent());
-            if (!torrent.isPresent()) {
-                System.out.println("BEEEEEP");
-                throw new Exception("Torrent not found in Repository!");
-            } else {
-
-                try {
-
-                    // Initialize a pointer
-                    // in file using OutputStream
-                    OutputStream
-                            os
-                            = new FileOutputStream(torrentFile);
-
-                    // Starts writing the bytes in it
-                    os.write(torrent.get().getTorrent());
-                    System.out.println("Successfully"
-                            + " byte inserted");
-
-                    // Close the file
-                    os.close();
-                    os.flush();
-                } catch (Exception e) {
-                    System.out.println("Exception: " + e);
-                    e.printStackTrace();
-                }
-                return torrentFile;
-            }
-        }
-
-    }
-
 
     @Override
     public Optional<Torrent> findByName(String name) {
