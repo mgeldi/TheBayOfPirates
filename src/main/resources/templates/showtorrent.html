@@ -47,8 +47,8 @@
                 </button>
             </div>
         </form>
-        <div th:if="${principal}">
-            <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
+        <div th:if="${principal != null && user != null}">
+            <div th:if="${principal.getName().equals((user.getEmail()))}">
                 <form action="/torrent/delete" method="post">
                     <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
                     <button type="submit" id="deletebtn"

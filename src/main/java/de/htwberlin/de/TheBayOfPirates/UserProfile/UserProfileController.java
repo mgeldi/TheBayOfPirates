@@ -1,6 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.UserProfile;
 
 
+import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,8 @@ public class UserProfileController {
     public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Optional<User> user = userService.findByUserName(username);
-        modelAndView.addObject("user", new User());
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("useremail", user.get().getEmail());
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("description", "");
         modelAndView.addObject("gender", "");
         modelAndView.setViewName("userProfile");
@@ -44,6 +44,7 @@ public class UserProfileController {
                                         @RequestParam("gender") String gender, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         try {
             String imageName = file.getOriginalFilename();
             User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());

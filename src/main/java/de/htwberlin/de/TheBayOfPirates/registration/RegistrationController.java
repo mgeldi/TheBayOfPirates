@@ -25,27 +25,25 @@ public class RegistrationController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.setViewName("index"); // resources/template/home.html
-        modelAndView.addObject("user", new User());
-        modelAndView.addObject("principal", principal);
         return modelAndView;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult) throws Exception {
+    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         // Check for the validations
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
             modelAndView.addObject("bindingResult", bindingResult);
             System.out.println(bindingResult.toString());
-            modelAndView.addObject("user", new User());
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         } else if (userService.userExists(user)) {
             modelAndView.addObject("successMessage", "User already exists!");
             System.out.println("User exists!");
-            modelAndView.addObject("user", new User());
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
@@ -56,13 +54,20 @@ public class RegistrationController {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User is registered successfully!");
             System.out.println("User registered!");
-            modelAndView.addObject("user", new User());
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
     }
 
+    public static void handleSecurity(ModelAndView modelAndView, Principal principal, UserService userService) {
+        if (principal != null) {
+            modelAndView.addObject("user", userService.findByUserEmail(principal.getName()).get());
+        } else {
+            modelAndView.addObject("user", new User());
+        }
 
+        modelAndView.addObject("principal", principal);
+    }
 }
 
 

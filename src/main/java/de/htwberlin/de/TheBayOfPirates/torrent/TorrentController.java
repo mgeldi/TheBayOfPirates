@@ -1,6 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
-import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -8,8 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,44 +29,46 @@ public class TorrentController {
     @Autowired
     TorrentService torrentService;
 
+    @Autowired
+    UserService userService;
+
     public TorrentController(TorrentService torrentService) {
         this.torrentService = torrentService;
     }
 
     @GetMapping(value = "/torrent/name={name:.+}")
-    public String getTorrent(Model model, @PathVariable String name, Principal principal, ModelMap modelMap) {
-        modelMap.addAttribute("principal", principal);
-        modelMap.addAttribute("user", new User());
+    public ModelAndView getTorrent(@PathVariable String name, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
-            model.addAttribute("torrent", torrent.get());
+            modelAndView.addObject("torrent", torrent.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Torrent not found!");
         }
-
-        return "showtorrent";
+        modelAndView.setViewName("showtorrent");
+        return modelAndView;
     }
 
     @GetMapping(value = "/torrent/id={id}")
-    public String getTorrent(Model model, @PathVariable int id, Principal principal, ModelMap modelMap) {
-        modelMap.addAttribute("principal", principal);
-        modelMap.addAttribute("user", new User());
+    public ModelAndView getTorrent(@PathVariable int id, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
         if (torrent.isPresent()) {
-            model.addAttribute("torrent", torrent.get());
+            modelAndView.addObject("torrent", torrent.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Torrent not found!");
         }
-
-        return "showtorrent";
+        modelAndView.setViewName("showtorrent");
+        return modelAndView;
     }
 
     @GetMapping(value = "/torrent/upload")
-    public ModelAndView postTorrent(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("principal", principal);
-        modelMap.addAttribute("user", new User());
+    public ModelAndView postTorrent(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("description", "");
         modelAndView.setViewName("torrentUpload");
         return modelAndView;
@@ -77,7 +78,7 @@ public class TorrentController {
     public ModelAndView postTorrent(@RequestParam("file") MultipartFile multipartFile,
                                     Principal principal, @RequestParam("description") String description) {
         ModelAndView modelAndView = new ModelAndView();
-
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         String fileName = multipartFile.getOriginalFilename();
         System.out.println("File to be uploaded was called: " + fileName);
         String actualName = fileName.substring(0, fileName.length() - ".torrent".length());
@@ -106,7 +107,6 @@ public class TorrentController {
     public String handleMissingParams(MissingServletRequestParameterException ex) {
         String name = ex.getParameterName();
         System.out.println(name + " parameter is missing");
-
         return "/torrent/upload";
     }
 
@@ -123,7 +123,7 @@ public class TorrentController {
                 // Content-Disposition
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + actualName)
                 // Contet-Length
-                .contentLength(torrentBytes.length) //
+                .contentLength(torrentBytes.length)
                 .body(resource);
     }
 
@@ -155,8 +155,7 @@ public class TorrentController {
     @GetMapping(value = "/torrent/search={name}/page={page}")
     public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", new User());
-        modelAndView.addObject("principal", principal);
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page - 1); //-1 because it starts at 0
         modelAndView.addObject("totalPages", torrentPage.getTotalPages());
         System.out.println(torrentPage.getTotalPages());
