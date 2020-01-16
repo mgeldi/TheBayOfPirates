@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
             if (!user.isPresent())
                 throw new Exception("User not found!");
             User userProfile = user.get();
+            userProfile.setHasProfilePicture(true);
             userProfile.setDescription(description);
             userProfile.setGender(gender);
             userProfile.setImage(imageByte);

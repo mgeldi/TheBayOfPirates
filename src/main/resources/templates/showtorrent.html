@@ -11,7 +11,7 @@
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 
 <div class="border border-secodary" style="margin: 100px; width: auto; padding: 1px; text: left">
-    <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
+    <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
         <h1 th:if="${param.successMessage}" class="display-4">You have successfully uploaded a torrent!</h1>
         <hr th:if="${param.successMessage}">
 
@@ -67,5 +67,6 @@
 </div>
 </div>
 </div>
+<div th:insert="fragments/navbar.html :: footer"></div>
 </body>
 </html>

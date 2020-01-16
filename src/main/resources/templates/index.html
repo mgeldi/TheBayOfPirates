@@ -2,13 +2,13 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="en">
 
-<head th:replace="fragments/navbar.html :: head">
+<head th:insert="fragments/navbar.html :: head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script th:inline="javascript"></script>
 </head>
 <body>
-<div th:replace="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/navbar.html :: navbar"></div>
 <div class="jumbotron" th:if="${principal}">
     <div class="container text-center" style="padding-top: 40px">
         <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span th:text=${user.getUsername()}></span>!</h1>
@@ -27,7 +27,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 order-lg-2">
                 <div class="p-5">
-                    <img class="img-fluid rounded-circle" src="images/01.jpg">
+                    <img class="img-fluid rounded-circle" src="images/thinking.jpg" style="height: 100%; width: 100%">
                 </div>
             </div>
             <div class="col-lg-6 order-lg-1">
@@ -49,7 +49,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="p-5">
-                    <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
+                    <img class="img-fluid rounded-circle" src="images/running.jpg" style="height: 100%; width: 100%">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -69,7 +69,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 order-lg-2">
                 <div class="p-5">
-                    <img class="img-fluid rounded-circle" src="img/03.jpg" alt="">
+                    <img class="img-fluid rounded-circle" src="images/funny.jpg" style="height: 100%; width: 100%">
                 </div>
             </div>
             <div class="col-lg-6 order-lg-1">
@@ -83,7 +83,7 @@
         </div>
     </div>
 </section>
-
+<div th:insert="fragments/navbar.html :: footer"></div>
 </body>
 
 </html>

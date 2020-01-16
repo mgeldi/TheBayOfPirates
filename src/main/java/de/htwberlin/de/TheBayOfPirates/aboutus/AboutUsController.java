@@ -1,6 +1,8 @@
 package de.htwberlin.de.TheBayOfPirates.aboutus;
 
+import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
 import de.htwberlin.de.TheBayOfPirates.user.User;
+import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ public class AboutUsController {
 
     @Autowired
     private DateAndTime dateAndTime;
+
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -32,8 +37,7 @@ public class AboutUsController {
     public ModelAndView getAboutUs(Principal principal, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("about"); // resources/template/home.html
-        modelAndView.addObject("user", new User());
-        modelAndView.addObject("principal", principal);
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
         return modelAndView;
     }

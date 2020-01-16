@@ -39,6 +39,9 @@ public class Torrent {
 
     private LocalDateTime uploadedDateTime;
 
+    @Length()
+    private float rating;
+
     @Lob
     @Column(name = "torrent", unique = false, nullable = false)
     @Type(type = "org.hibernate.type.BinaryType")
