@@ -53,7 +53,7 @@ public class User{
 
     private boolean enabled;
 
-    @Column(name="image", unique = false, nullable = false)
+    @Column(name="image")
     @Type(type="org.hibernate.type.BinaryType")
     private byte []image;
 
