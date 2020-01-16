@@ -2,8 +2,10 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import com.sun.istack.NotNull;
 import de.htwberlin.de.TheBayOfPirates.user.User;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,6 +43,9 @@ public class Torrent {
     @Column(name = "torrent", unique = false, nullable = false)
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] torrent;
+
+    @Column(name = "rating")
+    private Double rating = 0.0;
 
     public String getName() {
         return name;
@@ -81,5 +86,16 @@ public class Torrent {
 
     public LocalDateTime getUploadedDateTime() {
         return uploadedDateTime;
+    }
+
+    public double getRating() {
+        if(rating == null) {
+            rating = 0.0;
+        }
+        return this.rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

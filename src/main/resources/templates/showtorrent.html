@@ -58,6 +58,12 @@
                 </form>
             </div>
         </div>
+        <form th:action="@{/torrent/rate}" method="post">
+            <input type="text" name="torrentid" class="d-none" th:value="${torrent.getTorrentID()}">
+            <input type="text" name="rating">
+            <button type="submit">RATE ME</button>
+        </form>
+        <div th:value="${torrent.getRating()}" th:text="${torrent.getRating()}"></div>
 </div>
 </div>
 </div>

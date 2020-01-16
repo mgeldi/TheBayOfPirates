@@ -1,0 +1,17 @@
+package de.htwberlin.de.TheBayOfPirates.rating;
+
+import de.htwberlin.de.TheBayOfPirates.torrent.Torrent;
+import de.htwberlin.de.TheBayOfPirates.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+public interface UserRatingRepository extends JpaRepository<UserRating, Integer> {
+    List<UserRating> findAllByTorrentID(Torrent torrent);
+
+    List<UserRating> findAllByUserID(User user);
+
+    Optional<UserRating> findByUserID(User user);
+}
