@@ -11,7 +11,7 @@
 <div th:replace="fragments/navbar.html :: navbar"></div>
 <div class="jumbotron" th:if="${principal}">
     <div class="container text-center" style="padding-top: 40px">
-        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, [[${#httpServletRequest.remoteUser}]]!</h1>
+        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span th:text=${user.getUsername()}></span>!</h1>
         <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
     </div>
 </div>
