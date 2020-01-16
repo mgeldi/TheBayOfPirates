@@ -9,7 +9,7 @@
 <div class="row col-lg-4 col-lg-offset-4"
      style="margin: auto; width: auto; background-color: #fff;
      padding: 100px;">
-    <span class="border border-secodary" style="margin: 40px; width: auto; padding: 60px">
+    <div class="border border-secodary" style="margin: 40px; width: auto; padding: 60px">
     <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}" th:object="${description} "
           method="post"
           class="form-signin" role="form">
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <p></p>
                         <label for="FormControlTextarea1">Description: </label>
-                        <textarea class="form-control" name="description" id="FormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control-lg" name="description" id="FormControlTextarea1" rows="6"></textarea>
                     </div>
                 </tr>
                 <tr>
@@ -38,9 +38,12 @@
                     </div>
                 </tr>
             </table>
+                <div th:if="${param.error}">
+                    <div th:text="${param.error.iterator().next()}"></div>
+                </div>
         </div>
     </form>
-    </span>
+    </div>
 </div>
 </body>
 </html>

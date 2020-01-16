@@ -1,40 +1,63 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-    <title>Title</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/navbar.html :: head">
+    <title>Upload Torrent</title>
 </head>
+
 <body>
 
-<div th:object="${torrent}">
-    <div th:text="${torrent.getName()}"></div>
-    <div th:text="${torrent.getDescription()}"></div>
-    <div th:text="${torrent.getUser().getEmail()}"></div>
-    <div th:text="${torrent.getTorrentID()}"></div>
-    <form action="/torrent/download" method="get">
-        <label>
-            <input hidden type="text" name="filename" th:value="${torrent.getName()}">
-        </label>
-        <div>
-            <button type="submit" id="downloadbtn"
-                    class="btn btn-outline-secondary my-2 my-sm-0">Download
-            </button>
-        </div>
-    </form>
-    <div th:if="${principal}">
-        <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
-            <form action="/torrent/delete" method="post">
-                <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
-                <button type="submit" id="deletebtn"
-                        class="btn btn-outline-secondary my-2 my-sm-0">Delete this torrent
-                </button>
-            </form>
-        </div>
+<nav th:replace="fragments/navbar.html :: navbar"></nav>
 
-    </div>
+<div class="border border-secodary" style="margin: 100px; width: auto; padding: 1px; text: left">
+    <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
+        <h1 class="display-4">You have successfully uploaded a torrent!</h1>
+        <hr>
+
+            <div class="text-left">
+                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Torrent ID:</span>
+                <span class="container align-baseline " style="font-size: large" th:text="${torrent.getTorrentID()}"></span>
+            </div>
+
+            <div class="text-left">
+                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Torrent Name:</span>
+                <span class="align-baseline" style="font-size: large" th:text="${torrent.getName()}"></span>
+            </div>
+
+            <div class="text-left">
+                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Description:</span>
+                <span class="container align-baseline " style="font-size: large"
+                      th:text="${torrent.getDescription()}"></span>
+            </div>
+
+            <div class="text-left">
+                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Uploaded by:</span>
+                <span class="container align-baseline " style="font-size: large"
+                      th:text="${torrent.getUser().getEmail()}"></span>
+            </div>
+
+        <form action="/torrent/download" method="get">
+            <label>
+                <input hidden type="text" name="filename" th:value="${torrent.getName()}">
+            </label>
+            <div>
+                <button type="submit" id="downloadbtn"
+                        class="btn btn-secondary my-2 my-sm-0">Download
+                </button>
+            </div>
+        </form>
+        <div th:if="${principal}">
+            <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
+                <form action="/torrent/delete" method="post">
+                    <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
+                    <button type="submit" id="deletebtn"
+                            class="btn btn-outline-secondary my-2 my-sm-0">Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+</div>
+</div>
 </div>
 
 </div>
