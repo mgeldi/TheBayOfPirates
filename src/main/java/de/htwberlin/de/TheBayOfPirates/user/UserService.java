@@ -1,5 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.user;
 
+
+import java.io.File;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +32,9 @@ public interface UserService {
      * @return
      */
     public Optional<User> findByUserEmail(String email);
+
+    public Optional<User> findByUserName(String username) throws Exception;
+
+    public User saveUserProfile(byte [] imageByte, String description, String gender, String imageName, String mail) throws Exception;
 
 }

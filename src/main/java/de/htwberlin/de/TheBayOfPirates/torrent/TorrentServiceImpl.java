@@ -4,6 +4,8 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -38,7 +40,7 @@ public class TorrentServiceImpl implements TorrentService {
         if (torrentFile.getName().endsWith(".torrent")
                 && getFileSizeKiloBytes(torrentFile) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
 
-            FileInputStream fis = new FileInputStream(torrentFile);
+
             Torrent torrent = new Torrent();
             torrent.setDescription(description);
             Optional<User> user = userService.findByUserEmail(userEmail);
@@ -119,38 +121,6 @@ public class TorrentServiceImpl implements TorrentService {
     }
 
 
-    public void saveStandardTorrent() throws Exception {
-        System.out.println("Entered postcunstruct");
-        File file = new File("~/Downloads/archlinux-2019.12.01-x86_64.iso.torrent");
-        if (file.exists()) {
-
-            System.out.println(file.getName());
-            String actualName = file.getName().substring(0, file.getName().length() - ".torrent".length());
-            if (torrentRepository.findByName(actualName).isPresent()) {
-                System.out.println("Default torrent already in database!");
-                return;
-            }
-            System.out.println("Torrent was loaded!" + file.getName());
-            saveTorrent(file, "werder@gmail.com", "This is a test torrent file in our" +
-                    "database!");
-        } else {
-            System.out.println("Torrent not found!");
-        }
-    }
-
-
-    public void loadStandardTorrent() throws Exception {
-        File file = this.loadTorrent("archlinux-2019.12.01-x86_64.iso");
-        if (file.exists()) {
-            System.out.println("Torrent was restored out of database!");
-            if (file.getName().equals("archlinux-2019.12.01-x86_64.iso")) {
-                System.out.println("Name was also fine!");
-            }
-        } else {
-            System.out.println("Torrent could not be restored: " + file.getName() + " " + file.getAbsolutePath());
-        }
-    }
-
     @Override
     public Optional<Torrent> findByName(String name) {
         return torrentRepository.findByName(name);
@@ -171,5 +141,15 @@ public class TorrentServiceImpl implements TorrentService {
     public void removeTorrentByName(String name) {
         Optional<Torrent> torrent = torrentRepository.findByName(name);
         torrentRepository.delete(torrent.get());
+    }
+
+    @Override
+    public Page<Torrent> getTorrentPagesBySearch(String searchTerm, int page) {
+        PageRequest pageRequest = PageRequest.of(page, TorrentService.PAGESIZE);
+        Page<Torrent> resultPage = torrentRepository.findAllByNameContaining(searchTerm, pageRequest);
+        System.out.println("Searchterm was: " + searchTerm);
+        System.out.println("Result was:" + resultPage.toString());
+        System.out.println("Item count: " + resultPage.getTotalElements());
+        return resultPage;
     }
 }

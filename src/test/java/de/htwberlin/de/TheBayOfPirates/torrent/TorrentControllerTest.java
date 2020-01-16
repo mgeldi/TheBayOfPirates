@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -38,6 +39,7 @@ class TorrentControllerTest {
         Mockito.when(torrentService.findByName("archlinux-2019.12.01-x86_64.iso"))
                 .thenReturn(java.util.Optional.ofNullable(mockedTorrent));
         Mockito.when(torrentService.findByTorrentID(mockedTorrent.getTorrentID())).thenReturn(Optional.of(mockedTorrent));
+        Mockito.when(torrentService.getTorrentPagesBySearch(Mockito.anyString(), Mockito.anyInt())).thenReturn(Mockito.mock(Page.class));
         torrentController = new TorrentController(torrentService);
         mockMvc = MockMvcBuilders.standaloneSetup(torrentController).build();
         mockedTorrentFile = new MockMultipartFile(torrentFile.getName(), torrentFile.getName(),
@@ -91,5 +93,15 @@ class TorrentControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
         Assert.assertEquals("Hello", result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void testSearchPage() throws Exception {
+        MvcResult result = mockMvc.perform(get("/torrent/search=bla/page=1"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
+        Assert.assertEquals("/torrent/search=bla/page=", result.getModelAndView().getModel().get("searchURL"));
+        Assert.assertEquals(1, result.getModelAndView().getModel().get("currentPage"));
+        Assert.assertEquals(0, result.getModelAndView().getModel().get("totalPages"));
     }
 }

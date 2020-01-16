@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "torrents")
@@ -26,13 +27,15 @@ public class Torrent {
 
     @NotNull
     @Length(min = 20, max = 1000, message = "Please provide a sufficient description that" +
-            " is between 20 and 100 characters long!")
+            " is between 20 and 1000 characters long!")
     private String description;
 
     @ManyToOne
     @JoinTable(name = "uploadedby", joinColumns = @JoinColumn(name = "torrentid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
     private User user;
+
+    private LocalDateTime uploadedDateTime;
 
     @Lob
     @Column(name="torrent", unique = false, nullable = false)
@@ -69,5 +72,14 @@ public class Torrent {
 
     public void setTorrent(byte[] torrent) {
         this.torrent = torrent;
+    }
+
+    @PrePersist
+    private void saveTimeStamp(){
+        uploadedDateTime = LocalDateTime.now();
+    }
+
+    public LocalDateTime getUploadedDateTime() {
+        return uploadedDateTime;
     }
 }

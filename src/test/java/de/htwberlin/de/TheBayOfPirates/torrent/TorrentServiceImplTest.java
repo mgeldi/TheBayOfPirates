@@ -2,8 +2,11 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockingDetails;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -11,8 +14,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import static org.junit.Assert.*;
 
 
 class TorrentServiceImplTest {
@@ -48,6 +55,8 @@ class TorrentServiceImplTest {
         Mockito.when(torrentRepository.findByTorrentID(Mockito.anyInt())).thenReturn(Optional.empty());
         Mockito.when(torrentRepository.findByName(filename)).thenReturn(Optional.of(torrent));
         Mockito.when(torrentRepository.findByName("something")).thenReturn(Optional.empty());
+        Mockito.when(torrentRepository.findAllByNameContaining(Mockito.anyString(), Mockito.any()))
+                .thenReturn(Mockito.mock(Page.class));
         torrentService = new TorrentServiceImpl(torrentRepository, userService);
         //we need to delete the previous test run files
         File torrentFile = new File(System.getProperty("user.home") + "/" + filename + ".torrent");
@@ -127,6 +136,12 @@ class TorrentServiceImplTest {
         assertEquals(torrent.getName(), returnedTorrent.getName());
         assertEquals(torrent.getTorrent(), returnedTorrent.getTorrent());
         assertEquals(torrent.getTorrentID(), returnedTorrent.getTorrentID());
+    }
 
+    @Test
+    void getTorrentPagesBySearch() {
+        Object resultPage = torrentService.getTorrentPagesBySearch("someSearchTerm", 0);
+        MockingDetails mockingDetails = Mockito.mockingDetails(resultPage);
+        Assert.assertTrue(new ReflectionEquals(Page.class).matches(mockingDetails.getMockCreationSettings().getTypeToMock()));
     }
 }
