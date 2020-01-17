@@ -41,17 +41,16 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "/user/profile")
-    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile multipartFile,
+    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile file,
                                         @RequestParam("gender") String gender, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        String imageName = multipartFile.getOriginalFilename();
-
         try {
-            System.out.println(imageName + " " + multipartFile.getName());
-            User savedPicture = userService.saveUserProfile(multipartFile.getBytes(), description, gender, imageName, principal.getName());
-            modelAndView.addObject("successMessage", "Successfully updated profile!");
+            String imageName = file.getOriginalFilename();
+            System.out.println(imageName  +" " + file.getName());
+            User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());
+           modelAndView.addObject("successMessage", "Successfully updated profile!");
 
             modelAndView.setViewName("redirect:/user/profile=" + savedPicture.getUsername());
         } catch (Exception e) {

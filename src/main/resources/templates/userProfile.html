@@ -13,12 +13,16 @@
 </head>
 <body>
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
+<<<<<<< HEAD
+<dic class ="s" th:if="${principal}">
 <div th:insert="fragments/notifier.html :: notifier"></div>
-
-<div class="row col-lg-8 col-lg-offset-8" th:if="${principal}" style="margin: auto; width: 80%; padding: 100px;">
+     style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
 
+        <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" th:object="${description}"
+              method="post"
+              class="form-signin" role="form">
             <h3 class="form-signin-heading display-3">Profile</h3>
             <hr>
             <input type="file" name="file" class="custom-file-input" id="customFileLang" onchange="readURL(this)"/>
@@ -26,9 +30,8 @@
             <div>
                 <table>
                     <tr>
-                        <div class="profilePic">
-                            <img id="image"
-                                 th:src="@{images/{userdet}{img}(img=${user.getImageName()}, userdet=${user.getEmail()})}">
+                        <div class="profilePic" >
+                            <img id="image" th:src="@{images/{userdet}{img}(img=${user.getImageName()}, userdet=${user.getEmail()})}"  >
                             <hr>
                             <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
                                     data-target="#editProfileModal">Edit Profile</button>
@@ -66,10 +69,6 @@
                     </table>
 
                     <!--Modal-->
-                    <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}"
-                          th:object="${description}"
-                          method="post"
-                          class="form-signin" role="form">
                     <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
                          aria-labelledby="editProfileModalTitle" aria-hidden="true">
                        <div class="modal-dialog modal-lg" role="document">
@@ -82,7 +81,7 @@
                               </div>
                               <div class="modal-body">
                                    <div class="custom-file">
-                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02"/>
+                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02" onchange="readURL(this);"  />
                                        <label class="custom-file-label"
                                               for="customFileLang">Change profile picture...</label>
                              </div>
@@ -109,15 +108,15 @@
                             </div>
                           </div>
                     </div>
-                                </form>
                     <!-- Modal Ende -->
                 </table>
             </div>
+        </form>
         </span>
     </div>
 </div>
 <div th:insert="fragments/navbar.html :: footer"></div>
-</div>
+</dic>
 </body>
 
 <script>

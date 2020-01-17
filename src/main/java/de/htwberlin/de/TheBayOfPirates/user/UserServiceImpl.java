@@ -10,11 +10,13 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.StringTokenizer;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -82,22 +84,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String userEmail) throws Exception {
         /*if (imageName.endsWith(".png") || imageName.endsWith(".jpg") && */
-        if ((imageByte.length / 1000) < MAX_FILE_SIZE_IN_KILO_BYTES) {
+        if((imageByte.length / 1000) <MAX_FILE_SIZE_IN_KILO_BYTES) {
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())
                 throw new Exception("User not found!");
-            System.out.println(imageByte.length);
             BufferedImage createImg = ImageIO.read(new ByteArrayInputStream(imageByte));
-            File file = new File("src/main/java/resources/images/" + userEmail + imageName);
-            file.createNewFile();
-            StringTokenizer typeTokenizer = new StringTokenizer(imageName, ".");
-            String type = "";
-            while (typeTokenizer.hasMoreTokens()) {
-                type = typeTokenizer.nextToken();
-                System.out.println(type);
-            }
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
-            os.write(imageByte);
+            File file = new File("/images/" +imageName +userEmail);
             User userProfile = user.get();
             userProfile.setHasProfilePicture(true);
             userProfile.setDescription(description);
@@ -111,6 +103,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception("The uploaded picture is neither a png or jpg");
         }
     }
+
 
 
 }
