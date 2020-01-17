@@ -2,6 +2,9 @@ node_modules/
 .idea/
 .gradle
 build/
+*.log
+*.txt
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+
