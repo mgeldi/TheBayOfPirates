@@ -62,7 +62,7 @@ class UserProfileControllerTest {
                 param("principal", principal.getName()).
                 param("description", description).
                 param("gender", gender)).
-                andExpect(model().attribute("error", "failed!"));
+                andExpect(model().attribute("error", "Updating profile failed! null"));
     }
 
     @Test
@@ -72,7 +72,7 @@ class UserProfileControllerTest {
                 param("principal", principal.getName()).
                 param("description", description).
                 param("gender", gender)).
-                andExpect(model().attribute("error", "failed!"));
+                andExpect(model().attribute("error", "Updating profile failed! null"));
     }
 
 

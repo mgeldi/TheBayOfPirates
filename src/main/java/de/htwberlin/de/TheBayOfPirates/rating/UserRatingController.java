@@ -37,6 +37,7 @@ public class UserRatingController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         RegistrationController.handleSecurity(modelAndView, principal, userService);
+        modelAndView.addObject("successMessage", "Torrent rated successfully!");
         modelAndView.setViewName("redirect:/torrent/id=" + id);
         return modelAndView;
     }

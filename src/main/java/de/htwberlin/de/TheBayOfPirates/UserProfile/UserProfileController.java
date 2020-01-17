@@ -48,11 +48,11 @@ public class UserProfileController {
         try {
             String imageName = file.getOriginalFilename();
             User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());
-            modelAndView.addObject("successMessage", "Upload succeeded!");
+            modelAndView.addObject("successMessage", "Successfully updated profile!");
             modelAndView.setViewName("redirect:/");
         } catch (Exception e) {
             e.printStackTrace();
-            modelAndView.addObject("error", "failed!");
+            modelAndView.addObject("error", "Updating profile failed! " + e.getMessage());
             modelAndView.setViewName("redirect:/");
         }
         return modelAndView;
