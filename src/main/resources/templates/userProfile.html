@@ -14,8 +14,8 @@
 <body>
 
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
-
-<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == useremail}"
+<dic class ="s" th:if="${principal}">
+<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == user.getEmail()}"
      style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
@@ -29,13 +29,9 @@
 
             <div>
                 <table>
-
                     <tr>
-                        <div class="profilePic">
-                            <input type='file' name="file" onchange="readURL(this);" />
-                            <img id="blah" src="/images/pirateprofile.png" alt="your image" style="width: 80%"/>
-
-                          
+                        <div class="profilePic" >
+                            <img id="image" th:src="@{images/{userdet}{img}(img=${user.getImageName()}, userdet=${user.getEmail()})}"  >
                             <hr>
                             <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
                                     data-target="#editProfileModal">Edit Profile</button>
@@ -85,7 +81,7 @@
                               </div>
                               <div class="modal-body">
                                    <div class="custom-file">
-                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
+                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02" onchange="readURL(this);"  />
                                        <label class="custom-file-label"
                                               for="customFileLang">Change profile picture...</label>
                              </div>
@@ -120,6 +116,7 @@
     </div>
 </div>
 <div th:insert="fragments/navbar.html :: footer"></div>
+</dic>
 </body>
 
 <script>
@@ -128,19 +125,13 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#blah')
+                $('#image')
                     .attr('src', e.target.result)
                     .width(150)
                     .height(200);
             };
-
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-    $('#inputGroupFile02').on('change', function () {
-        var fileName = $(this).val().substring(12);
-        $(this).next('.custom-file-label').html(fileName);
-    })
 </script>
 
