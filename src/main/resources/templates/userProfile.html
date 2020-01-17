@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/navbar.html :: head">
+<head th:replace="fragments/navbar.html :: head">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -12,10 +12,11 @@
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 </head>
 <body>
+
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
-<<<<<<< HEAD
-<dic class ="s" th:if="${principal}">
 <div th:insert="fragments/notifier.html :: notifier"></div>
+
+<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == useremail}"
      style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
@@ -29,9 +30,9 @@
 
             <div>
                 <table>
+
                     <tr>
-                        <div class="profilePic" >
-                            <img id="image" th:src="@{images/{userdet}{img}(img=${user.getImageName()}, userdet=${user.getEmail()})}"  >
+                        <div class="profilePic">
                             <hr>
                             <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
                                     data-target="#editProfileModal">Edit Profile</button>
@@ -81,9 +82,9 @@
                               </div>
                               <div class="modal-body">
                                    <div class="custom-file">
-                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02" onchange="readURL(this);"  />
+                                       <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
                                        <label class="custom-file-label"
-                                              for="customFileLang">Change profile picture...</label>
+                                                for="customFileLang">Change profile picture...</label>
                              </div>
                                 <tr>
                                     <div class="form-group" th:object="${gender}">
@@ -116,7 +117,6 @@
     </div>
 </div>
 <div th:insert="fragments/navbar.html :: footer"></div>
-</dic>
 </body>
 
 <script>
@@ -125,13 +125,19 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#image')
+                $('#blah')
                     .attr('src', e.target.result)
                     .width(150)
                     .height(200);
             };
+
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $('#inputGroupFile02').on('change', function () {
+        var fileName = $(this).val().substring(12);
+        $(this).next('.custom-file-label').html(fileName);
+    })
 </script>
 
