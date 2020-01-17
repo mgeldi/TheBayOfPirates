@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Script</title>
+</head>
+<body>
+<div th:fragment="notifier">
+    <script th:inline="javascript">
+        function notifySuccess() {
+            var succMessage = /*[[${param.successMessage}]]*/ 'default';
+            if (succMessage && succMessage !== 'default') {
+                var message = /*[[${param.successMessage}]]*/ 'default';
+                alert("Success: " + message)
+            }
+        }
+
+        function notifyErrors() {
+            var errorMessage = /*[[${param.error}]]*/ 'default';
+            if (errorMessage && errorMessage !== 'default') {
+                var error = /*[[${param.error}]]*/ 'default';
+                alert("Error: " + error);
+            }
+        }
+    </script>
+    <div th:if="${param.successMessage}">
+        <div>
+            <script>notifySuccess()</script>
+        </div>
+    </div>
+    <div th:if="${param.error}">
+        <div>
+            <script>notifyErrors()</script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -28,15 +28,23 @@ public class UserRatingController {
 
     @PostMapping(value = "/torrent/rate")
     public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam String rating) {
-        double ratingAsDouble = Double.parseDouble(rating);
         ModelAndView modelAndView = new ModelAndView();
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
+        double ratingAsDouble = 0;
+        try {
+            ratingAsDouble = Double.parseDouble(rating);
+        } catch(Exception e){
+            modelAndView.addObject("error", "The value of rating was not correct!");
+            modelAndView.setViewName("index");
+            return modelAndView;
+        }
         try {
             userRatingService.giveRatingToTorrent(principal.getName(), id, ratingAsDouble);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        RegistrationController.handleSecurity(modelAndView, principal, userService);
+        modelAndView.addObject("successMessage", "Torrent rated successfully!");
         modelAndView.setViewName("redirect:/torrent/id=" + id);
         return modelAndView;
     }

@@ -12,10 +12,10 @@
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 </head>
 <body>
-
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
+<<<<<<< HEAD
 <dic class ="s" th:if="${principal}">
-<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == user.getEmail()}"
+<div th:insert="fragments/notifier.html :: notifier"></div>
      style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
