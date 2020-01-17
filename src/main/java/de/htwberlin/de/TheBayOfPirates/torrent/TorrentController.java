@@ -134,6 +134,7 @@ public class TorrentController {
         if (torrent.isPresent()) {
             if (principal.getName().equals(torrent.get().getUser().getEmail())) {
                 torrentService.removeTorrentByName(filename);
+                modelAndView.addObject("successMessage", "Torrent \"" + torrent.get().getName() + "\"deleted successfully!");
                 modelAndView.setViewName("redirect:/torrent/upload");
                 return modelAndView;
             } else {
@@ -174,6 +175,9 @@ public class TorrentController {
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
 
+        if (torrentPage.getTotalElements() == 0) {
+            modelAndView.addObject("successMessage", "No Torrents with that name found!");
+        }
         modelAndView.setViewName("search");
         return modelAndView;
     }

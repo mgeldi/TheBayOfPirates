@@ -62,8 +62,8 @@ class RegistrationControllerTest {
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/?successMessage=Please+correct+the+errors+in+form%21"))
-                .andExpect(model().attribute("successMessage", "Please correct the errors in form!"));
+                .andExpect(redirectedUrl("/?successMessage=Please+correct+the+errors+in+the+form%21"))
+                .andExpect(model().attribute("successMessage", "Please correct the errors in the form!"));
     }
 
     @Test
@@ -79,7 +79,7 @@ class RegistrationControllerTest {
                 .param("email", "werder@gmail.com")
                 .param("password", "werder"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/?successMessage=User+already+exists%21"))
-                .andExpect(model().attribute("successMessage", "User already exists!"));
+                .andExpect(redirectedUrl("/?successMessage=User+with+that+username+or+email+already+exists%21"))
+                .andExpect(model().attribute("successMessage", "User with that username or email already exists!"));
     }
 }

@@ -34,6 +34,7 @@ public class UserProfileController {
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("useremail", user.get().getEmail());
         modelAndView.addObject("description", "");
+        modelAndView.addObject("image", "");
         modelAndView.addObject("gender", "");
         modelAndView.setViewName("userProfile");
         return modelAndView;
@@ -47,12 +48,14 @@ public class UserProfileController {
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         try {
             String imageName = file.getOriginalFilename();
+            System.out.println(imageName  +" " + file.getName());
             User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());
-            modelAndView.addObject("successMessage", "Upload succeeded!");
-            modelAndView.setViewName("redirect:/");
+           modelAndView.addObject("successMessage", "Successfully updated profile!");
+
+            modelAndView.setViewName("redirect:/user/profile=" + savedPicture.getUsername());
         } catch (Exception e) {
             e.printStackTrace();
-            modelAndView.addObject("error", "failed!");
+            modelAndView.addObject("error", "Updating profile failed! " + e.getMessage());
             modelAndView.setViewName("redirect:/");
         }
         return modelAndView;
