@@ -9,9 +9,11 @@
 </head>
 <body>
 <div th:insert="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/notifier.html :: notifier"></div>
 <div class="jumbotron" th:if="${principal}">
     <div class="container text-center" style="padding-top: 40px">
-        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span th:text=${user.getUsername()}></span>!</h1>
+        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span
+                th:text=${user.getUsername()}></span>!</h1>
         <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
     </div>
 </div>
@@ -76,8 +78,9 @@
                 <div class="p-5">
                     <h2 class="display-4">Free for ever!</h2>
                     <p>We are planning on staying a free and open source site for ever! Yay! Still want to support our
-                    cause? Check the About page to find out more about us and see if you can help us out by contributing
-                    to our project on GitHub! Every contribution, including bug reporting, is welcome!</p>
+                        cause? Check the About page to find out more about us and see if you can help us out by
+                        contributing
+                        to our project on GitHub! Every contribution, including bug reporting, is welcome!</p>
                 </div>
             </div>
         </div>
@@ -85,5 +88,4 @@
 </section>
 <div th:insert="fragments/navbar.html :: footer"></div>
 </body>
-
 </html>

@@ -12,6 +12,8 @@
 
 <body>
 <div th:replace="fragments/navbar.html :: navbar"></div>
+<div th:insert="fragments/notifier.html :: notifier"></div>
+
 <div class="border border-secodary" style="margin: 100px; width: auto; padding: 1px;">
 
     <div class="container text-center" style="padding-top: 80px; padding-bottom: 80px" th:if="!(${totalPages} == 0)">

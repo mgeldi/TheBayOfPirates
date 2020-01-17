@@ -25,12 +25,13 @@ public class UserRatingServiceImpl implements UserRatingService {
     @Override
     public void getRatingOfTorrentByID(int torrentID) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
-        if(!torrent.isPresent()){
+        if (!torrent.isPresent()) {
             throw new Exception("Torrent does not exist!");
         }
         List<UserRating> ratings = userRatingRepository.findAllByTorrentID(torrent.get());
-        if (ratings.isEmpty()) {
-            throw new Exception("No Ratings for this torrent!");
+        if (ratings.size() == 0) {
+            torrent.get().setRating(0.0);
+            System.out.println("0 ratings");
         } else {
             int numberOfRatings = ratings.size();
             double rating = 0.0;
@@ -39,23 +40,24 @@ public class UserRatingServiceImpl implements UserRatingService {
             }
             rating /= numberOfRatings;
             torrent.get().setRating(rating);
-            torrentRepository.saveAndFlush(torrent.get());
         }
+        torrentRepository.saveAndFlush(torrent.get());
     }
 
     @Override
     public void giveRatingToTorrent(String email, int torrentID, double rating) throws Exception {
         Optional<User> user = userRepository.findByEmail(email);
         Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
-        if(!user.isPresent()){
+        if (!user.isPresent()) {
             throw new Exception("User not found! Unexpected Error!");
         }
-        if(!torrent.isPresent()){
+        if (!torrent.isPresent()) {
             throw new Exception("Torrent not found! Unexpected Error!");
         }
         Optional<UserRating> loadedUserRating = userRatingRepository.findByUserID(user.get());
-        if(loadedUserRating.isPresent()){
+        if (loadedUserRating.isPresent()) {
             loadedUserRating.get().setRating(rating);
+            System.out.println("loadedRating " + loadedUserRating.get().getRating());
             userRatingRepository.saveAndFlush(loadedUserRating.get());
         } else {
             UserRating userRating = new UserRating(torrent.get(), user.get());
