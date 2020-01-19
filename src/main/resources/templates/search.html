@@ -22,32 +22,48 @@
             <hr>
             <tr>
                 <th>Name</th>
-                <th>Uploaded By</th>
+                <th colspan="2">Uploaded By</th>
                 <th>Upload Date</th>
             </tr>
             <tr th:each="torrent : ${torrentPage.content}" class="font-weight-light">
-                <td><a th:text="${torrent.getName()}" th:href="@{/torrent/id={id}(id=${torrent.getTorrentID()})}"></a></td>
-                <td th:text="${torrent.getUser().getUsername()}"></td>
+                <td><a th:text="${torrent.getName()}" th:href="@{/torrent/id={id}(id=${torrent.getTorrentID()})}"></a>
+                </td>
+                <td style="border-right: 0;"><a th:text="${torrent.getUser().getUsername()}"
+                       th:href="@{/user/profile={username}(username=${torrent.getUser().getUsername()})}"></a>
+                </td>
+                <td style="border-left: 0;">
+                    <div th:if="${torrent.getUser().hasProfilePicture()}">
+                        <img  style="max-width: 40px; max-height: 50px" id="imageOfProfile" th:src="@{/profilepic/{username}(username=${torrent.getUser().getUsername()})}">
+                    </div>
+                    <div th:if="${!torrent.getUser().hasProfilePicture()}">
+                        <img style="max-height: 40px; max-width: 50px" id="image" src="/images/pirateprofile.png">
+                    </div>
+                </td>
                 <td th:text="${torrent.getUploadedDateTime()}"></td>
             </tr>
         </table>
         <!--pagination -->
         <nav aria-label="Page navigation secondary">
             <ul class="pagination justify-content-center">
-                <li class="page-item"  th:if="!${isFirstPage}">
-                    <a class="page-link" th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage -1})}" aria-label="Previous">
+                <li class="page-item" th:if="!${isFirstPage}">
+                    <a class="page-link"
+                       th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage -1})}"
+                       aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
                 <li class="page-item" th:if="${totalPages > 0}"
                     th:each="pageNumber : ${pageNumbers}">
-                    <a class="page-link" th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
+                    <a class="page-link"
+                       th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
                        th:text="${pageNumber}"
                        th:class="${pageNumber==torrentPage.number + 1} ? active"></a>
                 </li>
                 <li class="page-item" th:if="!${isLastPage}">
-                    <a class="page-link" th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage +1})}" aria-label="Next">
+                    <a class="page-link"
+                       th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${currentPage +1})}"
+                       aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>

@@ -5,14 +5,15 @@ import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import sun.security.util.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -27,12 +28,31 @@ public class UserProfileController {
     }
 
 
+    @ResponseBody
+    @GetMapping(value = "/profilepic/{username}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] testphoto(@PathVariable("username") String username) throws Exception{
+        Optional<User> user = userService.findByUserName(username);
+        if(user.isPresent()){
+            if(user.get().hasProfilePicture()){
+                return user.get().getImage();
+            } else {
+                throw new Exception("User has no profile picture!");
+            }
+        } else {
+            throw new Exception("User not found!");
+        }
+    }
+
     @GetMapping(value = "/user/profile={username}")
-    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception {
+    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         Optional<User> user = userService.findByUserName(username);
+        //String filepath = userService.loadProfilePicture(user.get().getUsername());
+
+        //System.out.println(filepath);
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        modelAndView.addObject("useremail", user.get().getEmail());
+        //modelAndView.addObject("filepath", filepath);
+        modelAndView.addObject("profile", user.get());
         modelAndView.addObject("description", "");
         modelAndView.addObject("image", "");
         modelAndView.addObject("gender", "");
@@ -41,16 +61,16 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "/user/profile")
-    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile file,
+    public ModelAndView postUserProfile(@RequestParam("description") String description, @RequestParam("file") MultipartFile multipartFile,
                                         @RequestParam("gender") String gender, Principal principal) {
 
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         try {
-            String imageName = file.getOriginalFilename();
-            System.out.println(imageName  +" " + file.getName());
-            User savedPicture = userService.saveUserProfile(file.getBytes(), description, gender, imageName, principal.getName());
-           modelAndView.addObject("successMessage", "Successfully updated profile!");
+            String imageName = multipartFile.getOriginalFilename();
+            System.out.println(imageName);
+            User savedPicture = userService.saveUserProfile(multipartFile.getBytes(), description, gender, imageName, principal.getName());
+            modelAndView.addObject("successMessage", "Successfully updated profile!");
 
             modelAndView.setViewName("redirect:/user/profile=" + savedPicture.getUsername());
         } catch (Exception e) {

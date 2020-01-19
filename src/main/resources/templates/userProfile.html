@@ -16,23 +16,27 @@
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
-<div class="row col-lg-8 col-lg-offset-8" th:if="${principal.getName() == useremail}"
+<div class="row col-lg-8 col-lg-offset-8" th:if="${principal}"
      style="margin: auto; width: 80%; padding: 100px;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
 
-        <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" th:object="${description}"
-              method="post"
-              class="form-signin" role="form">
+
             <h3 class="form-signin-heading display-3">Profile</h3>
             <hr>
-            <input type="file" name="file" class="custom-file-input" id="customFileLang" onchange="readURL(this)"/>
+            <input type="file" name="file" class="custom-file-input" id="customFileLang">
 
+            <div th:if="${profile.hasProfilePicture()}">
+                <img  style="max-width: 450px; max-height: 450px" id="imageOfProfile" th:src="@{/profilepic/{username}(username=${profile.getUsername()})}">
+            </div>
+            <div th:if="${!profile.hasProfilePicture()}">
+                <img id="image" src="/images/pirateprofile.png">
+            </div>
             <div>
                 <table>
 
                     <tr>
-                        <div class="profilePic">
+                        <div class="profilePic" th:if="${principal.getName() == profile.getEmail()}">
                             <hr>
                             <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal"
                                     data-target="#editProfileModal">Edit Profile</button>
@@ -43,32 +47,35 @@
                     <table class="table table-bordered table-light">
                             <tr class="font-weight-light">
                                 <th scope="row">Username: </th>
-                                <td colspan="4" style="font-size: large" th:text="${user.getUsername()}"></td>
+                                <td colspan="4" style="font-size: large" th:text="${profile.getUsername()}"></td>
                             </tr>
 
                             <tr class="font-weight-light">
                                  <th scope="row">E-Mail: </th>
-                                <td colspan="4" style="font-size: large" th:text="${user.getEmail()}"></td>
+                                <td colspan="4" style="font-size: large" th:text="${profile.getEmail()}"></td>
                             </tr>
 
                             <tr class="font-weight-light">
                                 <th scope="row">Gender: </th>
-                                <td colspan="4" style="font-size: large" th:text="${user.getGender()}"></td>
+                                <td colspan="4" style="font-size: large" th:text="${profile.getGender()}"></td>
                             </tr>
 
                             <tr class="font-weight-light">
                                 <th scope="row">Surname: </th>
-                                <td colspan="2" style="font-size: large" th:text="${user.getSurname()}"></td>
+                                <td colspan="2" style="font-size: large" th:text="${profile.getSurname()}"></td>
                                 <th scope="row">Lastname: </th>
-                                <td colspan="2" style="font-size: large" th:text="${user.getName()}"></td>
+                                <td colspan="2" style="font-size: large" th:text="${profile.getName()}"></td>
                             </tr>
 
                             <tr class="font-weight-light">
                                 <th scope="row">About Me: </th>
-                                <td colspan="4" style="font-size: large" th:text="${user.getDescription()}"></td>
+                                <td colspan="4" style="font-size: large" th:text="${profile.getDescription()}"></td>
                             </tr>
                     </table>
 
+
+                <form autocomplete="off" enctype="multipart/form-data" th:action="@{/user/profile}" method="post"
+                      class="form-signin" role="form">
                     <!--Modal-->
                     <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
                          aria-labelledby="editProfileModalTitle" aria-hidden="true">
@@ -84,7 +91,7 @@
                                    <div class="custom-file">
                                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile02">
                                        <label class="custom-file-label"
-                                                for="customFileLang">Change profile picture...</label>
+                                              for="customFileLang">Change profile picture...</label>
                              </div>
                                 <tr>
                                     <div class="form-group" th:object="${gender}">

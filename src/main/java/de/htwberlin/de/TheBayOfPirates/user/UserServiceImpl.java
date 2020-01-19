@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -68,42 +69,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUserEmail(String email) {
+    public Optional<User> findByUserEmail(String email) { ;
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public Optional<User> findByUserName(String username) throws Exception {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (!user.isPresent()) {
-            throw new Exception("User profile not found!");
-        }
-        return user;
+    public Optional<User> findByUserName(String username){
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String userEmail) throws Exception {
         /*if (imageName.endsWith(".png") || imageName.endsWith(".jpg") && */
-        if((imageByte.length / 1000) <MAX_FILE_SIZE_IN_KILO_BYTES) {
+        if ((imageByte.length / 1000) < MAX_FILE_SIZE_IN_KILO_BYTES) {
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())
                 throw new Exception("User not found!");
-            BufferedImage createImg = ImageIO.read(new ByteArrayInputStream(imageByte));
-            File file = new File("/images/" +imageName +userEmail);
             User userProfile = user.get();
             userProfile.setHasProfilePicture(true);
             userProfile.setDescription(description);
             userProfile.setGender(gender);
             userProfile.setImage(imageByte);
             userProfile.setImageName(imageName);
-            userRepository.save(userProfile);
-
+            userRepository.saveAndFlush(userProfile);
             return userProfile;
         } else {
             throw new Exception("The uploaded picture is neither a png or jpg");
         }
     }
-
-
-
 }

@@ -32,8 +32,7 @@ public interface UserService {
      */
     public Optional<User> findByUserEmail(String email);
 
-    public Optional<User> findByUserName(String username) throws Exception;
+    public Optional<User> findByUserName(String username);
 
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String mail) throws Exception;
-
 }
