@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html style="height: 100%;" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/navbar.html :: head">
     <title>Upload Torrent</title>
 </head>
-<body>
+<body style="height: 100%;">
 <div th:insert="fragments/navbar.html :: navbar"></div>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
 <div class="row col-lg-8 col-lg-offset-8"
-     style="margin: auto; width: 80%; padding: 100px;">
-    <div class="container-fluid border" style=" width: auto; padding: 170px; text: left">
+     style="margin: auto; width: 80%; padding: 100px; min-height: 96%;">
+    <div class="container-fluid border" style=" width: auto; padding: 170px; text: left;">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
         <form autocomplete="off" enctype="multipart/form-data" th:action="@{/torrent/upload}"
               th:object="${description} "

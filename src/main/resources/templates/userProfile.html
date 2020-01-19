@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html style="height: 100%;" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/navbar.html :: head">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -11,13 +11,13 @@
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 </head>
-<body>
+<body style="height: 100%;">
 
 <nav th:insert="fragments/navbar.html :: navbar"></nav>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
 <div class="row col-lg-8 col-lg-offset-8" th:if="${principal}"
-     style="margin: auto; width: 80%; padding: 100px;">
+     style="margin: auto; width: 80%; padding: 100px; min-height: 96%;">
     <div class="container-fluid border border-secodary" style=" width: auto; padding: 20px; text: left">
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
 
