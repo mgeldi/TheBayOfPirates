@@ -29,7 +29,7 @@ public class UserRatingController {
     public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam String rating) {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        double ratingAsDouble = 0;
+        double ratingAsDouble = 0.0;
         try {
             ratingAsDouble = Double.parseDouble(rating);
         } catch (Exception e) {
@@ -43,6 +43,7 @@ public class UserRatingController {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("successMessage", "Torrent rated successfully!");
         modelAndView.setViewName("redirect:/torrent/id=" + id);
         return modelAndView;

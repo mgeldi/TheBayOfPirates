@@ -10,46 +10,47 @@
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
-<div class="border border-secodary" style="margin: 100px; width: auto; padding: 1px; text: left">
+<div class="border border-secodary" style="margin: 100px; width: auto; padding: 220px; text: left">
     <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
-        <h1 th:if="${param.successMessage}" class="display-4">You have successfully uploaded a torrent!</h1>
-        <hr th:if="${param.successMessage}">
+    <h1 th:if="${param.successMessage}" class="display-4">You have successfully uploaded a torrent!</h1>
+    <hr th:if="${param.successMessage}">
 
-            <div class="text-left">
-                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Torrent ID:</span>
-                <span class="container align-baseline " style="font-size: large" th:text="${torrent.getTorrentID()}"></span>
-            </div>
+    <div class="text-left">
+        <span class="font-weight-light col-md-3 align-baseline"
+              style="font-size: x-large; margin-left: 10%">Torrent ID:</span>
+        <span class="container align-baseline " style="font-size: large" th:text="${torrent.getTorrentID()}"></span>
+    </div>
 
-            <div class="text-left">
-                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Torrent Name:</span>
-                <span class="align-baseline" style="font-size: large" th:text="${torrent.getName()}"></span>
-            </div>
+    <div class="text-left">
+        <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Torrent Name:</span>
+        <span class="align-baseline" style="font-size: large" th:text="${torrent.getName()}"></span>
+    </div>
 
-            <div class="text-left">
-                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Description:</span>
-                <span class="container align-baseline "
-                      style="font-size: large"
-                      th:text="${torrent.getDescription()}"></span>
-            </div>
+    <div class="text-left">
+        <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Description:</span>
+        <span class="container align-baseline "
+              style="font-size: large"
+              th:text="${torrent.getDescription()}"></span>
+    </div>
 
-            <div class="text-left">
-                <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Uploaded by:</span>
-                <span class="container align-baseline " style="font-size: large"
-                      th:text="${torrent.getUser().getEmail()}"></span>
-            </div>
-
-        <form action="/torrent/download" method="get">
-            <label>
-                <input hidden type="text" name="filename" th:value="${torrent.getName()}">
-            </label>
-            <div>
-                <button type="submit" id="downloadbtn"
-                        class="btn btn-secondary my-2 my-sm-0">Download
-                </button>
-            </div>
-        </form>
+    <div class="text-left">
+        <span class="font-weight-light col-md-3 align-baseline" style="font-size: x-large; margin-left: 10%">Uploaded by:</span>
+        <span class="container align-baseline " style="font-size: large"
+              th:text="${torrent.getUser().getEmail()}"></span>
+    </div>
+    <form action="/torrent/download" method="get">
+        <label>
+            <input hidden type="text" name="filename" th:value="${torrent.getName()}">
+        </label>
+        <div>
+            <button type="submit" id="downloadbtn"
+                    class="btn btn-secondary my-2 my-sm-0">Download
+            </button>
+        </div>
         <div th:if="${principal != null && user != null}">
+
             <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
+
                 <form action="/torrent/delete" method="post">
                     <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
                     <button type="submit" id="deletebtn"
@@ -58,12 +59,16 @@
                 </form>
             </div>
         </div>
+
+        <hr>
+
         <form th:action="@{/torrent/rate}" method="post">
             <input type="text" name="torrentid" class="d-none" th:value="${torrent.getTorrentID()}">
-            <input type="number" step="0.01" name="rating" required>
+            <input type="text" name="rating">
             <button type="submit">RATE ME</button>
         </form>
         <div th:value="${torrent.getRating()}" th:text="${torrent.getRating()}"></div>
+    </form>
 </div>
 </div>
 </div>

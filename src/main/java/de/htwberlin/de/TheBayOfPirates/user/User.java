@@ -58,6 +58,10 @@ public class User {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;
 
+
+
+    private String imageName;
+
     private boolean hasProfilePicture;
 
 
@@ -153,6 +157,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
     public User() {
 
