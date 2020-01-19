@@ -29,11 +29,12 @@
                 <td><a th:text="${torrent.getName()}" th:href="@{/torrent/id={id}(id=${torrent.getTorrentID()})}"></a>
                 </td>
                 <td style="border-right: 0;"><a th:text="${torrent.getUser().getUsername()}"
-                       th:href="@{/user/profile={username}(username=${torrent.getUser().getUsername()})}"></a>
+                                                th:href="@{/user/profile={username}(username=${torrent.getUser().getUsername()})}"></a>
                 </td>
                 <td style="border-left: 0;">
                     <div th:if="${torrent.getUser().hasProfilePicture()}">
-                        <img  style="max-width: 40px; max-height: 50px" id="imageOfProfile" th:src="@{/profilepic/{username}(username=${torrent.getUser().getUsername()})}">
+                        <img style="max-width: 40px; max-height: 50px" id="imageOfProfile"
+                             th:src="@{/profilepic/{username}(username=${torrent.getUser().getUsername()})}">
                     </div>
                     <div th:if="${!torrent.getUser().hasProfilePicture()}">
                         <img style="max-height: 40px; max-width: 50px" id="image" src="/images/pirateprofile.png">
@@ -55,10 +56,9 @@
                 </li>
                 <li class="page-item" th:if="${totalPages > 0}"
                     th:each="pageNumber : ${pageNumbers}">
-                    <a class="page-link"
-                       th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
+                    <a th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
                        th:text="${pageNumber}"
-                       th:class="${pageNumber==torrentPage.number + 1} ? active"></a>
+                       th:class="(${pageNumber==torrentPage.number + 1} ? active) + ' page-link'"></a>
                 </li>
                 <li class="page-item" th:if="!${isLastPage}">
                     <a class="page-link"

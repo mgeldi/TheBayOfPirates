@@ -22,7 +22,7 @@
         <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px">
 
 
-            <h3 class="form-signin-heading display-3">Profile</h3>
+            <h3 class="form-signin-heading display-3" th:text="${profile.getUsername()} + '\'s User Profile'"></h3>
             <hr>
             <input type="file" name="file" class="custom-file-input" id="customFileLang">
 
