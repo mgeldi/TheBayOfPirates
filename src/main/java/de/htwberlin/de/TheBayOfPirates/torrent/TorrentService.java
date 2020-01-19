@@ -21,9 +21,9 @@ public interface TorrentService {
 
     Optional<Torrent> findByTorrentID(int torrentID);
 
-    void removeTorrentByID(int torrentID);
+    void removeTorrentByID(int torrentID) throws Exception;
 
-    void removeTorrentByName(String name);
+    void removeTorrentByName(String name) throws Exception;
 
     Page<Torrent> getTorrentPagesBySearch(String searchTerm, int page);
 

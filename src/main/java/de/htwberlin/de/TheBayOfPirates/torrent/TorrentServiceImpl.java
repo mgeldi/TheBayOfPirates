@@ -1,6 +1,7 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
 
+import de.htwberlin.de.TheBayOfPirates.rating.UserRatingService;
 import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class TorrentServiceImpl implements TorrentService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRatingService userRatingService;
 
     public TorrentServiceImpl(TorrentRepository torrentRepository, UserService userService) {
         this.torrentRepository = torrentRepository;
@@ -56,15 +60,21 @@ public class TorrentServiceImpl implements TorrentService {
     }
 
     @Override
-    public void removeTorrentByID(int torrentID) {
+    public void removeTorrentByID(int torrentID) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
-        torrentRepository.delete(torrent.get());
+        if (torrent.isPresent()) {
+            userRatingService.removeAllRatingsOfTorrent(torrentID);
+            torrentRepository.delete(torrent.get());
+        }
     }
 
     @Override
-    public void removeTorrentByName(String name) {
+    public void removeTorrentByName(String name) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByName(name);
-        torrentRepository.delete(torrent.get());
+        if (torrent.isPresent()) {
+            userRatingService.removeAllRatingsOfTorrent(torrent.get().getTorrentID());
+            torrentRepository.delete(torrent.get());
+        }
     }
 
     @Override

@@ -2,6 +2,8 @@ package de.htwberlin.de.TheBayOfPirates.rating;
 
 import de.htwberlin.de.TheBayOfPirates.torrent.Torrent;
 import de.htwberlin.de.TheBayOfPirates.user.User;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -16,10 +18,12 @@ public class UserRating implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long ratingID;
 
-    @ManyToOne
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Torrent torrentID;
 
-    @ManyToOne
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User userID;
 
     @Column(name = "rating")

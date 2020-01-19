@@ -66,4 +66,14 @@ public class UserRatingServiceImpl implements UserRatingService {
         }
         getRatingOfTorrentByID(torrentID);
     }
+
+    @Override
+    public void removeAllRatingsOfTorrent(int torrentID) throws Exception {
+        Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
+        if (torrent.isPresent()) {
+            userRatingRepository.removeAllByTorrentID(torrent.get());
+        } else {
+            throw new Exception("Torrent not found!");
+        }
+    }
 }

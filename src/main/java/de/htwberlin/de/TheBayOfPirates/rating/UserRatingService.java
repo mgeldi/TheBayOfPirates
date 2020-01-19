@@ -7,4 +7,6 @@ public interface UserRatingService {
     void getRatingOfTorrentByID(int torrentID) throws Exception;
 
     void giveRatingToTorrent(String email, int torrentID, double rating) throws Exception;
+
+    void removeAllRatingsOfTorrent(int torrentID) throws Exception;
 }
