@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import sun.security.util.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -30,10 +27,10 @@ public class UserProfileController {
 
     @ResponseBody
     @GetMapping(value = "/profilepic/{username}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] testphoto(@PathVariable("username") String username) throws Exception{
+    public byte[] testphoto(@PathVariable("username") String username) throws Exception {
         Optional<User> user = userService.findByUserName(username);
-        if(user.isPresent()){
-            if(user.get().hasProfilePicture()){
+        if (user.isPresent()) {
+            if (user.get().hasProfilePicture()) {
                 return user.get().getImage();
             } else {
                 throw new Exception("User has no profile picture!");
@@ -44,14 +41,10 @@ public class UserProfileController {
     }
 
     @GetMapping(value = "/user/profile={username}")
-    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception{
+    public ModelAndView getPostUserProfile(@PathVariable("username") String username, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Optional<User> user = userService.findByUserName(username);
-        //String filepath = userService.loadProfilePicture(user.get().getUsername());
-
-        //System.out.println(filepath);
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        //modelAndView.addObject("filepath", filepath);
         modelAndView.addObject("profile", user.get());
         modelAndView.addObject("description", "");
         modelAndView.addObject("image", "");
