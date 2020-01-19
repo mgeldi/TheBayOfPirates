@@ -30,7 +30,7 @@
                 <img  style="max-width: 450px; max-height: 450px" id="imageOfProfile" th:src="@{/profilepic/{username}(username=${profile.getUsername()})}">
             </div>
             <div th:if="${!profile.hasProfilePicture()}">
-                <img id="image" src="/images/pirateprofile.png">
+                <img id="image" style="max-width: 450px; max-height: 450px;" src="/images/pirateprofile.png">
             </div>
             <div>
                 <table>

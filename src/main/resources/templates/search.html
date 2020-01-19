@@ -54,11 +54,11 @@
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
-                <li class="page-item" th:if="${totalPages > 0}"
+                <li th:class="(${pageNumber==torrentPage.number + 1} ? active) + ' page-item'" th:if="${totalPages > 0}"
                     th:each="pageNumber : ${pageNumbers}">
                     <a th:href="@{{baseurl}{pageparam}(baseurl=${searchURL}, pageparam=${pageNumber})}"
                        th:text="${pageNumber}"
-                       th:class="(${pageNumber==torrentPage.number + 1} ? active) + ' page-link'"></a>
+                        class="page-link"></a>
                 </li>
                 <li class="page-item" th:if="!${isLastPage}">
                     <a class="page-link"
