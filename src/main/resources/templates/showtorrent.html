@@ -47,28 +47,29 @@
                     class="btn btn-secondary my-2 my-sm-0">Download
             </button>
         </div>
-        <div th:if="${principal != null && user != null}">
-
-            <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
-
-                <form action="/torrent/delete" method="post">
-                    <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
-                    <button type="submit" id="deletebtn"
-                            class="btn btn-outline-secondary my-2 my-sm-0">Delete
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <hr>
-
-        <form th:action="@{/torrent/rate}" method="post">
-            <input type="text" name="torrentid" class="d-none" th:value="${torrent.getTorrentID()}">
-            <input type="text" name="rating">
-            <button type="submit">RATE ME</button>
-        </form>
-        <div th:value="${torrent.getRating()}" th:text="${torrent.getRating()}"></div>
     </form>
+
+    <div th:if="${principal != null && user != null}">
+
+        <div th:if="${principal.getName().equals((torrent.getUser().getEmail()))}">
+
+            <form action="/torrent/delete" method="post">
+                <input type="text" name="filename" th:value="${torrent.getName()}" hidden="hidden">
+                <button type="submit" id="deletebtn"
+                        class="btn btn-outline-secondary my-2 my-sm-0">Delete
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <form th:action="@{/torrent/rate}" method="post">
+        <input type="text" name="torrentid" class="d-none" th:value="${torrent.getTorrentID()}">
+        <input type="text" name="rating">
+        <button type="submit">RATE ME</button>
+    </form>
+    <div th:value="${torrent.getRating()}" th:text="${torrent.getRating()}"></div>
 </div>
 </div>
 </div>

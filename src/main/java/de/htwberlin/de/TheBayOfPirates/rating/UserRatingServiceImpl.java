@@ -7,6 +7,7 @@ import de.htwberlin.de.TheBayOfPirates.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,7 @@ public class UserRatingServiceImpl implements UserRatingService {
         getRatingOfTorrentByID(torrentID);
     }
 
+    @Transactional
     @Override
     public void removeAllRatingsOfTorrent(int torrentID) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);

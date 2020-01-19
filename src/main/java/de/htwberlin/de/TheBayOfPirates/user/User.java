@@ -58,8 +58,6 @@ public class User {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;
 
-
-
     private String imageName;
 
     private boolean hasProfilePicture;
