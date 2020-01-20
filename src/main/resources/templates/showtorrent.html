@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html style="height: 100%;" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/navbar.html :: head">
     <title>Upload Torrent</title>
 </head>
 
-<body style="height: 100%;">
+<body>
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
-<div class="border border-secondary" style="margin: 100px; width: auto; padding: 220px; text: left; min-height: 96%;">
+<div class="border border-secondary" style="margin: 100px; width: auto; padding: 220px; text: left;">
     <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
     <h1 th:if="${param.successMessage}" class="display-4">You have successfully uploaded a torrent!</h1>
     <hr th:if="${param.successMessage}">
