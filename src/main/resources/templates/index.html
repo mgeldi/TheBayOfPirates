@@ -9,17 +9,23 @@
 <body>
 <div th:insert="fragments/navbar.html :: navbar"></div>
 <div th:insert="fragments/notifier.html :: notifier"></div>
-<div class="jumbotron" th:if="${principal}">
-    <div class="container text-center" style="padding-top: 40px">
-        <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span
-                th:text=${user.getUsername()}></span>!</h1>
-        <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
-    </div>
-</div>
-<div class="jumbotron" th:if="${principal} == null">
-    <div class="container text-center" style="padding-top: 40px">
-        <h1 class="display-2" th:inline="text">The Bay of Pirates</h1>
-        <p style="font-size: 20px; padding-top: 20px">Will Rock Your Socks Off</p>
+<div class="jumbotron"
+     style="background-image: url(images/pirateJumbotron.jpg); background-size: cover; background-position: bottom">
+    <div class="container text-center" style="padding-top: 40px; color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  ">
+        <div th:if="${principal}">
+            <h1 class="display-2" th:inline="text">Welcome to the Bay of Pirates, <span
+                    th:text=${user.getUsername()}></span>!</h1>
+            <p style="font-size: 20px; padding-top: 20px">Are you ready to pirate?</p>
+        </div>
+        <div th:if="${principal == null}">
+            <h1 class="display-2" th:inline="text">The Bay of Pirates - Register now to use all features!</h1>
+            <p style="font-size: 20px; padding-top: 20px">..we'll Rock Your Socks Off. Promised!</p>
+        </div>
     </div>
 </div>
 
