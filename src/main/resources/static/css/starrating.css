@@ -1,0 +1,25 @@
+
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css);
+
+.starrating > input {display: none;}  /* Remove radio buttons */
+
+.starrating > label:before {
+    content: "\f714" !important; /* Star */
+    margin: 2px;
+    font-size: 2em;
+    font-family: "Font Awesome 5 Free";
+    font-weight: bold;
+    display: inline-block;
+}
+
+.starrating > label
+{
+    color: #222222; /* Start color when not clicked */
+}
+
+.starrating > input:checked ~ label
+{ color: #ffca08 ; } /* Set yellow color when star checked */
+
+.starrating > input:hover ~ label
+{ color: #ffca08 ;  } /* Set yellow color when star hover */
+
