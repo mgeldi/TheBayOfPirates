@@ -16,4 +16,6 @@ public interface UserRatingRepository extends JpaRepository<UserRating, Integer>
     void removeAllByTorrentID(Torrent torrent);
 
     Optional<UserRating> findByUserID(User user);
+
+    Optional<UserRating> findByUserIDAndTorrentID(User user, Torrent torrent);
 }

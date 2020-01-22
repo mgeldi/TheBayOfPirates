@@ -78,4 +78,22 @@ public class UserRatingServiceImpl implements UserRatingService {
             throw new Exception("Torrent not found!");
         }
     }
+
+    @Override
+    public Double getPreviousUserRatingOfTorrent(int torrentID, String email) throws Exception {
+        Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
+        Optional<User> user = userRepository.findByEmail(email);
+        if(torrent.isPresent() && user.isPresent()){
+            Optional<UserRating> userRating = userRatingRepository.findByUserIDAndTorrentID(user.get(), torrent.get());
+            return userRating.get().getRating();
+        } else {
+            throw new Exception("User or Torrent not found!");
+        }
+    }
+
+    @Override
+    public Double getPreviousUSerRatingOfTorrentByName(String name, String email) throws Exception {
+        Optional<Torrent> torrent = torrentRepository.findByName(name);
+        return getPreviousUserRatingOfTorrent(torrent.get().getTorrentID(), email);
+    }
 }

@@ -26,7 +26,7 @@ public class UserRatingController {
     private TorrentRepository torrentRepository;
 
     @PostMapping(value = "/torrent/rate")
-    public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam String rating) {
+    public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam String rating) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         double ratingAsDouble = 0.0;

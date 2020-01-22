@@ -1,5 +1,6 @@
 package de.htwberlin.de.TheBayOfPirates.torrent;
 
+import de.htwberlin.de.TheBayOfPirates.rating.UserRatingService;
 import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,15 @@ public class TorrentController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserRatingService userRatingService;
+
     public TorrentController(TorrentService torrentService) {
         this.torrentService = torrentService;
     }
 
     @GetMapping(value = "/torrent/name={name:.+}")
-    public ModelAndView getTorrent(@PathVariable String name, Principal principal) {
+    public ModelAndView getTorrent(@PathVariable String name, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         System.out.println(name);
@@ -48,11 +52,12 @@ public class TorrentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Torrent not found!");
         }
         modelAndView.setViewName("showtorrent");
+        modelAndView.addObject("previousRating", userRatingService.getPreviousUSerRatingOfTorrentByName(name, principal.getName()));
         return modelAndView;
     }
 
     @GetMapping(value = "/torrent/id={id}")
-    public ModelAndView getTorrent(@PathVariable int id, Principal principal) {
+    public ModelAndView getTorrent(@PathVariable int id, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         Optional<Torrent> torrent = torrentService.findByTorrentID(id);
@@ -62,6 +67,7 @@ public class TorrentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Torrent not found!");
         }
         modelAndView.setViewName("showtorrent");
+        modelAndView.addObject("previousRating", userRatingService.getPreviousUserRatingOfTorrent(id, principal.getName()));
         return modelAndView;
     }
 
