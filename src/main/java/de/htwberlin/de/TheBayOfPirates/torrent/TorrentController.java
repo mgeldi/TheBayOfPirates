@@ -36,8 +36,9 @@ public class TorrentController {
     @Autowired
     UserRatingService userRatingService;
 
-    public TorrentController(TorrentService torrentService) {
+    public TorrentController(UserService userService, TorrentService torrentService, UserRatingService userRatingService) {
         this.torrentService = torrentService;
+        this.userRatingService = userRatingService;
     }
 
     @GetMapping(value = "/torrent/name={name:.+}")

@@ -55,7 +55,7 @@ public class UserRatingServiceImpl implements UserRatingService {
         if (!torrent.isPresent()) {
             throw new Exception("Torrent not found! Unexpected Error!");
         }
-        Optional<UserRating> loadedUserRating = userRatingRepository.findByUserID(user.get());
+        Optional<UserRating> loadedUserRating = userRatingRepository.findByUserIDAndTorrentID(user.get(), torrent.get());
         if (loadedUserRating.isPresent()) {
             loadedUserRating.get().setRating(rating);
             System.out.println("loadedRating " + loadedUserRating.get().getRating());
@@ -85,7 +85,11 @@ public class UserRatingServiceImpl implements UserRatingService {
         Optional<User> user = userRepository.findByEmail(email);
         if(torrent.isPresent() && user.isPresent()){
             Optional<UserRating> userRating = userRatingRepository.findByUserIDAndTorrentID(user.get(), torrent.get());
-            return userRating.get().getRating();
+            if(userRating.isPresent()){
+                return userRating.get().getRating();
+            } else {
+                return 0.0;
+            }
         } else {
             throw new Exception("User or Torrent not found!");
         }

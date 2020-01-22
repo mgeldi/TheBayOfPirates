@@ -1,7 +1,6 @@
 package de.htwberlin.de.TheBayOfPirates.rating;
 
 import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
-import de.htwberlin.de.TheBayOfPirates.torrent.TorrentRepository;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,8 @@ public class UserRatingController {
     @Autowired
     private UserRatingService userRatingService;
 
-    @Autowired
-    private TorrentRepository torrentRepository;
-
     @PostMapping(value = "/torrent/rate")
-    public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam String rating) throws Exception {
+    public ModelAndView rateTorrent(@RequestParam("torrentid") int id, Principal principal, @RequestParam("rating") String rating) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         double ratingAsDouble = 0.0;
@@ -43,7 +39,6 @@ public class UserRatingController {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        RegistrationController.handleSecurity(modelAndView, principal, userService);
         modelAndView.addObject("successMessage", "Torrent rated successfully!");
         modelAndView.setViewName("redirect:/torrent/id=" + id);
         return modelAndView;
