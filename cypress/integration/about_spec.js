@@ -88,6 +88,7 @@ function register_wrong_user() {
 function login_as_user() {
     I_see_navbar_as_non_user();
     cy.get('button').contains('Login').click();
+    cy.wait(500);
     cy.get('#emailLogin').type('cypressemail@gmail.com');
     cy.get('#passwordLogin').type('cypress');
     cy.get('button').contains('Sign in').click();
