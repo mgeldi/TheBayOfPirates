@@ -106,7 +106,7 @@ class TorrentServiceImplTest {
 
     @Test
     void getTorrentPagesBySearch() {
-        Object resultPage = torrentService.getTorrentPagesBySearch("someSearchTerm", 0);
+        Object resultPage = torrentService.getTorrentPagesBySearch("someSearchTerm", 0, 10);
         MockingDetails mockingDetails = Mockito.mockingDetails(resultPage);
         Assert.assertTrue(new ReflectionEquals(Page.class).matches(mockingDetails.getMockCreationSettings().getTypeToMock()));
     }

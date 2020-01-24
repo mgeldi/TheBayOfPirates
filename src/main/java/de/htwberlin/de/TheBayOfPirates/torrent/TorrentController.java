@@ -153,18 +153,23 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/search")
-    public ModelAndView searchTorrent(@RequestParam(name = "search") String search) {
+    public ModelAndView searchTorrent(@RequestParam(name = "search") String search, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.println(search);
-        modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1");
+        modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1" + (size.map(integer -> "?size=" + integer).orElse("")));
         return modelAndView;
     }
 
     @GetMapping(value = "/torrent/search={name}/page={page}")
-    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal) throws Exception {
+    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        Page<Torrent> torrentPage = torrentService.getTorrentPagesBySearch(name, page - 1); //-1 because it starts at 0
+        Page<Torrent> torrentPage;
+        if (size.isPresent()) {
+            torrentPage = torrentService.getTorrentPagesBySearch(name, page - 1, size.get()); //-1 because it starts at 0
+        } else {
+            throw new Exception("Size not specified! Error!");
+        }
         modelAndView.addObject("totalPages", torrentPage.getTotalPages());
         System.out.println(torrentPage.getTotalPages());
         modelAndView.addObject("currentPage", page);
@@ -172,6 +177,8 @@ public class TorrentController {
         modelAndView.addObject("isLastPage", page == torrentPage.getTotalPages());
         modelAndView.addObject("searchURL", "/torrent/search=" + name + "/page=");
         modelAndView.addObject("torrentPage", torrentPage);
+        if(size.get() != 10)
+            modelAndView.addObject("sizeRequest", + size.get());
 
         int totalPages = torrentPage.getTotalPages();
         // Get total number of pages

@@ -50,7 +50,7 @@ class TorrentControllerTest {
         Mockito.when(torrentService.findByName("archlinux-2019.12.01-x86_64.iso"))
                 .thenReturn(java.util.Optional.ofNullable(mockedTorrent));
         Mockito.when(torrentService.findByTorrentID(mockedTorrent.getTorrentID())).thenReturn(Optional.of(mockedTorrent));
-        Mockito.when(torrentService.getTorrentPagesBySearch(Mockito.anyString(), Mockito.anyInt())).thenReturn(Mockito.mock(Page.class));
+        Mockito.when(torrentService.getTorrentPagesBySearch(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt())).thenReturn(Mockito.mock(Page.class));
         torrentController = new TorrentController(userService, torrentService, userRatingService);
         mockMvc = MockMvcBuilders.standaloneSetup(torrentController).build();
     }
