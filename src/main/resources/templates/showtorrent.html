@@ -13,11 +13,11 @@
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 <div th:insert="fragments/notifier.html :: notifier"></div>
 
-<div class="border rounded" style="margin: 100px; width: auto; padding: 220px; text: left;">
+<div class="border rounded" style="margin: 100px; width: auto; padding: 50px; text: left;">
     <span class="container text-center" style="padding-top: 80px; padding-bottom: 80px"></span>
-    <h1 th:if="${param.successMessage}" class="display-4">You have successfully uploaded a torrent!</h1>
+    <h1 th:if="${param.successMessage}" class="display-4 text-center">You have successfully uploaded a torrent!</h1>
     <div class="text-center border-bottom">
-        <h1>Torrent View</h1>
+        <h1 class="display-3">Torrent View</h1>
     </div>
 
 
