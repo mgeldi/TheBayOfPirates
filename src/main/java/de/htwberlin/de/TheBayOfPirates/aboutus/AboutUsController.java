@@ -26,12 +26,10 @@ public class AboutUsController {
      * @param model model
      * @return AboutUs the view which is to be returned
      * @RequestMapping({"/about"}) public String dateAndTime(Model model) {
-cd     * model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
+     * model.addAttribute("localdatetime", dateAndTime.getDateAndTime());
      * return "AboutUs";
      * }
      */
-
-
     @GetMapping(value = "/about")
     public ModelAndView getAboutUs(Principal principal, Model model) {
         ModelAndView modelAndView = new ModelAndView();
