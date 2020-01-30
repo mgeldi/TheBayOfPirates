@@ -60,15 +60,6 @@ public class TorrentServiceImpl implements TorrentService {
     }
 
     @Override
-    public void removeTorrentByID(int torrentID) throws Exception {
-        Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
-        if (torrent.isPresent()) {
-            userRatingService.removeAllRatingsOfTorrent(torrentID);
-            torrentRepository.delete(torrent.get());
-        }
-    }
-
-    @Override
     public void removeTorrentByName(String name) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByName(name);
         if (torrent.isPresent()) {

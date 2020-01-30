@@ -1,7 +1,6 @@
 package de.htwberlin.de.TheBayOfPirates.aboutus;
 
 import de.htwberlin.de.TheBayOfPirates.registration.RegistrationController;
-import de.htwberlin.de.TheBayOfPirates.user.User;
 import de.htwberlin.de.TheBayOfPirates.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -7,14 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -64,25 +61,23 @@ class TorrentControllerTest {
     }
 
     /**
-    @Test
-    void getTorrentPageByName() throws Exception {
-        MvcResult result = mockMvc.perform(get("/torrent/name=archlinux-2019.12.01-x86_64.iso"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(forwardedUrl("showtorrent"))
-                .andReturn();
+     @Test void getTorrentPageByName() throws Exception {
+     MvcResult result = mockMvc.perform(get("/torrent/name=archlinux-2019.12.01-x86_64.iso"))
+     .andExpect(status().is2xxSuccessful())
+     .andExpect(forwardedUrl("showtorrent"))
+     .andReturn();
 
-    }
+     }
 
 
-    @Test
-    void getTorrentPageByID() throws Exception {
-        MvcResult result = mockMvc.perform(get("/torrent/id=1")
-        .principal(principal))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(forwardedUrl("showtorrent"))
-                .andReturn();
-    }
-    */
+     @Test void getTorrentPageByID() throws Exception {
+     MvcResult result = mockMvc.perform(get("/torrent/id=1")
+     .principal(principal))
+     .andExpect(status().is2xxSuccessful())
+     .andExpect(forwardedUrl("showtorrent"))
+     .andReturn();
+     }
+     */
     /**
      * @Test void postTorrent() throws Exception {
      * System.out.println(torrentFile.getName());

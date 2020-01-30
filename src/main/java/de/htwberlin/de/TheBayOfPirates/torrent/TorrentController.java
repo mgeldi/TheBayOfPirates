@@ -177,8 +177,8 @@ public class TorrentController {
         modelAndView.addObject("isLastPage", page == torrentPage.getTotalPages());
         modelAndView.addObject("searchURL", "/torrent/search=" + name + "/page=");
         modelAndView.addObject("torrentPage", torrentPage);
-        if(size.get() != 10)
-            modelAndView.addObject("sizeRequest", + size.get());
+        if (size.get() != 10)
+            modelAndView.addObject("sizeRequest", +size.get());
 
         int totalPages = torrentPage.getTotalPages();
         // Get total number of pages

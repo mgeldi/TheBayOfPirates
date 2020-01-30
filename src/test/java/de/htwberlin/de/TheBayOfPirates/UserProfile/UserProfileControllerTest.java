@@ -15,7 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.Principal;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 
 class UserProfileControllerTest {
@@ -34,7 +35,6 @@ class UserProfileControllerTest {
     private Principal principal;
 
 
-
     @BeforeEach
     void setUp() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
@@ -51,7 +51,7 @@ class UserProfileControllerTest {
         mockedImageFile = new MockMultipartFile(imageFile.getName(), imageFile.getName(),
                 "text/plain", Files.readAllBytes(imageFile.toPath()));
         mockedFalseFile = new MockMultipartFile(falseFile.getName(), falseFile.getName(),
-                "text/plain",Files.readAllBytes(falseFile.toPath()));
+                "text/plain", Files.readAllBytes(falseFile.toPath()));
     }
 
     @Test

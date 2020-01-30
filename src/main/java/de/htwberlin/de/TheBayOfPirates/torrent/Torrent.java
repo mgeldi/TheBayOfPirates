@@ -2,10 +2,8 @@ package de.htwberlin.de.TheBayOfPirates.torrent;
 
 import com.sun.istack.NotNull;
 import de.htwberlin.de.TheBayOfPirates.user.User;
-import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -89,7 +87,7 @@ public class Torrent {
     }
 
     public double getRating() {
-        if(rating == null) {
+        if (rating == null) {
             rating = 0.0;
         }
         return this.rating;

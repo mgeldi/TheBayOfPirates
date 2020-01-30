@@ -19,7 +19,7 @@ class UserServiceImplTest {
     private UserRepository mockedUserRepo;
 
     @BeforeEach
-    void setupUserServiceAndRepo(){
+    void setupUserServiceAndRepo() {
         RoleRepository mockedRoleRepo = Mockito.mock(RoleRepository.class);
         Role mockedRole = Mockito.mock(Role.class);
         mockedRole.setRoleName("USER");
@@ -47,9 +47,9 @@ class UserServiceImplTest {
 
     @Test
     void saveUserSuccessful() {
-        try{
+        try {
             userService.saveUser(mockedUser);
-        } catch(Exception e) {
+        } catch (Exception e) {
             fail("Something went wrong!");
             e.printStackTrace();
         }
@@ -58,15 +58,15 @@ class UserServiceImplTest {
 
     /**
      * not Neccesary because @Valid is spring boot specific, handles wrong user for us
-    @Test
-    void saveInvalidUserNotSuccessful() {
-        try{
-            userService.saveUser(mockedUserInvalid);
-            fail("No exception was thrown!");
-        } catch(Exception e) {
-            //everything went fine!
-        }
-    }
+     *
+     * @Test void saveInvalidUserNotSuccessful() {
+     * try{
+     * userService.saveUser(mockedUserInvalid);
+     * fail("No exception was thrown!");
+     * } catch(Exception e) {
+     * //everything went fine!
+     * }
+     * }
      **/
 
     @Test
@@ -76,7 +76,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testFindByUserEmail(){
+    void testFindByUserEmail() {
         userService.findByUserEmail("test");
         verify(mockedUserRepo, times(1)).findByEmail("test");
     }

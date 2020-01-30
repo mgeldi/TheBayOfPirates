@@ -83,9 +83,9 @@ public class UserRatingServiceImpl implements UserRatingService {
     public Double getPreviousUserRatingOfTorrent(int torrentID, String email) throws Exception {
         Optional<Torrent> torrent = torrentRepository.findByTorrentID(torrentID);
         Optional<User> user = userRepository.findByEmail(email);
-        if(torrent.isPresent() && user.isPresent()){
+        if (torrent.isPresent() && user.isPresent()) {
             Optional<UserRating> userRating = userRatingRepository.findByUserIDAndTorrentID(user.get(), torrent.get());
-            if(userRating.isPresent()){
+            if (userRating.isPresent()) {
                 return userRating.get().getRating();
             } else {
                 return 0.0;

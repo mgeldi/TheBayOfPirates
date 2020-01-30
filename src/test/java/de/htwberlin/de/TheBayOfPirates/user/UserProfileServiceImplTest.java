@@ -12,8 +12,6 @@ import java.nio.file.Files;
 import java.util.Optional;
 
 
-
-
 class UserProfileServiceImplTest {
 
     private UserService userService;
@@ -28,8 +26,6 @@ class UserProfileServiceImplTest {
     private final String gender = "FGjghbjk";
 
     private byte[] ImageAsByte;
-
-
 
 
     @BeforeEach
@@ -47,8 +43,6 @@ class UserProfileServiceImplTest {
         Mockito.when(userRepository.findByEmail("muhammed@gmail.com")).thenReturn(Optional.of(user));
 
     }
-
-
 
 
     @Test

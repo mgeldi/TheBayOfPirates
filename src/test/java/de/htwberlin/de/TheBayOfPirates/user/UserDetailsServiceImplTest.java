@@ -58,9 +58,9 @@ class UserDetailsServiceImplTest {
 
     @Test
     void loadNonExistentUserByUsername() {
-        assertThrows(UsernameNotFoundException.class, () ->{
-                    UserDetails userDetails = detailsService.loadUserByUsername("blubb@gmail.com");
-                });
+        assertThrows(UsernameNotFoundException.class, () -> {
+            UserDetails userDetails = detailsService.loadUserByUsername("blubb@gmail.com");
+        });
         Mockito.verify(mockedUserService, Mockito.times(1)).findByUserEmail("blubb@gmail.com");
     }
 }

@@ -14,7 +14,7 @@ public interface UserService {
      *
      * @param user User with full data
      */
-    public void saveUser(User user) throws Exception;
+    void saveUser(User user) throws Exception;
 
     /**
      * Checks if the user (username or email) already exists.
@@ -22,7 +22,7 @@ public interface UserService {
      * @param user User with full data
      * @return True, if it already exists, otherwise false
      */
-    public boolean userExists(User user);
+    boolean userExists(User user);
 
     /**
      * Find user by email.
@@ -30,9 +30,9 @@ public interface UserService {
      * @param email
      * @return
      */
-    public Optional<User> findByUserEmail(String email);
+    Optional<User> findByUserEmail(String email);
 
-    public Optional<User> findByUserName(String username);
+    Optional<User> findByUserName(String username);
 
-    public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String mail) throws Exception;
+    User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String mail) throws Exception;
 }

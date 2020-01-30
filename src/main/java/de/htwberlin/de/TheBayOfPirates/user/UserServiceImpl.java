@@ -7,14 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
 import javax.validation.Valid;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -69,12 +62,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUserEmail(String email) { ;
+    public Optional<User> findByUserEmail(String email) {
+        ;
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public Optional<User> findByUserName(String username){
+    public Optional<User> findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 

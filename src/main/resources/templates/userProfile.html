@@ -27,7 +27,8 @@
             <input type="file" name="file" class="custom-file-input" id="customFileLang">
 
             <div th:if="${profile.hasProfilePicture()}">
-                <img  style="max-width: 450px; max-height: 450px" id="imageOfProfile" th:src="@{/profilepic/{username}(username=${profile.getUsername()})}">
+                <img style="max-width: 450px; max-height: 450px" id="imageOfProfile"
+                     th:src="@{/profilepic/{username}(username=${profile.getUsername()})}">
             </div>
             <div th:if="${!profile.hasProfilePicture()}">
                 <img id="image" style="max-width: 450px; max-height: 450px;" src="/images/pirateprofile.png">
@@ -119,7 +120,7 @@
                     <!-- Modal Ende -->
                 </table>
             </div>
-        </form>
+            </form>
         </span>
     </div>
 </div>
