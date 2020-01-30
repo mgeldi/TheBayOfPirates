@@ -71,11 +71,6 @@ public class User {
         this.image = image;
     }
 
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -88,11 +83,6 @@ public class User {
         this.username = userName;
     }
 
-
-    public UUID getUserID() {
-        return userID;
-    }
-
     public String getName() {
         return name;
     }
@@ -103,10 +93,6 @@ public class User {
 
     public String getSurname() {
         return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getEmail() {
@@ -155,10 +141,6 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getImageName() {
-        return imageName;
     }
 
     public void setImageName(String imageName) {

@@ -33,7 +33,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userWithEmail = userService.findByUserEmail(username);
         Optional<User> userWithUsername = userService.findByUserName(username);
-        UserBuilder builder = null;
         if (userWithEmail.isPresent()) {
             return getBuilder(userWithEmail.get().getEmail(), userWithEmail.get().getPassword(), userWithEmail.get().getRoles()).build();
         } else if (userWithUsername.isPresent()) {

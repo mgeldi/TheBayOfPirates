@@ -28,7 +28,7 @@ public class UserRating implements Serializable {
 
     @Column(name = "rating")
     @Min(0)
-    @Max(10)
+    @Max(5)
     private Double rating = 0.0;
 
     public UserRating() {

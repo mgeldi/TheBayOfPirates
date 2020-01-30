@@ -38,12 +38,10 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in the form!");
             modelAndView.addObject("bindingResult", bindingResult);
-            System.out.println(bindingResult.toString());
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         } else if (userService.userExists(user)) {
             modelAndView.addObject("successMessage", "User with that username or email already exists!");
-            System.out.println("User exists!");
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
@@ -53,7 +51,6 @@ public class RegistrationController {
             user.setEnabled(true);
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User is registered successfully!");
-            System.out.println("User registered!");
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }

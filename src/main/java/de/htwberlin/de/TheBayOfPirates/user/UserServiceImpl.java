@@ -21,8 +21,6 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    private UserService userService;
 
     private static final short MAX_FILE_SIZE_IN_KILO_BYTES = 500;
 
@@ -39,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     public void initRoles() {
-        System.out.println("Initializing User role!");
         if (!roleRepository.findByRole("USER").isPresent()) {
             roleRepository.save(new Role("USER"));
         }
@@ -74,7 +71,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String userEmail) throws Exception {
-        /*if (imageName.endsWith(".png") || imageName.endsWith(".jpg") && */
         if ((imageByte.length / 1000) < MAX_FILE_SIZE_IN_KILO_BYTES) {
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())

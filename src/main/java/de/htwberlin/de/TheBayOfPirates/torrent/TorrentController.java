@@ -45,7 +45,6 @@ public class TorrentController {
     public ModelAndView getTorrent(@PathVariable String name, Principal principal) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
-        System.out.println(name);
         Optional<Torrent> torrent = torrentService.findByName(name);
         if (torrent.isPresent()) {
             modelAndView.addObject("torrent", torrent.get());
@@ -87,12 +86,10 @@ public class TorrentController {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         String fileName = multipartFile.getOriginalFilename();
-        System.out.println("File to be uploaded was called: " + fileName);
         String actualName = fileName.substring(0, fileName.length() - ".torrent".length());
         if (torrentService.findByName(actualName).isPresent()) {
             modelAndView.addObject("error",
                     "Torrent with that name already exists!");
-            System.out.println("Torrent already exists!");
             modelAndView.setViewName("redirect:/torrent/upload");
         } else {
             try {
@@ -155,27 +152,25 @@ public class TorrentController {
     @GetMapping(value = "/torrent/search")
     public ModelAndView searchTorrent(@RequestParam(name = "search") String search, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(search);
         modelAndView.setViewName("redirect:/torrent/search=" + search + "/page=1" + (size.map(integer -> "?size=" + integer).orElse("")));
         return modelAndView;
     }
 
-    @GetMapping(value = "/torrent/search={name}/page={page}")
-    public ModelAndView searchForTorrentByName(@PathVariable String name, @PathVariable @Min(1) int page, Principal principal, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) throws Exception {
+    @GetMapping(value = "/torrent/search={searchTerm}/page={page}")
+    public ModelAndView searchForTorrentByName(@PathVariable String searchTerm, @PathVariable @Min(1) int page, Principal principal, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         Page<Torrent> torrentPage;
         if (size.isPresent()) {
-            torrentPage = torrentService.getTorrentPagesBySearch(name, page - 1, size.get()); //-1 because it starts at 0
+            torrentPage = torrentService.getTorrentPagesBySearch(searchTerm, page - 1, size.get()); //-1 because it starts at 0
         } else {
             throw new Exception("Size not specified! Error!");
         }
         modelAndView.addObject("totalPages", torrentPage.getTotalPages());
-        System.out.println(torrentPage.getTotalPages());
         modelAndView.addObject("currentPage", page);
         modelAndView.addObject("isFirstPage", page == 1);
         modelAndView.addObject("isLastPage", page == torrentPage.getTotalPages());
-        modelAndView.addObject("searchURL", "/torrent/search=" + name + "/page=");
+        modelAndView.addObject("searchURL", "/torrent/search=" + searchTerm + "/page=");
         modelAndView.addObject("torrentPage", torrentPage);
         if (size.get() != 10)
             modelAndView.addObject("sizeRequest", +size.get());
