@@ -71,7 +71,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:if="!${isFirstPage}">
                     <a class="page-link"
-                       th:href="${searchURL + (currentPage -1) + #uris.unescapeQueryParam('?size=' + sizeRequest)}"
+                       th:href="${searchURL + (currentPage -1) + (sizeRequest != null ? #uris.unescapeQueryParam('?size=' + sizeRequest) : '')}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
@@ -85,13 +85,13 @@
                 </li>
                 <li th:class="(${pageNumber==torrentPage.number + 1} ? active) + ' page-item'" th:if="${totalPages > 0}"
                     th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="${searchURL + pageNumber + #uris.unescapeQueryParam('?size=' + sizeRequest)}"
+                    <a th:href="${searchURL + pageNumber + (sizeRequest != null ? #uris.unescapeQueryParam('?size=' + sizeRequest) : '')}"
                        th:text="${pageNumber}"
                        class="page-link"></a>
                 </li>
                 <li class="page-item" th:if="!${isLastPage}">
                     <a class="page-link"
-                       th:href="${searchURL + (currentPage + 1) + #uris.unescapeQueryParam('?size=' + sizeRequest)}"
+                       th:href="${searchURL + (currentPage + 1) + (sizeRequest != null ? #uris.unescapeQueryParam('?size=' + sizeRequest) : '')}"
                        aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
