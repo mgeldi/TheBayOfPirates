@@ -54,6 +54,34 @@ public class User {
 
     private boolean enabled;
 
+    public UUID getUserID() {
+        return userID;
+    }
+
+    public void setUserID(UUID userID) {
+        this.userID = userID;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public boolean isHasProfilePicture() {
+        return hasProfilePicture;
+    }
+
     @Column(name = "image")
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;

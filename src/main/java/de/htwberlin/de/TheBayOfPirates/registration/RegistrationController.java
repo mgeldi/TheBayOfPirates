@@ -35,13 +35,14 @@ public class RegistrationController {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         // Check for the validations
-        if (userService.userExists(user)) {
-            modelAndView.addObject("successMessage", "User with that username or email already exists!");
-            modelAndView.setViewName("redirect:/");
-            return modelAndView;
-        } else if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in the form!");
             modelAndView.addObject("bindingResult", bindingResult);
+            System.out.println(bindingResult.toString());
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        } else if (userService.userExists(user)) {
+            modelAndView.addObject("successMessage", "User with that username or email already exists!");
             modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
