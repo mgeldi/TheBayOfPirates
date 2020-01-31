@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUserProfile(byte[] imageByte, String description, String gender, String imageName, String userEmail) throws Exception {
-        if ((imageByte.length / 1000) < MAX_FILE_SIZE_IN_KILO_BYTES) {
+        if ((imageByte.length / 1000) <= MAX_FILE_SIZE_IN_KILO_BYTES) {
             Optional<User> user = userRepository.findByEmail(userEmail);
             if (!user.isPresent())
                 throw new Exception("User not found!");
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
             userRepository.saveAndFlush(userProfile);
             return userProfile;
         } else {
-            throw new Exception("The uploaded picture is neither a png or jpg");
+            throw new Exception("The picture exceeded the file size!");
         }
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.ByteArrayInputStream;
 import java.security.Principal;
@@ -157,7 +158,7 @@ public class TorrentController {
     }
 
     @GetMapping(value = "/torrent/search={searchTerm}/page={page}")
-    public ModelAndView searchForTorrentByName(@PathVariable String searchTerm, @PathVariable @Min(1) int page, Principal principal, @RequestParam(defaultValue = "10", name = "size") Optional<Integer> size) throws Exception {
+    public ModelAndView searchForTorrentByName(@PathVariable String searchTerm, @PathVariable @Min(1) int page, Principal principal, @RequestParam(defaultValue = "10", name = "size") @Min(1) @Max(100) Optional<Integer> size) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         RegistrationController.handleSecurity(modelAndView, principal, userService);
         Page<Torrent> torrentPage;

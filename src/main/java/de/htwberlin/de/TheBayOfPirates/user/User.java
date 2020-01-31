@@ -54,6 +54,14 @@ public class User {
 
     private boolean enabled;
 
+    @Column(name = "image")
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] image;
+
+    private String imageName;
+
+    private boolean hasProfilePicture;
+
     public UUID getUserID() {
         return userID;
     }
@@ -81,14 +89,6 @@ public class User {
     public boolean isHasProfilePicture() {
         return hasProfilePicture;
     }
-
-    @Column(name = "image")
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] image;
-
-    private String imageName;
-
-    private boolean hasProfilePicture;
 
 
     public byte[] getImage() {
